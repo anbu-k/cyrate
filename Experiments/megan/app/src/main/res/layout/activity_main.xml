@@ -8,20 +8,19 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/forAlex"
+        android:id="@+id/notAlexButton"
         android:layout_width="192dp"
         android:layout_height="167dp"
         android:layout_below="@id/whereToEat"
         android:layout_centerHorizontal="true"
-        android:onClick="imNotAlex"
         android:text="i'm not alex"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/forEveryoneElse"
+        android:id="@+id/alexButton"
         android:layout_width="206dp"
         android:layout_height="211dp"
-        android:layout_below="@id/forAlex"
+        android:layout_below="@id/notAlexButton"
         android:layout_centerHorizontal="true"
         android:onClick="imAlex"
         android:text="i'm alex" />

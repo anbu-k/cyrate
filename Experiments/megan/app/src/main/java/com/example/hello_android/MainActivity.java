@@ -1,6 +1,8 @@
 package com.example.hello_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        alexEat = (Button) findViewById(R.id.forAlex);
-        notAlexEat = (Button) findViewById(R.id.forEveryoneElse);
+        alexEat = (Button) findViewById(R.id.notAlexButton);
+        notAlexEat = (Button) findViewById(R.id.alexButton);
 
         alexEat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         notAlexEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "loading your dinner...", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "loading your dinner...", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this, notAlexActivity.class);
+                startActivity(i);
             }
         });
     }
