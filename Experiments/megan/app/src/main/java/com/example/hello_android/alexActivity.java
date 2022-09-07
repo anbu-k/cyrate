@@ -3,6 +3,7 @@ package com.example.hello_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 public class alexActivity extends AppCompatActivity {
 
@@ -11,4 +12,5 @@ public class alexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alex);
     }
+
 }
