@@ -16,20 +16,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        alexEat = (Button) findViewById(R.id.notAlexButton);
-        notAlexEat = (Button) findViewById(R.id.alexButton);
+        alexEat = (Button) findViewById(R.id.alexButton);
+        notAlexEat = (Button) findViewById(R.id.notAlexButton);
 
         alexEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "hi alex, looking for ur dinner", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this, alexActivity.class);
+                startActivity(i);
             }
         });
 
         notAlexEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "loading your dinner...", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(MainActivity.this, notAlexActivity.class);
                 startActivity(i);
             }
