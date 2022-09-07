@@ -20,6 +20,9 @@
             android:name=".notAlexActivity"
             android:exported="false" />
         <activity
+            android:name=".EnterUrNameActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

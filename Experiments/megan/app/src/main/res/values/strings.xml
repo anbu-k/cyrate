@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">hello_android</string>
+    <string-array name="meals">
+        <item>breakfast</item>
+        <item>lunch</item>
+        <item>dinner</item>
+        <item>snack</item>
+        <item>ice cream</item>
+    </string-array>
 </resources>

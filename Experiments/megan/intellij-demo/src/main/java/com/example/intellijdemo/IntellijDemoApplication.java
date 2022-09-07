@@ -8,7 +8,7 @@ public class IntellijDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IntellijDemoApplication.class, args);
-		System.out.println("hello workd");
+		System.out.println("hello world");
 	}
 
 }

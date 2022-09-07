@@ -22,8 +22,15 @@
         android:layout_height="211dp"
         android:layout_below="@id/notAlexButton"
         android:layout_centerHorizontal="true"
-        android:onClick="imAlex"
         android:text="i'm alex" />
+
+    <Button
+        android:id="@+id/enterMyNameButton"
+        android:layout_width="206dp"
+        android:layout_height="211dp"
+        android:layout_below="@id/alexButton"
+        android:layout_centerHorizontal="true"
+        android:text="enter my name" />
 
     <TextView
         android:id="@+id/whereToEat"
