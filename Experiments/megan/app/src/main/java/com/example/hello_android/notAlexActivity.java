@@ -33,7 +33,7 @@ public class notAlexActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(notAlexActivity.this, alexActivity.class));
+                startActivity(new Intent(notAlexActivity.this, whereToEatActivity.class));
             }
         });
 
