@@ -10,26 +10,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 
 @RestController
 public class RateContoller {
-    
-    // Note that there is only ONE instance of PeopleController in 
-    // Springboot system.
-    HashMap<String, Rating> ratingList = new  HashMap<>();
-    ArrayList<Rating> ratingList2 = new ArrayList<Rating>();
-
     //CRUDL (create/read/update/delete/list)
     // use POST, GET, PUT, DELETE, GET methods for CRUDL
+    /**
+     * Messing around with ArrayList
+     * Hashmap better choice
+     * 
+    @GetMapping("/rating")
+    public @ResponseBody ArrayList<Rating> getAllRatings() {
+        return ratingList2;
+    }
+    */
+
+    //hashmap used to store all ratings, can index by restName
+    HashMap<String, Rating> ratingList = new  HashMap<>();
 
     // THIS IS THE LIST OPERATION
     @GetMapping("/rating")
     public @ResponseBody HashMap<String,Rating> getAllRatings() {
         return ratingList;
     }
-
+      
     // THIS IS THE CREATE OPERATION
     // post a new rating
     @PostMapping("/rating")
