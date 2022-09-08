@@ -17,11 +17,11 @@ public class Person {
 
     private String telephone;
 
-    public Person(){
-        
+    public Person() {
+
     }
 
-    public Person(String firstName, String lastName, String address, String telephone){
+    public Person(String firstName, String lastName, String address, String telephone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -62,9 +62,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return firstName + " " 
-               + lastName + " "
-               + address + " "
-               + telephone;
+        return firstName + " "
+                + lastName + " "
+                + address + " "
+                + telephone;
     }
 }
