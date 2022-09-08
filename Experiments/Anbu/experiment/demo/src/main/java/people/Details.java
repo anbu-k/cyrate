@@ -1,5 +1,4 @@
-package coms309.people;
-
+package people;
 
 /**
  * Provides the Definition/Structure for the people row
@@ -7,9 +6,9 @@ package coms309.people;
  * @author Vivek Bengre
  */
 
-public class Person {
+public class Details {
 
-    private String restaurantName; //private String restuarantName
+    private String locationName; //private String restuarantName
 
    // private String lastName;  
 
@@ -17,23 +16,23 @@ public class Person {
 
     private String telephone;
 
-    public Person() {
+    public Details() {
 
     }
 
-    public Person(String restaurantName, String address, String telephone) {
-        this.restaurantName = restaurantName;
+    public Details(String restaurantName, String address, String telephone) {
+        this.locationName = restaurantName;
         //this.lastName = lastName;
         this.address = address;
         this.telephone = telephone;
     }
 
-    public String getrestaurantName() {
-        return this.restaurantName;
+    public String getlocationName() {
+        return this.locationName;
     }
 
-    public void setrestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
+    public void setlocationName(String restaurantName) {
+        this.locationName = restaurantName;
     }
 
    // public String getLastName() {
@@ -62,7 +61,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return restaurantName + " "
+        return locationName + " "
                // + lastName + " "
                 + address + " "
                 + telephone;
