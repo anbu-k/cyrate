@@ -9,9 +9,9 @@ package coms309.people;
 
 public class Person {
 
-    private String firstName;
+    private String restaurantName; //private String restuarantName
 
-    private String lastName;
+   // private String lastName;  
 
     private String address;
 
@@ -21,28 +21,28 @@ public class Person {
 
     }
 
-    public Person(String firstName, String lastName, String address, String telephone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(String restaurantName, String address, String telephone) {
+        this.restaurantName = restaurantName;
+        //this.lastName = lastName;
         this.address = address;
         this.telephone = telephone;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getrestaurantName() {
+        return this.restaurantName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setrestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public String getLastName() {
-        return this.lastName;
-    }
+   // public String getLastName() {
+    //    return this.lastName;
+   // }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    //public void setLastName(String lastName) {
+    //    this.lastName = lastName;
+   // }
 
     public String getAddress() {
         return this.address;
@@ -62,8 +62,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return firstName + " "
-                + lastName + " "
+        return restaurantName + " "
+               // + lastName + " "
                 + address + " "
                 + telephone;
     }

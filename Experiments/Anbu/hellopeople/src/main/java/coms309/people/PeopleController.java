@@ -48,8 +48,8 @@ public class PeopleController {
     @PostMapping("/people")
     public @ResponseBody String createPerson(@RequestBody Person person) {
         System.out.println(person);
-        peopleList.put(person.getFirstName(), person);
-        return "New person "+ person.getFirstName() + " Saved";
+        peopleList.put(person.getrestaurantName(), person);
+        return "New person "+ person.getrestaurantName() + " Saved";
     }
 
     // THIS IS THE READ OPERATION
@@ -59,8 +59,8 @@ public class PeopleController {
     // in this case because of @ResponseBody
     // Note: To READ we use GET method
     @GetMapping("/people/{firstName}")
-    public @ResponseBody Person getPerson(@PathVariable String firstName) {
-        Person p = peopleList.get(firstName);
+    public @ResponseBody Person getPerson(@PathVariable String restaurantName) {
+        Person p = peopleList.get(restaurantName);
         return p;
     }
 
@@ -72,9 +72,9 @@ public class PeopleController {
     // in this case because of @ResponseBody
     // Note: To UPDATE we use PUT method
     @PutMapping("/people/{firstName}")
-    public @ResponseBody Person updatePerson(@PathVariable String firstName, @RequestBody Person p) {
-        peopleList.replace(firstName, p);
-        return peopleList.get(firstName);
+    public @ResponseBody Person updatePerson(@PathVariable String restaurantName, @RequestBody Person p) {
+        peopleList.replace(restaurantName, p);
+        return peopleList.get(restaurantName);
     }
 
     // THIS IS THE DELETE OPERATION
@@ -84,8 +84,8 @@ public class PeopleController {
     // Note: To DELETE we use delete method
     
     @DeleteMapping("/people/{firstName}")
-    public @ResponseBody HashMap<String, Person> deletePerson(@PathVariable String firstName) {
-        peopleList.remove(firstName);
+    public @ResponseBody HashMap<String, Person> deletePerson(@PathVariable String restaurantName) {
+        peopleList.remove(restaurantName);
         return peopleList;
     }
 }
