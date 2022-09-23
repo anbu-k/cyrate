@@ -55,14 +55,14 @@ public class RateContoller {
 
     // THIS IS THE UPDATE OPERATION
     // update a rating
-    @PutMapping("/rating/{firstName}")
+    @PutMapping("/rating/{restName}")
     public @ResponseBody Rating updateRating(@PathVariable String restName, @RequestBody Rating r) {
         ratingList.replace(restName, r);
         return ratingList.get(restName);
     }
 
     // THIS IS THE DELETE OPERATION
-    @DeleteMapping("/rating/{firstName}")
+    @DeleteMapping("/rating/{restName}")
     public @ResponseBody HashMap<String, Rating> deleteRating(@PathVariable String restName) {
         ratingList.remove(restName);
         return ratingList;
