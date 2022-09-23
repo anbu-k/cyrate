@@ -1,5 +1,6 @@
 package com.example.cyrate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,14 @@ public class SignUpTabFragment extends Fragment {
         password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         confirmPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
         signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
+
+        signUp.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), RestaurantListActivity.class);
+                startActivity(i);
+            }
+        }));
 
         return root;
     }
