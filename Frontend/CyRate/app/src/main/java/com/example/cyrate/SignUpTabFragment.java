@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cyrate.activities.RestaurantListActivity;
+
 public class SignUpTabFragment extends Fragment {
     EditText email, password, confirmPassword;
     Button signUp;

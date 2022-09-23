@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cyrate.activities.RestaurantListActivity;
+
 public class LoginTabFragment extends Fragment {
 
     EditText email, password;

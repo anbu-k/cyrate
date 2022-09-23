@@ -1,4 +1,4 @@
-package com.example.cyrate;
+package com.example.cyrate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.cyrate.R;
 
 public class IntroActivity extends AppCompatActivity {
 

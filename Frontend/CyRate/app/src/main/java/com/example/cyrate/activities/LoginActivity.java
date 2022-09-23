@@ -1,10 +1,12 @@
-package com.example.cyrate;
+package com.example.cyrate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.example.cyrate.LoginAdapter;
+import com.example.cyrate.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class LoginActivity extends AppCompatActivity {
