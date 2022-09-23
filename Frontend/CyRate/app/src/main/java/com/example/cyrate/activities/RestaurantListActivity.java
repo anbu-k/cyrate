@@ -3,8 +3,11 @@ package com.example.cyrate.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.R;
+import com.example.cyrate.adapters.RestaurantListAdapter;
 import com.example.cyrate.models.RestaurantListCardModel;
 
 import java.util.ArrayList;
@@ -20,7 +23,13 @@ public class RestaurantListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
 
+        RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
+
         setUpRestaurantCardListModels();
+
+        RestaurantListAdapter restListAdapter = new RestaurantListAdapter(this, restaurantCardListModels);
+        recyclerView.setAdapter(restListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setUpRestaurantCardListModels() {
