@@ -5,7 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.cyrate.LoginAdapter;
+import com.example.cyrate.adapters.LoginAdapter;
 import com.example.cyrate.R;
 import com.google.android.material.tabs.TabLayout;
 

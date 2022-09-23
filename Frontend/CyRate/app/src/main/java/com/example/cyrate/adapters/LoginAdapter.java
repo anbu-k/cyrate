@@ -1,4 +1,4 @@
-package com.example.cyrate;
+package com.example.cyrate.adapters;
 
 import android.content.Context;
 
@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.cyrate.LoginTabFragment;
+import com.example.cyrate.SignUpTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
     final Context ctx;
