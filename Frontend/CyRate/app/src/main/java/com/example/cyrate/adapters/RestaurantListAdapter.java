@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyrate.R;
+import com.example.cyrate.RestaurantListInterface;
 import com.example.cyrate.models.RestaurantListCardModel;
 
 
@@ -18,12 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder> {
+    private final RestaurantListInterface restaurantListInterface;
     Context ctx;
     ArrayList<RestaurantListCardModel> restaurantCardList;
 
-    public RestaurantListAdapter(Context ctx, ArrayList<RestaurantListCardModel> restaurantCardList){
+    public RestaurantListAdapter(
+            Context ctx,
+            ArrayList<RestaurantListCardModel> restaurantCardList,
+            RestaurantListInterface restaurantListInterface
+            ){
         this.ctx = ctx;
         this.restaurantCardList = restaurantCardList;
+        this.restaurantListInterface = restaurantListInterface;
     }
     // This is where we inflate our layout (RestaurantListCard) for each of our rows in the view
     @NonNull
@@ -31,7 +38,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public RestaurantListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.restauarnt_list_card, parent, false);
-        return new RestaurantListAdapter.MyViewHolder(view);
+        return new RestaurantListAdapter.MyViewHolder(view, restaurantListInterface);
     }
 
     // Since this is a recycle view, cards will be discarded when they go off screen.
@@ -59,7 +66,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         ImageView restImg;
         TextView restName, restCategory, restAddress, restRating, restHours;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RestaurantListInterface restaurantListInterface) {
             super(itemView);
 
             restImg = itemView.findViewById(R.id.restaurant_img);
@@ -69,6 +76,20 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             restRating = itemView.findViewById(R.id.restaurant_rating);
             restHours = itemView.findViewById(R.id.restaurant_hours);
 
+            itemView.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(restaurantListInterface != null){
+                                int pos = getAdapterPosition();
+
+                                if(pos != RecyclerView.NO_POSITION){
+                                    restaurantListInterface.onItemClick(pos);
+                                }
+                            }
+                        }
+                    }
+            );
 
         }
     }

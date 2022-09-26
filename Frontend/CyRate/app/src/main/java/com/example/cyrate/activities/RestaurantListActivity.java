@@ -1,5 +1,6 @@
 package com.example.cyrate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,12 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.R;
+import com.example.cyrate.RestaurantListInterface;
 import com.example.cyrate.adapters.RestaurantListAdapter;
 import com.example.cyrate.models.RestaurantListCardModel;
 
 import java.util.ArrayList;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class RestaurantListActivity extends AppCompatActivity implements RestaurantListInterface {
 
     ArrayList<RestaurantListCardModel> restaurantCardListModels = new ArrayList<>();
     int[] restaurantImages = {R.drawable.provisions_hero};
@@ -27,7 +29,9 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         setUpRestaurantCardListModels();
 
-        RestaurantListAdapter restListAdapter = new RestaurantListAdapter(this, restaurantCardListModels);
+        RestaurantListAdapter restListAdapter = new RestaurantListAdapter(this,
+                restaurantCardListModels, this);
+
         recyclerView.setAdapter(restListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -51,5 +55,19 @@ public class RestaurantListActivity extends AppCompatActivity {
                     restaurantImages[0]
             ));
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, IndividualRestaurantActivity.class);
+
+        intent.putExtra("NAME", restaurantCardListModels.get(position).getName());
+        intent.putExtra("CATEGORY", restaurantCardListModels.get(position).getCategory());
+        intent.putExtra("ADDRESS", restaurantCardListModels.get(position).getAddress());
+        intent.putExtra("RATING", restaurantCardListModels.get(position).getRating());
+        intent.putExtra("HOURS", restaurantCardListModels.get(position).getHours());
+        intent.putExtra("IMAGE", restaurantCardListModels.get(position).getImg());
+
+        startActivity(intent);
     }
 }
