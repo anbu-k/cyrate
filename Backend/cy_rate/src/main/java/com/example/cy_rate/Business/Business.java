@@ -1,8 +1,13 @@
 package com.example.cy_rate.Business;
 
+import java.util.ArrayList;
+import com.example.cy_rate.Review.Review; //review class
+
 public class Business {
     
+    //----Business information-----//
     private int bus_id;
+    private String bus_name;
     private String bus_type;
     private String photo_url;
     private String hours;
@@ -10,8 +15,11 @@ public class Business {
     private int owner_id;
     private String menu_link;
     private String price_gauge;
+    
+    //-------review's stuff--------//
     private int review_count;
     private int review_sum;
+    private ArrayList<Review> review_list;
     
     public Business(int bus_id, String bus_type, String photo_url, String hours, String location, 
                     int owner_id, String menu_link, String price_gauge, int review_count, int review_sum){
@@ -27,7 +35,17 @@ public class Business {
         this.review_sum = review_sum;
     }
 
-
+    //---------- Getter Setter's ----------// 
+    public String get_name()
+    {
+        return bus_name;
+    }
+    
+    public void set_name(String bname)
+    {
+        this.bus_name = bname;
+    }
+    
     public int get_id(){
         return bus_id;
     }
@@ -126,7 +144,7 @@ public class Business {
     }
 
 
-    //---------- Utility --------------
+    //---------- Utility --------------//
     public void add_review(int rating)
     {
         review_sum += rating;
