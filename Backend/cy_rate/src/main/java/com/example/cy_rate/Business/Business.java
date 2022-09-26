@@ -3,9 +3,24 @@ package com.example.cy_rate.Business;
 import java.util.ArrayList;
 import com.example.cy_rate.Review.Review; //review class
 
+
+// JPA stuff
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
+@Entity
 public class Business {
     
     //----Business information-----//
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bus_id;
     private String bus_name;
     private String bus_type;
@@ -17,14 +32,29 @@ public class Business {
     private String price_gauge;
     
     //-------review's stuff--------//
-    private int review_count;
+
     private int review_sum;
-    private ArrayList<Review> review_list;
+    private int review_count;
     
-    public Business(int bus_id, String bus_type, String photo_url, String hours, String location, 
+    public Business()
+    {
+        this.bus_type = "";
+        this.bus_name = "";
+        this.photo_url = "";
+        this.hours = "";
+        this.location = "";
+        this.owner_id = 0;
+        this.menu_link = "";
+        this.price_gauge = "";
+        this.review_count = 0;
+        this.review_sum = 0;
+    }
+
+
+    public Business(String bus_type, String bus_name, String photo_url, String hours, String location, 
                     int owner_id, String menu_link, String price_gauge, int review_count, int review_sum){
-        this.bus_id = bus_id;
         this.bus_type = bus_type;
+        this.bus_name = bus_name;
         this.photo_url = photo_url;
         this.hours = hours;
         this.location = location;
@@ -143,18 +173,26 @@ public class Business {
         this.review_sum = sum;
     }
 
+    public int get_reviewAVG()
+    {
+        //avoid dividing by 0
+        if(review_count == 0)
+            return 0;
+        return review_sum / review_count;
+    }
 
     //---------- Utility --------------//
-    public void add_review(int rating)
+    public void add_review(Review review)
     {
-        review_sum += rating;
-        review_count++;
+        this.review_sum += review.getRateVal();
+        this.review_count++;
     }
 
     @Override
     public String toString()
     {
-        return "";
+        return bus_id + "\n" + bus_name + "\n" + bus_type 
+        + "\n" + hours + "\n" + location + "\n" + price_gauge;
     }
 
 
