@@ -39,4 +39,11 @@ public class BusinessContoller {
         return success;
     }
 
+    @DeleteMapping(path = "/business/{id}")
+    String deleteBusiness(@PathVariable int id)
+    {
+        businessRepo.deleteById(id);
+        return success;
+    }
+
 }
