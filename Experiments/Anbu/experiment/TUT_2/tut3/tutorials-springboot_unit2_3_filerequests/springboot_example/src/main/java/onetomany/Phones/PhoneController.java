@@ -15,8 +15,13 @@ public class PhoneController {
 
     @Autowired
     PhoneRepository phoneRepository;
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private String loginSuccess = "{\"message\":\"success\"}";
+    private String loginFailure = "{\"message\":\"failure\"}";
+
+    /*
+     * private string loginSuccess = "{\"message\":\"success\"}";
+     * private string loginFailure = "{\"message\":\"success\"}";
+     */
 
     @GetMapping(path = "/phones")
     List<Phone> getAllPhones(){
@@ -31,9 +36,9 @@ public class PhoneController {
     @PostMapping(path = "/phones")
     String createPhone(Phone phone){
         if (phone == null)
-            return failure;
+            return loginFailure;
         phoneRepository.save(phone);
-        return success;
+        return loginSuccess;
     }
 
     @PutMapping("/phones/{id}")
