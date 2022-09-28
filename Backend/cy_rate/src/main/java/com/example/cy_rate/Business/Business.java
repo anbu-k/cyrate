@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -21,178 +23,177 @@ public class Business {
     //----Business information-----//
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bus_id;
-    private String bus_name;
-    private String bus_type;
-    private String photo_url;
+    private int busId;
+    private String busName;
+    private String busType;
+    private String photoUrl;
     private String hours;
     private String location;
-    private int owner_id;
-    private String menu_link;
-    private String price_gauge;
+    private int ownerId;
+    private String menuLink;
+    private String priceGauge;
     
     //-------review's stuff--------//
 
-    private int review_sum;
-    private int review_count;
+    private int reviewSum;
+    private int reviewCount;
     
     public Business()
     {
-        this.bus_type = "";
-        this.bus_name = "";
-        this.photo_url = "";
+        /* 
+        this.busType = "";
+        this.busName = "";
+        this.photoUrl = "";
         this.hours = "";
         this.location = "";
-        this.owner_id = 0;
-        this.menu_link = "";
-        this.price_gauge = "";
-        this.review_count = 0;
-        this.review_sum = 0;
+        this.ownerId = 0;
+        this.menuLink = "";
+        this.priceGauge = "";
+        this.reviewCount = 0;
+        this.reviewSum = 0;
+        */
     }
 
-
-    public Business(String bus_type, String bus_name, String photo_url, String hours, String location, 
-                    int owner_id, String menu_link, String price_gauge, int review_count, int review_sum){
-        this.bus_type = bus_type;
-        this.bus_name = bus_name;
-        this.photo_url = photo_url;
+    public Business(String busType, String busName, String photoUrl, String hours, String location, int ownerId, String menuLink, String priceGauge, int reviewCount, int reviewSum){
+        this.busType = busType;
+        this.busName = busName;
+        this.photoUrl = photoUrl;
         this.hours = hours;
         this.location = location;
-        this.owner_id = owner_id;
-        this.menu_link = menu_link;
-        this.price_gauge = price_gauge;
-        this.review_count = review_count;
-        this.review_sum = review_sum;
+        this.ownerId = ownerId;
+        this.menuLink = menuLink;
+        this.priceGauge = priceGauge;
+        this.reviewCount = reviewCount;
+        this.reviewSum = reviewSum;
     }
 
     //---------- Getter Setter's ----------// 
-    public String get_name()
+    public String getBusName()
     {
-        return bus_name;
+        return busName;
     }
     
-    public void set_name(String bname)
+    public void setBusName(String bname)
     {
-        this.bus_name = bname;
+        this.busName = bname;
     }
     
-    public int get_id(){
-        return bus_id;
+    public int getBusId(){
+        return busId;
     }
 
-    public void set_id(int bus_id){
-        this.bus_id = bus_id;
+    public void setBusId(int busId){
+        this.busId = busId;
     }
 
-    public String get_type(){
-        return bus_type;
+    public String getBusType(){
+        return busType;
     }
 
-    public void set_type(String type){
-        this.bus_type = type;
+    public void setBusType(String type){
+        this.busType = type;
     }
 
-    public String get_url()
+    public String getPhotoUrl()
     {
-        return photo_url;
+        return photoUrl;
     }
 
-    public void set_url(String url)
+    public void setPhotoUrl(String url)
     {
-        this.photo_url = url;
+        this.photoUrl = url;
     }
 
-    public String get_hours()
+    public String getHours()
     {
         return hours;
     }
 
-    public void set_hours(String hours)
+    public void setHours(String hours)
     {
         this.hours = hours;
     }
 
-    public String get_location()
+    public String getLocation()
     {
         return location;
     }
 
-    public void set_location(String location)
+    public void setLocation(String location)
     {
         this.location = location;
     }
 
-    public int get_ownerID()
+    public int getOwnerId()
     {
-        return owner_id;
+        return ownerId;
     }
 
-    public void set_owner(int id)
+    public void setOwnerId(int id)
     {
-        this.owner_id = id;
+        this.ownerId = id;
     }
 
-    public String get_menu()
+    public String getMenuLink()
     {
-        return menu_link;
+        return menuLink;
     }
 
-    public void set_menu(String link)
+    public void setMenuLink(String link)
     {
-        this.menu_link = link;
+        this.menuLink = link;
     }
 
-    public String get_priceEst()
+    public String getPriceGauge()
     {
-        return price_gauge;
+        return priceGauge;
     }
 
-    public void set_priceEst(String est)
+    public void setPriceGauge(String est)
     {
-        this.price_gauge = est;
+        this.priceGauge = est;
     }
 
-    public int get_review_count()
+    public int getReviewCount()
     {
-        return review_count;
+        return reviewCount;
     }
 
-
-    public void set_review_count(int count)
+    public void setReviewCount(int count)
     {
-        this.review_count = count;
+        this.reviewCount = count;
     }
 
-    public int get_review_sum()
+    public int getReviewSum()
     {
-        return review_sum;
+        return reviewSum;
     }
 
-    public void set_review_sum(int sum)
+    public void setReviewSum(int sum)
     {
-        this.review_sum = sum;
+        this.reviewSum = sum;
     }
 
     public int get_reviewAVG()
     {
         //avoid dividing by 0
-        if(review_count == 0)
+        if(reviewCount == 0)
             return 0;
-        return review_sum / review_count;
+        return reviewSum / reviewCount;
     }
 
     //---------- Utility --------------//
     public void add_review(Review review)
     {
-        this.review_sum += review.getRateVal();
-        this.review_count++;
+        this.reviewSum += review.getRateVal();
+        this.reviewCount++;
     }
 
     @Override
     public String toString()
     {
-        return bus_id + "\n" + bus_name + "\n" + bus_type 
-        + "\n" + hours + "\n" + location + "\n" + price_gauge;
+        return busId + "\n" + busName + "\n" + busType 
+        + "\n" + hours + "\n" + location + "\n" + priceGauge;
     }
 
 
