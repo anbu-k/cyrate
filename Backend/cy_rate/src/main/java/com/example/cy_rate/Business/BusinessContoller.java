@@ -21,13 +21,34 @@ public class BusinessContoller {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/business")
+    /**
+     * Get all business from remote db
+     * 
+     * @return all businesses in business table
+     */
+    @GetMapping(path = "/business/all")
     List<Business> getAllBusiness()
     {
         return businessRepo.findAll();
     }
 
-    @PostMapping(path = "/business")
+    /**
+     * Returns specific business from Business table
+     * @param id
+     * @return business found by id given
+     */
+    @GetMapping(path = "/business/byId/{id}")
+    Business getBusinessById(@PathVariable int id)
+    {
+        return businessRepo.findById(id);
+    }
+
+    /**
+     * Create a business by passing json obj
+     * @param bus
+     * @return success/failure str
+     */
+    @PostMapping(path = "/business/create")
     String createBusiness(@RequestBody Business bus)
     {
         if(bus == null)
@@ -39,7 +60,13 @@ public class BusinessContoller {
         return success;
     }
 
-    @DeleteMapping(path = "/business/{id}")
+    /**
+     * Deletes business identified by id from business table in db
+     * 
+     * @param id
+     * @return success/failure str
+     */
+    @DeleteMapping(path = "/business/delete/{id}")
     String deleteBusiness(@PathVariable int id)
     {
         businessRepo.deleteById(id);
