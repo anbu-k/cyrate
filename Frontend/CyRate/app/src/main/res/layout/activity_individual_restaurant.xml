@@ -111,10 +111,42 @@
         android:textSize="40dp"
         android:elevation="10dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/reviews_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/reviews_btn"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:letterSpacing=".4"
+        android:background="@drawable/button_background"
+        android:text="REVIEWS"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:elevation="10dp"
+
+        app:layout_constraintBottom_toTopOf="@id/find_us_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/find_us_btn"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:letterSpacing=".4"
+        android:background="@drawable/button_background"
+        android:text="FIND US"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:elevation="10dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviews_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
