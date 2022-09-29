@@ -1,7 +1,6 @@
 package com.example.cyrate.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyrate.R;
-import com.example.cyrate.RestaurantListInterface;
+import com.example.cyrate.models.RestaurantListInterface;
 import com.example.cyrate.models.RestaurantListCardModel;
 
 

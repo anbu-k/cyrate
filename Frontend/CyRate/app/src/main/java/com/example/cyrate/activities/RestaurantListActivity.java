@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.R;
-import com.example.cyrate.RestaurantListInterface;
+import com.example.cyrate.models.RestaurantListInterface;
 import com.example.cyrate.adapters.RestaurantListAdapter;
 import com.example.cyrate.models.RestaurantListCardModel;
 
