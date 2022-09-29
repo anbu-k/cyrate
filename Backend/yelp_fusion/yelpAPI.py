@@ -21,6 +21,8 @@ def main():
     data = data.json()
     businesses = data.get('businesses')
     bus_uni = []
+    # days are ordered in json object as 0 1 2 3 4 5 6
+    # using this to create hours str below
     days_dic = {0:"Mon", 1:"Tue", 2:"Wed",3:"Thu",4:"Fri",5:"Sat", 6:"Sun"}
 
     # for each business in json response
@@ -60,8 +62,8 @@ def main():
         'bus_name': element.get('name'),
         'bus_type': element.get('categories')[0].get('title'), 
         'location': f"{element.get('location').get('address1')}, {element.get('location').get('city')} ({element.get('location').get('zip_code')})",
-        'menu_link': None,
-        'owner_id':  None,
+        'menu_link': "",
+        'owner_id': -1,
         'hours': hours_str,
         'photo_url': element.get('image_url'),
         'price_gauge': element.get('price'),
@@ -77,7 +79,7 @@ def main():
     # rename index to match sql table
     df.index.names = ['bus_id']
     df.to_sql(con=conn, name='business', if_exists='replace')
-    print('Apparent Success returning....')
+    print('Success Business table updated....')
     return
 
 if __name__ == '__main__':

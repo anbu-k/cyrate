@@ -174,7 +174,7 @@ public class Business {
         this.reviewSum = sum;
     }
 
-    public int get_reviewAVG()
+    public int reviewAVG()
     {
         //avoid dividing by 0
         if(reviewCount == 0)
