@@ -73,4 +73,37 @@ public class BusinessContoller {
         return success;
     }
 
+    /**
+     * 
+     * @param id
+     * @param bus
+     * @return
+     */
+    @PutMapping(path= "/business/updateById/{id}")
+    String updateBusiness(@PathVariable int id, @RequestBody Business bus)
+    {
+        try{
+            Business updateBusiness = businessRepo.findById(id);
+            
+            // copy @requestbody bus to specific business found by id
+            // probably more efficient way of doing this
+            updateBusiness.setBusName(bus.getBusName());
+            updateBusiness.setBusType(bus.getBusType());
+            updateBusiness.setHours(bus.getHours());
+            updateBusiness.setLocation(bus.getLocation());
+            updateBusiness.setMenuLink(bus.getMenuLink());
+            updateBusiness.setOwnerId(bus.getOwnerId());
+            updateBusiness.setPhotoUrl(bus.getBusName());
+            updateBusiness.setPriceGauge(bus.getPriceGauge());
+            updateBusiness.setReviewCount(bus.getReviewCount());
+            updateBusiness.setReviewSum(bus.getReviewSum());
+            return success;
+
+        }
+        catch(Exception e)
+        {
+            return "Can't Find business w/ given ID";
+        }  
+    }
+
 }

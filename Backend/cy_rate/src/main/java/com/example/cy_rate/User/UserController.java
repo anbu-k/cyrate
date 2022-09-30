@@ -31,7 +31,7 @@ public class UserController {
         return userRepo.findAll();
     }
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user/create")
     String createUser(@RequestBody User user)
     {
         if(user == null)
@@ -40,7 +40,7 @@ public class UserController {
         return success;
     }
 
-    @PostMapping(path = "/user")
+    //@PostMapping(path = "/user")
 
 
 
