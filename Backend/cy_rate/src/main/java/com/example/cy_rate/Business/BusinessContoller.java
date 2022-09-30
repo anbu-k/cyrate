@@ -2,7 +2,10 @@ package com.example.cy_rate.Business;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,36 +77,36 @@ public class BusinessContoller {
     }
 
     /**
+     * Update specific business by id
+     * Pass new Business obj as body w updated values
      * 
      * @param id
      * @param bus
-     * @return
+     * @return Success Str / "Couldnt find business w id: id"
      */
     @PutMapping(path= "/business/updateById/{id}")
     String updateBusiness(@PathVariable int id, @RequestBody Business bus)
     {
         try{
-            Business updateBusiness = businessRepo.findById(id);
-            
-            // copy @requestbody bus to specific business found by id
-            // probably more efficient way of doing this
-            updateBusiness.setBusName(bus.getBusName());
-            updateBusiness.setBusType(bus.getBusType());
-            updateBusiness.setHours(bus.getHours());
-            updateBusiness.setLocation(bus.getLocation());
-            updateBusiness.setMenuLink(bus.getMenuLink());
-            updateBusiness.setOwnerId(bus.getOwnerId());
-            updateBusiness.setPhotoUrl(bus.getBusName());
-            updateBusiness.setPriceGauge(bus.getPriceGauge());
-            updateBusiness.setReviewCount(bus.getReviewCount());
-            updateBusiness.setReviewSum(bus.getReviewSum());
-            return success;
-
+        Business updateBusiness = businessRepo.findById(id);
+        
+        // copy @requestbody bus to specific business found by id
+        // probably more efficient way of doing this, all i could find for now
+        updateBusiness.setBusName(bus.getBusName());
+        updateBusiness.setBusType(bus.getBusType());
+        updateBusiness.setHours(bus.getHours());
+        updateBusiness.setLocation(bus.getLocation());
+        updateBusiness.setMenuLink(bus.getMenuLink());
+        updateBusiness.setOwnerId(bus.getOwnerId());
+        updateBusiness.setPhotoUrl(bus.getBusName());
+        updateBusiness.setPriceGauge(bus.getPriceGauge());
+        updateBusiness.setReviewCount(bus.getReviewCount());
+        updateBusiness.setReviewSum(bus.getReviewSum());
+        businessRepo.save(updateBusiness);
         }
-        catch(Exception e)
-        {
-            return "Can't Find business w/ given ID";
-        }  
+        catch(Exception e){ 
+            return "Could not find business with id: " + id;
+        }
+        return success; 
     }
-
 }
