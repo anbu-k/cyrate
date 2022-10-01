@@ -46,11 +46,11 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     // RestaurantListCardModel (name, address, etc..)
     @Override
     public void onBindViewHolder(@NonNull BusinessListAdapter.MyViewHolder holder, int position) {
-//        holder.restName.setText(restaurantCardList.get(position).getName());
-//        holder.restAddress.setText(restaurantCardList.get(position).getAddress());
-//        holder.restCategory.setText(restaurantCardList.get(position).getCategory());
-//        holder.restRating.setText(restaurantCardList.get(position).getRating());
-//        holder.restHours.setText(restaurantCardList.get(position).getHours());
+        holder.restName.setText(restaurantCardList.get(position).getBusName());
+        holder.restAddress.setText(restaurantCardList.get(position).getLocation());
+        holder.restCategory.setText(restaurantCardList.get(position).getBusType());
+        holder.restRating.setText(restaurantCardList.get(position).getBusType());
+        holder.restHours.setText(restaurantCardList.get(position).getHours());
 //        holder.restImg.setImageResource(restaurantCardList.get(position).getImg());
     }
 
