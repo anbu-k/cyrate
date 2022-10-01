@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cyrate.activities.RestaurantListActivity;
+import com.example.cyrate.activities.BusinessListActivity;
 
 public class LoginTabFragment extends Fragment {
 
@@ -48,7 +48,7 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), RestaurantListActivity.class);
+                Intent i = new Intent(getActivity(), BusinessListActivity.class);
                 startActivity(i);
             }
         }));

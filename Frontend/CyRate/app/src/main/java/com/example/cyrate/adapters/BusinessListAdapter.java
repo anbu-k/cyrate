@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyrate.R;
-import com.example.cyrate.models.RestaurantListInterface;
-import com.example.cyrate.models.RestaurantListCardModel;
+import com.example.cyrate.models.BusinessListInterface;
+import com.example.cyrate.models.BusinessListCardModel;
 
 
 import androidx.annotation.NonNull;
@@ -17,15 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder> {
-    private final RestaurantListInterface restaurantListInterface;
+public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.MyViewHolder> {
+    private final BusinessListInterface restaurantListInterface;
     Context ctx;
-    ArrayList<RestaurantListCardModel> restaurantCardList;
+    ArrayList<BusinessListCardModel> restaurantCardList;
 
-    public RestaurantListAdapter(
+    public BusinessListAdapter(
             Context ctx,
-            ArrayList<RestaurantListCardModel> restaurantCardList,
-            RestaurantListInterface restaurantListInterface
+            ArrayList<BusinessListCardModel> restaurantCardList,
+            BusinessListInterface restaurantListInterface
             ){
         this.ctx = ctx;
         this.restaurantCardList = restaurantCardList;
@@ -34,10 +34,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     // This is where we inflate our layout (RestaurantListCard) for each of our rows in the view
     @NonNull
     @Override
-    public RestaurantListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BusinessListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.restauarnt_list_card, parent, false);
-        return new RestaurantListAdapter.MyViewHolder(view, restaurantListInterface);
+        View view = inflater.inflate(R.layout.business_list_card, parent, false);
+        return new BusinessListAdapter.MyViewHolder(view, restaurantListInterface);
     }
 
     // Since this is a recycle view, cards will be discarded when they go off screen.
@@ -45,13 +45,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     // The new card will be 'binded' basically just updating the data for our
     // RestaurantListCardModel (name, address, etc..)
     @Override
-    public void onBindViewHolder(@NonNull RestaurantListAdapter.MyViewHolder holder, int position) {
-        holder.restName.setText(restaurantCardList.get(position).getName());
-        holder.restAddress.setText(restaurantCardList.get(position).getAddress());
-        holder.restCategory.setText(restaurantCardList.get(position).getCategory());
-        holder.restRating.setText(restaurantCardList.get(position).getRating());
-        holder.restHours.setText(restaurantCardList.get(position).getHours());
-        holder.restImg.setImageResource(restaurantCardList.get(position).getImg());
+    public void onBindViewHolder(@NonNull BusinessListAdapter.MyViewHolder holder, int position) {
+//        holder.restName.setText(restaurantCardList.get(position).getName());
+//        holder.restAddress.setText(restaurantCardList.get(position).getAddress());
+//        holder.restCategory.setText(restaurantCardList.get(position).getCategory());
+//        holder.restRating.setText(restaurantCardList.get(position).getRating());
+//        holder.restHours.setText(restaurantCardList.get(position).getHours());
+//        holder.restImg.setImageResource(restaurantCardList.get(position).getImg());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         ImageView restImg;
         TextView restName, restCategory, restAddress, restRating, restHours;
 
-        public MyViewHolder(@NonNull View itemView, RestaurantListInterface restaurantListInterface) {
+        public MyViewHolder(@NonNull View itemView, BusinessListInterface businessListInterface) {
             super(itemView);
 
             restImg = itemView.findViewById(R.id.restaurant_img);
@@ -79,11 +79,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(restaurantListInterface != null){
+                            if(businessListInterface != null){
                                 int pos = getAdapterPosition();
 
                                 if(pos != RecyclerView.NO_POSITION){
-                                    restaurantListInterface.onItemClick(pos);
+                                    businessListInterface.onItemClick(pos);
                                 }
                             }
                         }

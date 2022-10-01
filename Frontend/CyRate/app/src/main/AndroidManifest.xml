@@ -14,7 +14,7 @@
         android:theme="@style/Theme.CyRate"
         tools:targetApi="31">
         <activity
-            android:name=".activities.IndividualRestaurantActivity"
+            android:name=".activities.IndividualBusinessActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
@@ -32,7 +32,7 @@
             android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.RestaurantListActivity"
+            android:name=".activities.BusinessListActivity"
             android:exported="true" />
     </application>
 

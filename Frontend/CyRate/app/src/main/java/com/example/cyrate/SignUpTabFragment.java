@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cyrate.activities.RestaurantListActivity;
+import com.example.cyrate.activities.BusinessListActivity;
 
 public class SignUpTabFragment extends Fragment {
     EditText email, password, confirmPassword;
@@ -45,7 +45,7 @@ public class SignUpTabFragment extends Fragment {
         signUp.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), RestaurantListActivity.class);
+                Intent i = new Intent(getActivity(), BusinessListActivity.class);
                 startActivity(i);
             }
         }));

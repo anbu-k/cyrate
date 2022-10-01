@@ -1,5 +1,5 @@
 package com.example.cyrate.models;
 
-public interface RestaurantListInterface {
+public interface BusinessListInterface {
     void onItemClick(int position);
 }

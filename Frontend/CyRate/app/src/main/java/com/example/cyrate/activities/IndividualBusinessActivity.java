@@ -10,14 +10,14 @@ import android.widget.ImageView;
 import com.example.cyrate.R;
 
 
-public class IndividualRestaurantActivity extends AppCompatActivity {
+public class IndividualBusinessActivity extends AppCompatActivity {
 
     ImageView back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_individual_restaurant);
+        setContentView(R.layout.activity_individual_business);
 
         back_btn = (ImageView)findViewById(R.id.back_button_image);
 
@@ -30,7 +30,7 @@ public class IndividualRestaurantActivity extends AppCompatActivity {
     }
 
     private void navigateBack(){
-        Intent intent = new Intent(this, RestaurantListActivity.class);
+        Intent intent = new Intent(this, BusinessListActivity.class);
         startActivity(intent);
     }
 }
