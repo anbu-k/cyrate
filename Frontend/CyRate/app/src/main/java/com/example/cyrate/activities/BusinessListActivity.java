@@ -29,10 +29,10 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
         setUpBusinessListCardModels();
 
-        BusinessListAdapter restListAdapter = new BusinessListAdapter(this,
+        BusinessListAdapter busListAdapter = new BusinessListAdapter(this,
                 businessListCardModel, this);
 
-        recyclerView.setAdapter(restListAdapter);
+        recyclerView.setAdapter(busListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
