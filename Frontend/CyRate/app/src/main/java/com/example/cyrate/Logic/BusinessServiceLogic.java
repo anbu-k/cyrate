@@ -39,6 +39,9 @@ public class BusinessServiceLogic {
                         JSONObject business = (JSONObject) response.get(i);
                         Log.d("JSON OBJ", business.toString());
 
+                        // Some priceGauges are null, lets do a check first
+                        String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
+
                         BusinessListCardModel businessListCardModel = new BusinessListCardModel(
                                 (int) business.get("busId"),
                                 business.get("busName").toString(),
@@ -48,7 +51,7 @@ public class BusinessServiceLogic {
                                 business.get("location").toString(),
                                 (int) business.get("ownerId"),
                                 business.get("menuLink").toString(),
-                                business.get("priceGauge").toString(),
+                                priceGauge,
                                 (int) business.get("reviewSum"),
                                 (int) business.get("reviewCount")
                         );
