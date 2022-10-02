@@ -53,7 +53,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
-                for(int i = 0; i < list.size(); i++){
+                for (int i = 0; i < list.size(); i++) {
                     businessListCardModel.add(list.get(i));
                 }
                 BusinessListAdapter busListAdapter = new BusinessListAdapter(ctx,
@@ -74,12 +74,14 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
     public void onItemClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
-//        intent.putExtra("NAME", businessListCardModel.get(position).getName());
-//        intent.putExtra("CATEGORY", businessListCardModel.get(position).getCategory());
-//        intent.putExtra("ADDRESS", businessListCardModel.get(position).getAddress());
-//        intent.putExtra("RATING", businessListCardModel.get(position).getRating());
-//        intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
-//        intent.putExtra("IMAGE", businessListCardModel.get(position).getImg());
+        intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
+        intent.putExtra("CATEGORY", businessListCardModel.get(position).getBusType());
+        intent.putExtra("ADDRESS", businessListCardModel.get(position).getLocation());
+        intent.putExtra("RATING", "4.7"); // Hard coded for now
+        intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
+        intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
+        intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
+
 
         startActivity(intent);
     }

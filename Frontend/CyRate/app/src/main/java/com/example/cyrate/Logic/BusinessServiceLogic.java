@@ -1,5 +1,7 @@
 package com.example.cyrate.Logic;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -15,7 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessServiceLogic{
+public class BusinessServiceLogic {
 
 
     /**
@@ -31,21 +33,22 @@ public class BusinessServiceLogic{
                 Const.GET_BUSINESSES_URL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for(int i = 0; i < response.length(); i++){
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         // Get each business from the JSON array
                         JSONObject business = (JSONObject) response.get(i);
+                        Log.d("JSON OBJ", business.toString());
+
                         BusinessListCardModel businessListCardModel = new BusinessListCardModel(
                                 (int) business.get("busId"),
-                                (String) business.get("busName"),
-                                (String) business.get("busType"),
-                                (String) business.get("photoUrl"),
-                                (String) business.get("hours"),
-                                (String) business.get("location"),
+                                business.get("busName").toString(),
+                                business.get("busType").toString(),
+                                business.get("photoUrl").toString(),
+                                business.get("hours").toString(),
+                                business.get("location").toString(),
                                 (int) business.get("ownerId"),
-                                (String) business.get("menuLink"),
-                                "test",
-//                                (String) business.get("priceGauge"),
+                                business.get("menuLink").toString(),
+                                business.get("priceGauge").toString(),
                                 (int) business.get("reviewSum"),
                                 (int) business.get("reviewCount")
                         );
