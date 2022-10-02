@@ -1,6 +1,7 @@
 package com.example.cyrate.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.MyViewHolder> {
-    private final BusinessListInterface restaurantListInterface;
+    private final BusinessListInterface businessListInterface;
     Context ctx;
-    ArrayList<BusinessListCardModel> restaurantCardList;
+    ArrayList<BusinessListCardModel> businessCardList;
 
     public BusinessListAdapter(
             Context ctx,
-            ArrayList<BusinessListCardModel> restaurantCardList,
-            BusinessListInterface restaurantListInterface
+            ArrayList<BusinessListCardModel> businessCardList,
+            BusinessListInterface businessListInterface
             ){
         this.ctx = ctx;
-        this.restaurantCardList = restaurantCardList;
-        this.restaurantListInterface = restaurantListInterface;
+        this.businessCardList = businessCardList;
+        this.businessListInterface = businessListInterface;
     }
     // This is where we inflate our layout (RestaurantListCard) for each of our rows in the view
     @NonNull
@@ -37,7 +38,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     public BusinessListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.business_list_card, parent, false);
-        return new BusinessListAdapter.MyViewHolder(view, restaurantListInterface);
+        return new BusinessListAdapter.MyViewHolder(view, businessListInterface);
     }
 
     // Since this is a recycle view, cards will be discarded when they go off screen.
@@ -46,17 +47,22 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     // RestaurantListCardModel (name, address, etc..)
     @Override
     public void onBindViewHolder(@NonNull BusinessListAdapter.MyViewHolder holder, int position) {
-        holder.restName.setText(restaurantCardList.get(position).getBusName());
-        holder.restAddress.setText(restaurantCardList.get(position).getLocation());
-        holder.restCategory.setText(restaurantCardList.get(position).getBusType());
-        holder.restRating.setText(restaurantCardList.get(position).getBusType());
-        holder.restHours.setText(restaurantCardList.get(position).getHours());
-//        holder.restImg.setImageResource(restaurantCardList.get(position).getImg());
+        String[] hours = businessCardList.get(position).getHours().split("\\|");
+        Log.d("HOURS LIST", hours[0]);
+
+
+        holder.restName.setText(businessCardList.get(position).getBusName());
+        holder.restAddress.setText(businessCardList.get(position).getLocation());
+        holder.restCategory.setText(businessCardList.get(position).getBusType());
+        holder.restRating.setText("4.7"); // Hard code for now
+        holder.restHours.setText(hours[0].substring(5)); // Substring 5 since hours[0] is "Mon: <hours>" cut off the Mon: part
+        holder.restImg.setImageResource(R.drawable.provisions_hero);
+//        holder.restImg.setImageResource(businessCardList.get(position).getImg());
     }
 
     @Override
     public int getItemCount() {
-        return restaurantCardList.size();
+        return businessCardList.size();
     }
 
     // Class necessary and is similar for having an onCreate method. Allows us to get all our views
@@ -72,7 +78,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             restName = itemView.findViewById(R.id.restaurant_name);
             restCategory = itemView.findViewById(R.id.restaurant_category);
             restAddress = itemView.findViewById(R.id.restaurant_address);
-            restRating = itemView.findViewById(R.id.restaurant_rating);
+            restRating = itemView.findViewById(R.id.restaurant_rating_value);
             restHours = itemView.findViewById(R.id.restaurant_hours);
 
             itemView.setOnClickListener(

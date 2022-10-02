@@ -1,7 +1,9 @@
 package com.example.cyrate.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,32 +39,28 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         businessServiceLogic = new BusinessServiceLogic();
 
         try {
-            setUpBusinessListCardModels();
+            setUpBusinessListCardModels(this, this, recyclerView);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        BusinessListAdapter busListAdapter = new BusinessListAdapter(this,
-                businessListCardModel, this);
 
-        recyclerView.setAdapter(busListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void setUpBusinessListCardModels() throws JSONException {
-//        String[] restaurantNames = getResources().getStringArray(R.array.restaurantListNames);
-//        String[] restaurantCategories = getResources().getStringArray(R.array.restaurantListCategory);
-//        String[] restaurantAddresses = getResources().getStringArray(R.array.restaurantListAddress);
-//        String[] restaurantRatings = getResources().getStringArray(R.array.restaurantListRating);
-//        String[] restaurantHours = getResources().getStringArray(R.array.restaurantListHours);
+    private void setUpBusinessListCardModels(Context ctx, BusinessListInterface busInterface,
+                                             RecyclerView recyclerView) throws JSONException {
 
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
-//                for(int i = 0; i < list.size(); i++){
-//                    businessListCardModel.add(list.get(i));
-//                }
-                Toast.makeText(BusinessListActivity.this, list.toString(), Toast.LENGTH_LONG).show();
+                for(int i = 0; i < list.size(); i++){
+                    businessListCardModel.add(list.get(i));
+                }
+                BusinessListAdapter busListAdapter = new BusinessListAdapter(ctx,
+                        businessListCardModel, busInterface);
+
+                recyclerView.setAdapter(busListAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ctx));
             }
 
             @Override
@@ -70,19 +68,6 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
             }
         });
-
-        // Hard coded 15 for now to get 15 cards, this will be dynamic later when we get
-        // real restaurant data
-//        for (int i = 0; i < 15; i++) {
-//            businessListCardModel.add(new RestaurantListCardModel(
-//                    restaurantNames[0],
-//                    restaurantCategories[0],
-//                    restaurantAddresses[0],
-//                    restaurantRatings[0],
-//                    restaurantHours[0],
-//                    restaurantImages[0]
-//            ));
-//        }
     }
 
     @Override

@@ -38,10 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:letterSpacing=".2"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/restaurant_img"
                 app:layout_constraintTop_toTopOf="@id/restaurant_img"
@@ -82,25 +81,41 @@
                 android:textFontWeight="600"
                 android:textSize="10dp"
                 android:letterSpacing=".1"
+                android:padding="3dp"
                 android:fontFamily="@font/raleway_thin"
                 android:layout_marginVertical="3dp"
-                android:paddingRight="40dp"
                 app:layout_constraintTop_toBottomOf="@id/restaurant_address"
                 app:layout_constraintStart_toStartOf="@id/restaurant_address"
-                android:text="Rating: 5.0" />
+                android:text="Rating:" />
+
+            <TextView
+                android:id="@+id/restaurant_rating_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="3dp"
+                android:fontFamily="@font/raleway_thin"
+                android:paddingRight="30dp"
+                android:text="5.0"
+                android:textFontWeight="600"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="@+id/restaurant_rating"
+
+                app:layout_constraintStart_toEndOf="@id/restaurant_rating"
+                app:layout_constraintTop_toTopOf="@+id/restaurant_rating" />
 
             <TextView
                 android:id="@+id/restaurant_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="3dp"
+                android:fontFamily="@font/raleway_thin"
+                android:letterSpacing=".1"
+                android:text="9:00a - 9:00p"
                 android:textFontWeight="800"
                 android:textSize="10dp"
-                android:letterSpacing=".1"
-                android:fontFamily="@font/raleway_thin"
-                android:layout_marginVertical="3dp"
-                app:layout_constraintTop_toBottomOf="@id/restaurant_address"
-                app:layout_constraintStart_toEndOf="@id/restaurant_rating"
-                android:text="9:00a - 9:00p" />
+                app:layout_constraintBottom_toBottomOf="@+id/restaurant_rating_value"
+                app:layout_constraintStart_toEndOf="@id/restaurant_rating_value"
+                app:layout_constraintTop_toTopOf="@+id/restaurant_rating_value" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
