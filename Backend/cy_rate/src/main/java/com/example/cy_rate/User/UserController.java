@@ -2,6 +2,9 @@ package com.example.cy_rate.User;
 
 import java.util.List;
 import com.example.cy_rate.User.*;
+import javax.persistence.EntityNotFoundException;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,28 +28,82 @@ public class UserController {
      * 
      * @return all users in user table
      */
-    @GetMapping(path = "/user")
-    List<User> getUser()
+    @GetMapping(path = "/user/all")
+    List<User> getAllUser()
     {
         return userRepo.findAll();
     }
 
+    /**
+     * Returns User from the User table
+     * @param id
+     * @return The User is found by the corresponding id
+     */
+    @GetMapping(path = "/user/byId/{id}")
+    User getUserById(@PathVariable int id)
+    {
+        return userRepo.findById(id);
+    }
+
+
+    /**
+     * Creates a User by passing json object
+     * @param user
+     * @return If the creation was succesfull or a failure
+     */
     @PostMapping(path = "/user/create")
     String createUser(@RequestBody User user)
     {
         if(user == null)
+        {
         return failure;
+        }
+
         userRepo.save(user);
         return success;
     }
 
-    //@PostMapping(path = "/user")
+
+    /**
+     * Deletes User through the id that its given in the User table
+     * @param id
+     * @return If the deletion was succesfull or a failure
+     */
+    @DeleteMapping(path = "/user/delete/{id}")
+    String deleteUser(@PathVariable int id)
+    {
+        userRepo.deleteById(id);
+        return success;
+    }
 
 
+    /**
+     * Updates a User by its id
+     * Have a new User object with updated values
+     * @param id
+     * @param use
+     * @return 
+     */
+    @PutMapping(path = "/user/updateById/{id}")
+    String updateUser(@PathVariable int id, @RequestBody User use)
+    {
+        try{
+            User updateUser = userRepo.findById(id);
 
+            updateUser.setusername(use.getusername());
+            updateUser.setuserType(use.getuserType());
+            updateUser.setrealName(use.getrealName());
+            updateUser.setemail(use.getemail());
+            updateUser.setuserPass(use.getuserPass());
+            updateUser.setphoneNum(use.getphoneNum());
+            updateUser.setdob(use.getdob());
+            userRepo.save(updateUser);
 
-
-
-
+        }
+        catch(Exception e){
+            return "Not able to find User with id: " + id;
+        }
+        return success;
+    }
     
 }
