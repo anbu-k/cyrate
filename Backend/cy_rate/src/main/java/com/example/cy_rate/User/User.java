@@ -1,12 +1,11 @@
 package com.example.cy_rate.User;
 
-import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,9 +29,8 @@ public class User {
 
     }
 
-    public User(int userId, String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
+    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
     {
-        this.userId = userId;
         this.userType = userType;
         this.realName = realName;
         this.username = username;
