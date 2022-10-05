@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
@@ -76,6 +77,49 @@ public class BusinessServiceLogic {
         );
 
         AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void addBusiness(String busName, String busType, String busHours, String busLocation,
+                            String priceGauge, String photoUrl, addBusinessResponse r) throws JSONException {
+        String url = Const.ADD_BUSINESS_URL;
+
+        JSONObject newUserObj = new JSONObject();
+        newUserObj.put("busName", busName);
+        newUserObj.put("busType", busType);
+        newUserObj.put("hours", busHours);
+        newUserObj.put("location", busLocation);
+        newUserObj.put("priceGauge", priceGauge);
+        newUserObj.put("photoUrl", photoUrl);
+
+        // Defaults to fill the required JSON object
+        newUserObj.put("ownerId", -1);
+        newUserObj.put("menuLink", "");
+        newUserObj.put("reviewSum", 0);
+        newUserObj.put("reviewCount", 0);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObj,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null ) {
+                            r.onSuccess(response.toString());
+                        } else {
+                            r.onError("Null Response object received");
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        r.onError(error.getMessage());
+                    }
+                }
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+
+
     }
 
 }
