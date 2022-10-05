@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_restaurants"
+            android:icon="@drawable/restaurant_menu_icon"
+            android:title="Restaurants" />
+        <item
+            android:id="@+id/nav_addBusiness"
+            android:icon="@drawable/add_bussiness_icon"
+            android:title="Add Business" />
+    </group>
+
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/profile_icon"
+                    android:title="Profile" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="Log Out" />
+            </group>
+
+        </menu>
+
+    </item>
+
+
+</menu>

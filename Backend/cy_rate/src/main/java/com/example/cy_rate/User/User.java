@@ -17,7 +17,7 @@ public class User {
     // pk 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userID;
+    private int userId;
     private String userType;
     private String realName;
     private String username;
@@ -30,9 +30,9 @@ public class User {
 
     }
 
-    public User(int userID, String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
+    public User(int userId, String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
     {
-        this.userID = userID;
+        this.userId = userId;
         this.userType = userType;
         this.realName = realName;
         this.username = username;
@@ -46,12 +46,12 @@ public class User {
     
     public int getuserID()
     {
-        return userID;
+        return userId;
     }
 
-    public void setuserID(int uID)
+    public void setuserID(int uId)
     {
-        this.userID = uID;
+        this.userId = uId;
     }
 
     public String getuserType()
@@ -124,6 +124,14 @@ public class User {
         this.dob = dob;
     }
 
+    @Override
+    public String toString()
+    {
+        return userId + "\n" + userType + "\n" 
+        + realName + "\n" + username + "\n" 
+        + userPass + "\n" + email + "\n"
+        + phoneNum + "\n" + dob;
+    }
 
     
 }
