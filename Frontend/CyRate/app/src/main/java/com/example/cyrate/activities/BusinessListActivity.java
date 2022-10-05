@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +30,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessListActivity extends AppCompatActivity implements BusinessListInterface {
+public class BusinessListActivity extends AppCompatActivity implements BusinessListInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
     ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
@@ -33,6 +38,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
     DrawerLayout drawerLayout;
     NavigationView navView;
+    ImageView open_menu;
 
 
     @Override
@@ -42,6 +48,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
+        open_menu = (ImageView) findViewById(R.id.open_menu_icon);
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
 
@@ -53,7 +60,23 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
             e.printStackTrace();
         }
 
+        navigationDrawer();
 
+        drawerLayout.setScrimColor(getResources().getColor(R.color.red));
+
+    }
+
+
+    // When menu is open and back button is pressed, we just close the menu instead of going
+    // back a page
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     private void setUpBusinessListCardModels(Context ctx, BusinessListInterface busInterface,
@@ -93,6 +116,30 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
 
         startActivity(intent);
+    }
+
+    private void navigationDrawer() {
+        // Navigation Drawer
+        navView.bringToFront();
+        navView.setNavigationItemSelectedListener(this);
+        navView.setCheckedItem(R.id.nav_restaurants);
+
+        open_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                else{
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
     }
 }
 
