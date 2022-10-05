@@ -30,9 +30,8 @@ public class User {
 
     }
 
-    public User(int userId, String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
+    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
     {
-        this.userId = userId;
         this.userType = userType;
         this.realName = realName;
         this.username = username;
