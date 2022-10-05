@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cyrate.AddBusinessActivity;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.getBusinessesResponse;
 import com.example.cyrate.R;
@@ -138,7 +139,16 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId()){
+            case R.id.nav_restaurants:
+                break;
+            case R.id.nav_addBusiness:
+                Intent intent = new Intent(BusinessListActivity.this, AddBusinessActivity.class);
+                startActivity(intent);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

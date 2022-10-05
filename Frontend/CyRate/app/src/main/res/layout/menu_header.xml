@@ -7,6 +7,8 @@
     android:background="@drawable/campanile"
     android:gravity="bottom"
     android:paddingLeft="20dp"
+    android:paddingBottom="3dp"
+
     >
 
     <ImageView
