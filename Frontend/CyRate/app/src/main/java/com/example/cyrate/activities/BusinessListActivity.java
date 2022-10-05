@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,7 @@ import com.example.cyrate.R;
 import com.example.cyrate.models.BusinessListInterface;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
@@ -28,11 +31,17 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
     ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
     int[] restaurantImages = {R.drawable.provisions_hero};
 
+    DrawerLayout drawerLayout;
+    NavigationView navView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_list);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.nav_view);
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
 
