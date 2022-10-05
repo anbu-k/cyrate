@@ -56,7 +56,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.restAddress.setText(businessCardList.get(position).getLocation());
         holder.restCategory.setText(businessCardList.get(position).getBusType());
         holder.restRating.setText("4.7"); // Hard code for now
-        holder.restHours.setText(hours[0].substring(5)); // Substring 5 since hours[0] is "Mon: <hours>" cut off the Mon: part
+        holder.restHours.setText(hours[0]); // Substring 5 since hours[0] is "Mon: <hours>" cut off the Mon: part
 //        holder.restImg.setImageResource(R.drawable.provisions_hero);
 //        holder.restImg.setImageResource(businessCardList.get(position).getImg());
 
