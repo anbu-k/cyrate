@@ -30,13 +30,10 @@ public class UserLogic {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    Log.d("get users", "in onResponse");
+                    //create a list of users
                     JSONObject user = (JSONObject) response.get(0);
-                    Log.d("get users", "created user");
                     UserModel newUser = new UserModel(user.get("email").toString(), user.get("userPass").toString());
-                    Log.d("get users", "created user model");
                     userModelList.add(newUser);
-                    Log.d("get users", "added to list");
                     r.onSuccess(userModelList);
                 } catch (JSONException e) {
                     r.onError("OOF");
@@ -90,43 +87,6 @@ public class UserLogic {
 
                     }
                 });
-
-//         newUserObjectRequest = new JsonObjectRequest(Request.Method.GET,
-////                Const.URL_JSON_OBJECT, null,
-//                Const.POST_USER_URL, null,
-//                new Response.Listener<JSONObject>() {
-//
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        VolleyLog.d(response.toString());
-//                        //we should have some sort of success/failure response
-//                        try {
-//                            if (response.get("success").toString().equals("false")){
-//                                //log something on failure
-//                                VolleyLog.d("failed to register user test");
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//             @Override
-//            public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d("Error: " + error.getMessage());
-//            }
-//        }) {
-//             @Override
-//             protected Map<String, String> getParams() {
-//                 Map<String, String> params = new HashMap<String, String>();
-//                 params.put("email", email);
-//                 params.put("password", password);
-//
-//                 return params;
-//             }
-//         };
-
-        //user requires email and password to register
 
         //add to queue
         AppController.getInstance().addToRequestQueue(request);

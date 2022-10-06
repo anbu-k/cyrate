@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.getAllUsersResponse;
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.WelcomeActivity;
 import com.example.cyrate.models.UserModel;
 
 import java.util.List;
@@ -56,6 +57,8 @@ public class SignUpTabFragment extends Fragment {
                    @Override
                    public void onSuccess(List<UserModel> list) {
                        Toast.makeText(getActivity(), list.toString(), Toast.LENGTH_LONG).show();
+                       Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                       startActivity(i);
                    }
 
                    @Override
