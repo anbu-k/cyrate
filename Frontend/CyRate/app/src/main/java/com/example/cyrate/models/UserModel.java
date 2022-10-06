@@ -12,8 +12,9 @@ public class UserModel {
     private String phoneNum;
     private String dob;
 
-    public UserModel(UserType userType, String email, String password){
-        this.userType = userType;
+    public UserModel(String email, String password){
+        //default to basic user
+        this.userType = UserType.BASIC_USER;
         this.email = email;
         this.password = password;
     }

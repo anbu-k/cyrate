@@ -83,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/busName_text"
             app:layout_constraintBottom_toTopOf="@id/busType_text"
-            android:text="Enter Name" />
+            android:hint="Enter Name" />
 
         <TextView
             android:id="@+id/busType_text"
@@ -106,7 +106,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/busType_text"
             app:layout_constraintBottom_toTopOf="@id/busHours_txt"
-            android:text="Enter Type" />
+            android:hint="Enter Type" />
 
         <TextView
             android:id="@+id/busHours_txt"
@@ -129,7 +129,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/busHours_txt"
             app:layout_constraintBottom_toTopOf="@id/busLocation_txt"
-            android:text="Enter Hours" />
+            android:hint="Enter Hours" />
 
         <TextView
             android:id="@+id/busLocation_txt"
@@ -152,7 +152,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/busLocation_txt"
             app:layout_constraintBottom_toTopOf="@id/priceGauge_txt"
-            android:text="Enter Location" />
+            android:hint="Enter Location" />
 
         <TextView
             android:id="@+id/priceGauge_txt"
@@ -174,7 +174,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/priceGauge_txt"
-            android:text="Enter Price Gauge ($$)" />
+            android:hint="Enter Price Gauge ($$)" />
 
         <TextView
             android:id="@+id/photoUrl_txt"
@@ -195,7 +195,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/photoUrl_txt"
-            android:text="Enter Photo URL" />
+            android:hint="Enter Photo URL" />
 
         <Button
             android:id="@+id/btn_submit"
