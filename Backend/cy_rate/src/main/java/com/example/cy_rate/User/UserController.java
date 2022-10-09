@@ -45,6 +45,12 @@ public class UserController {
         return userRepo.findById(id);
     }
 
+    @GetMapping(path = "/user/byEmail/{email}")
+    User getUserByEmail(@PathVariable String email)
+    {
+        return userRepo.findByEmail(email);
+    }
+
 
     /**
      * Creates a User by passing json object

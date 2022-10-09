@@ -24,12 +24,14 @@ public class User {
     private String email;
     private String phoneNum;
     private String dob;
+    private String resetPassword;
+    private String profilePicture;
 
     public User(){
 
     }
 
-    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob)
+    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob, String resetPassword)
     {
         this.userType = userType;
         this.realName = realName;
@@ -38,6 +40,7 @@ public class User {
         this.email = email;
         this.phoneNum = phoneNum;
         this.dob = dob;
+        this.resetPassword = resetPassword;
     }
 
     // getters & setters
@@ -120,6 +123,26 @@ public class User {
     public void setdob(String dob)
     {
         this.dob = dob;
+    }
+
+    public String getnewPassword()
+    {
+        return resetPassword;
+    }
+
+    public void setNewPassword(String resetPassword)
+    {
+        this.resetPassword = resetPassword;
+    }
+
+    public String getPhotoUrl()
+    {
+        return profilePicture;
+    }
+
+    public void setPhotoUrl(String photoUrl)
+    {
+        this.profilePicture = photoUrl;
     }
 
     @Override
