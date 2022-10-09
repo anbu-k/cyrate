@@ -49,6 +49,12 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get user by email
+
+                //verify password
+
+                //set global user
+
                 Intent i = new Intent(getActivity(), WelcomeActivity.class);
                 startActivity(i);
             }

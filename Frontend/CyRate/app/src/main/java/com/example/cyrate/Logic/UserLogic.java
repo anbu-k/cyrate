@@ -22,7 +22,7 @@ import java.util.List;
 
 public class UserLogic {
 
-    public void getUser(getAllUsersResponse r) {
+    public void getAllUsers(getAllUsersResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         List<UserModel> userModelList = new ArrayList<>();
 
@@ -49,6 +49,44 @@ public class UserLogic {
 
         AppController.getInstance().addToRequestQueue(arrayRequest);
 
+    }
+
+    /**
+     * make request to server to get a specific user's info given their email
+     * @param email
+     * @param r
+     */
+    public void getUserByEmail(String email, getUserByEmailResponse r){
+        String url = Const.GET_USER_BY_EMAIL_URL + email;
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONObject userObject = (JSONObject) response;
+                    UserModel user = convertToUserModel(userObject.toString());
+                    r.onSuccess(user);
+                }catch(Exception e){
+                    r.onError("OOF");
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(objectRequest);
+
+        // return new UserModel("megan", "megan");
+
+    }
+
+    private  UserModel convertToUserModel(String s){
+        return new UserModel("megan", "megan");
     }
 
     /**
