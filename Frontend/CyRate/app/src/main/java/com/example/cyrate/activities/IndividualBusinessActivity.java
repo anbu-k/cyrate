@@ -3,10 +3,8 @@ package com.example.cyrate.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.DateTimePatternGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cyrate.EditBusinessActivity;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
-import com.example.cyrate.Logic.deleteBusinessResponse;
+import com.example.cyrate.Logic.businessStringResponse;
 import com.example.cyrate.R;
 
 import org.json.JSONException;
@@ -25,23 +24,25 @@ import org.json.JSONException;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
 
-    ImageView back_btn, busImage, delete_btn;
+    ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge;
     String busNameString;
     int busId;
     BusinessServiceLogic businessServiceLogic;
 
-
+    Bundle extras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_business);
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         busNameString = extras.getString("NAME");
 
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
+        edit_btn = (ImageView) findViewById(R.id.edit_icon);
+
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
         rating = (TextView) findViewById(R.id.ratings_text);
@@ -62,6 +63,17 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             }
         });
 
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, EditBusinessActivity.class);
+
+                // Pass our extras from Business List to here (Individual Business Act) to EditBusiness Act
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +86,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 try {
                                     businessServiceLogic.deleteBusiness(
-                                            new deleteBusinessResponse() {
+                                            new businessStringResponse() {
                                                 @Override
                                                 public void onSuccess(String s) {
                                                     Toast.makeText(IndividualBusinessActivity.this,

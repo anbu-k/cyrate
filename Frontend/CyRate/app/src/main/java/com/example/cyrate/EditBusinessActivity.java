@@ -1,4 +1,4 @@
-package com.example.cyrate.activities;
+package com.example.cyrate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +16,13 @@ import android.widget.Toast;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.businessStringResponse;
-import com.example.cyrate.R;
+import com.example.cyrate.activities.AddBusinessActivity;
+import com.example.cyrate.activities.BusinessListActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
-public class AddBusinessActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class EditBusinessActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
     NavigationView navView;
@@ -33,14 +34,17 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
     EditText busLocation;
     EditText priceGauge;
     EditText photoUrl;
-    Button submitBtn;
+    Button updateBtn;
+
+    int busId;
 
     BusinessServiceLogic businessServiceLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_business);
+        setContentView(R.layout.activity_edit_business);
+        Bundle extras = getIntent().getExtras();
 
         // Inputs
         busName = (EditText) findViewById(R.id.et_busName);
@@ -49,8 +53,15 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
         busLocation = (EditText) findViewById(R.id.et_busLocation);
         priceGauge = (EditText) findViewById(R.id.et_priceGauge);
         photoUrl = (EditText) findViewById(R.id.et_photoUrl);
-        submitBtn = (Button) findViewById(R.id.btn_submit);
+        updateBtn = (Button) findViewById(R.id.btn_submit);
 
+        busName.setText(extras.getString("NAME"));
+        busType.setText(extras.getString("CATEGORY"));
+        busHours.setText(extras.getString("HOURS"));
+        busLocation.setText(extras.getString("ADDRESS"));
+        priceGauge.setText(extras.getString("PRICE_GAUGE"));
+        photoUrl.setText(extras.getString("IMAGE"));
+        busId = extras.getInt("ID");
 
         // Navigation menu stuff
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -60,8 +71,9 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
         navigationDrawer();
         drawerLayout.setScrimColor(getResources().getColor(R.color.red));
 
+
         // Submit Logic
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -69,7 +81,7 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
                 if (busName.getText().toString().isEmpty() || busType.getText().toString().isEmpty() || busHours.getText().toString().isEmpty() ||
                         busLocation.getText().toString().isEmpty() || priceGauge.getText().toString().isEmpty() || photoUrl.getText().toString().isEmpty()
                 ) {
-                    Toast.makeText(AddBusinessActivity.this, "Complete All Inputs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditBusinessActivity.this, "Complete All Inputs", Toast.LENGTH_LONG).show();
                 } else {
                     businessServiceLogic = new BusinessServiceLogic();
 
@@ -89,16 +101,16 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
 
 
                     try {
-                        businessServiceLogic.addBusiness(name, type, hours, location, price, photo,
+                        businessServiceLogic.editBusiness(busId, name, type, hours, location, price, photo,
                                 new businessStringResponse() {
                                     @Override
                                     public void onSuccess(String s) {
-                                        Toast.makeText(AddBusinessActivity.this, name + " added!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(EditBusinessActivity.this, s, Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onError(String s) {
-                                        Toast.makeText(AddBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(EditBusinessActivity.this, s, Toast.LENGTH_LONG).show();
                                     }
                                 }
                         );
@@ -108,8 +120,6 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
                 }
             }
         });
-
-
     }
 
     // When menu is open and back button is pressed, we just close the menu instead of going
@@ -127,7 +137,6 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
         // Navigation Drawer
         navView.bringToFront();
         navView.setNavigationItemSelectedListener(this);
-        navView.setCheckedItem(R.id.nav_addBusiness);
 
         open_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,13 +152,17 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.nav_restaurants:
-                Intent intent = new Intent(AddBusinessActivity.this, BusinessListActivity.class);
+                intent = new Intent(EditBusinessActivity.this, BusinessListActivity.class);
                 startActivity(intent);
-                ;
-            case R.id.nav_addBusiness:
                 break;
+            case R.id.nav_addBusiness:
+                intent = new Intent(EditBusinessActivity.this, AddBusinessActivity.class);
+                startActivity(intent);
+                break;
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

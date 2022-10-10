@@ -8,11 +8,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
-import com.example.cyrate.R;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,7 +85,7 @@ public class BusinessServiceLogic {
      * @throws JSONException
      */
     public void addBusiness(String busName, String busType, String busHours, String busLocation,
-                            String priceGauge, String photoUrl, addBusinessResponse r) throws JSONException {
+                            String priceGauge, String photoUrl, businessStringResponse r) throws JSONException {
         String url = Const.ADD_BUSINESS_URL;
 
         JSONObject newUserObj = new JSONObject();
@@ -129,13 +127,49 @@ public class BusinessServiceLogic {
 
     }
 
-    public void deleteBusiness(deleteBusinessResponse r, int businessId) throws JSONException {
+    public void deleteBusiness(businessStringResponse r, int businessId) throws JSONException {
         String url = Const.DELETE_BUSINESS_URL + String.valueOf(businessId);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 r.onSuccess("Business Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void editBusiness(int businessId, String busName, String busType,
+                             String busHours, String busLocation, String priceGauge, String photoUrl, businessStringResponse r) throws JSONException {
+        String url = Const.EDIT_BUSINESS_URL + String.valueOf(businessId);
+
+        JSONObject newUserObj = new JSONObject();
+        newUserObj.put("busName", busName);
+        newUserObj.put("busType", busType);
+        newUserObj.put("hours", busHours);
+        newUserObj.put("location", busLocation);
+        newUserObj.put("priceGauge", priceGauge);
+        newUserObj.put("photoUrl", photoUrl);
+
+        // Defaults to fill the required JSON object
+        newUserObj.put("ownerId", -1);
+        newUserObj.put("menuLink", "");
+        newUserObj.put("reviewSum", 0);
+        newUserObj.put("reviewCount", 0);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,
+                url, newUserObj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Successfully Updated Business!");
             }
         }, new Response.ErrorListener() {
             @Override

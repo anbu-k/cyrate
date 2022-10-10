@@ -129,6 +129,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
 
 
+
         startActivity(intent);
     }
 

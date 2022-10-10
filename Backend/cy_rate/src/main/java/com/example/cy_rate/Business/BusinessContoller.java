@@ -98,7 +98,7 @@ public class BusinessContoller {
         updateBusiness.setLocation(bus.getLocation());
         updateBusiness.setMenuLink(bus.getMenuLink());
         updateBusiness.setOwnerId(bus.getOwnerId());
-        updateBusiness.setPhotoUrl(bus.getBusName());
+        updateBusiness.setPhotoUrl(bus.getBusName()); // BUG HERE 
         updateBusiness.setPriceGauge(bus.getPriceGauge());
         updateBusiness.setReviewCount(bus.getReviewCount());
         updateBusiness.setReviewSum(bus.getReviewSum());
