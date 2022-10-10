@@ -7,10 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cyrate.Logic.UserLogic;
+import com.example.cyrate.Logic.addUserResponse;
+import com.example.cyrate.Logic.getAllUsersResponse;
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.WelcomeActivity;
+import com.example.cyrate.models.UserModel;
+
+import org.json.JSONException;
+
+import java.util.List;
 
 public class SignUpTabFragment extends Fragment {
     EditText email, password, confirmPassword;
@@ -45,11 +55,83 @@ public class SignUpTabFragment extends Fragment {
         signUp.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), BusinessListActivity.class);
-                startActivity(i);
+                //check if email exists in database
+
+               //post new user
+
+               //on error, display error message
+
+               //set global user
+
+                UserLogic addUserLogic = new UserLogic();
+                try {
+                    addUserLogic.addUser(new addUserResponse() {
+
+                        @Override
+                        public void onSuccess(String s) {
+                            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                            startActivity(i);
+
+                        }
+
+                        @Override
+                        public void onError(String s) {
+                            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+
+                        }
+                    }, "basic", "megan@gmail.com", "password");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+//                UserLogic userLogic = new UserLogic();
+//               userLogic.getAllUsers(new getAllUsersResponse() {
+//                   @Override
+//                   public void onSuccess(List<UserModel> list) {
+//                       Toast.makeText(getActivity(), list.toString(), Toast.LENGTH_LONG).show();
+//                       //set global user
+//
+//                       Intent i = new Intent(getActivity(), WelcomeActivity.class);
+//                       startActivity(i);
+//                   }
+//
+//                   @Override
+//                   public void onError(String s) {
+//                       Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+//
+//                   }
+//               });
+
             }
         }));
 
         return root;
+    }
+
+    public boolean registerUser(View view){
+        //get the data from the textboxes
+        String userEmail = email.getText().toString();
+        String userPassword = password.getText().toString();
+        String userConfirmPassword = confirmPassword.getText().toString();
+
+        //look for email in database (GET user by email)
+
+        //if email is in database, display a toast "this email is already registered", return false
+
+        //confirm userPassword and userConfirmPassword are equal
+
+        //if not, display a toast "passwords do not match"
+
+        //if they do, create new userModel
+
+        //POST new user to database
+
+        //return true
+
+
+        return true;
     }
 }
