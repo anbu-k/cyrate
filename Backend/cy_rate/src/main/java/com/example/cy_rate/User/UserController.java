@@ -103,6 +103,7 @@ public class UserController {
             updateUser.setuserPass(use.getuserPass());
             updateUser.setphoneNum(use.getphoneNum());
             updateUser.setdob(use.getdob());
+            updateUser.setPhotoUrl(use.getPhotoUrl());
             userRepo.save(updateUser);
 
         }
@@ -110,6 +111,23 @@ public class UserController {
             return "Not able to find User with id: " + id;
         }
         return success;
+    }
+
+    @PutMapping(path = "/user/resetPassword/{id}")
+    String resetPassword(@PathVariable int id, @RequestBody User use)
+    {
+        User resetPassword = userRepo.findById(id);
+        try{
+        resetPassword.setuserPass(use.getuserPass());
+        userRepo.save(resetPassword);
+        }
+        catch(Exception e)
+        {
+            return "Not able to find User with id: " + id;
+
+        }
+        return success;
+
     }
     
 }

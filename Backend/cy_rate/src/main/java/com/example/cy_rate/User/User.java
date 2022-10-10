@@ -31,7 +31,7 @@ public class User {
 
     }
 
-    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob, String resetPassword)
+    public User(String userType, String realName, String username,String userPass, String email, String phoneNum, String dob, String profilePicture) //String newPassword
     {
         this.userType = userType;
         this.realName = realName;
@@ -40,7 +40,8 @@ public class User {
         this.email = email;
         this.phoneNum = phoneNum;
         this.dob = dob;
-        this.resetPassword = resetPassword;
+        this.profilePicture = profilePicture;
+        // this.resetPassword = resetPassword;
     }
 
     // getters & setters
@@ -125,24 +126,24 @@ public class User {
         this.dob = dob;
     }
 
-    public String getnewPassword()
-    {
-        return resetPassword;
-    }
+    // public String getnewPassword()
+    // {
+    //     return resetPassword;
+    // }
 
-    public void setNewPassword(String resetPassword)
-    {
-        this.resetPassword = resetPassword;
-    }
+    // public void setNewPassword(String resetPassword)
+    // {
+    //     this.resetPassword = resetPassword;
+    // }
 
     public String getPhotoUrl()
     {
         return profilePicture;
     }
 
-    public void setPhotoUrl(String photoUrl)
+    public void setPhotoUrl(String profilePicture)
     {
-        this.profilePicture = photoUrl;
+        this.profilePicture = profilePicture;
     }
 
     @Override
@@ -151,7 +152,8 @@ public class User {
         return userId + "\n" + userType + "\n" 
         + realName + "\n" + username + "\n" 
         + userPass + "\n" + email + "\n"
-        + phoneNum + "\n" + dob;
+        + phoneNum + "\n" + dob + "\n"
+        ;
     }
 
     
