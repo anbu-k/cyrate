@@ -132,7 +132,7 @@ public class SignUpTabFragment extends Fragment {
                                     Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 
                                 }
-                            }, "username", "email", "password");
+                            }, "megan eb", "email.com", "password");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
