@@ -119,7 +119,7 @@ public class UserLogic {
         //TODO
         //need to add a username field in registration page.
         //if a user updates their username from edit profile to the email of a future user there will be problems
-        newUserObject.put("phoneNum", "mthis is a phone number!m");
+        newUserObject.put("phoneNum", "mthis is a ijadf;kajdj;kphone number!m");
         newUserObject.put("dob", "mdate of birth");
         newUserObject.put("photoUrl", "https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 

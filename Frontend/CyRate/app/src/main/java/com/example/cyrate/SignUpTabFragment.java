@@ -64,7 +64,9 @@ public class SignUpTabFragment extends Fragment {
         signUp.setOnClickListener((new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        registerUser(view);
+                        Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                        startActivity(i);
+//                        registerUser(view);
                         //check if email exists in database
 
                         //post new user
@@ -97,12 +99,36 @@ public class SignUpTabFragment extends Fragment {
             @Override
             public void onSuccess(UserModel userModel) {
                 Toast.makeText(getActivity(), "sorry, this email is already in use", Toast.LENGTH_LONG).show();
-                keepChecking = true;
+                keepChecking = false;
             }
 
             @Override
             public void onError(String s) {
                 Toast.makeText(getActivity(), "this email is good to go", Toast.LENGTH_LONG).show();
+
+                UserLogic.getAllUsers(new getAllUsersResponse() {
+                    @Override
+                    public void onSuccess(List<UserModel> list) {
+                        for (int i = 0; i < list.size(); i++) {
+                            if ((list.get(i).getUsername() != null) && (list.get(i).getUsername().equals(userUsername))) {
+                                keepChecking = false;
+                                Toast.makeText(getActivity(), "username is unavailable", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        if (keepChecking){
+                                if (!userPassword.equals(userConfirmPassword)){
+                                    Toast.makeText(getActivity(), "oops! passwords don't match!", Toast.LENGTH_LONG).show();
+                                    keepChecking = false;
+                                }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String s) {
+                        Toast.makeText(getActivity(), "uh oh in check username", Toast.LENGTH_LONG).show();
+
+                    }
+                });
 
                 keepChecking = true;
             }
@@ -113,12 +139,12 @@ public class SignUpTabFragment extends Fragment {
         //if email is in database, display a toast "this email is already registered", return false
 
         //confirm userPassword and userConfirmPassword are equal
-        if (keepChecking){
-            if (!userPassword.equals(userConfirmPassword)){
-                Toast.makeText(getActivity(), "oops! passwords don't match!", Toast.LENGTH_LONG).show();
-                keepChecking = false;
-            }
-        }
+//        if (keepChecking){
+//            if (!userPassword.equals(userConfirmPassword)){
+//                Toast.makeText(getActivity(), "oops! passwords don't match!", Toast.LENGTH_LONG).show();
+//                keepChecking = false;
+//            }
+//        }
 
         //check username
         //TODO we don't have a good way to check if the username exists in the db.
