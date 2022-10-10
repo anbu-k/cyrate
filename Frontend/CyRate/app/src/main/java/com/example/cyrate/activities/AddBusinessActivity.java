@@ -1,4 +1,4 @@
-package com.example.cyrate;
+package com.example.cyrate.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.addBusinessResponse;
-import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -93,7 +93,7 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
                                 new addBusinessResponse() {
                                     @Override
                                     public void onSuccess(String s) {
-                                        Toast.makeText(AddBusinessActivity.this, name + "added!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(AddBusinessActivity.this, name + " added!", Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override

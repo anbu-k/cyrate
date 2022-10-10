@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cyrate.AddBusinessActivity;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.getBusinessesResponse;
 import com.example.cyrate.R;
@@ -128,6 +126,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
         intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
         intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
+        intent.putExtra("ID", businessListCardModel.get(position).getBusId());
 
 
         startActivity(intent);

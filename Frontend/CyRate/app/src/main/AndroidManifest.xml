@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AddBusinessActivity"
+            android:name=".activities.AddBusinessActivity"
             android:exported="false" />
         <activity
             android:name=".activities.IndividualBusinessActivity"
