@@ -11,12 +11,14 @@ public class UserModel {
     private String username;
     private String phoneNum;
     private String dob;
+    private String photoUrl;
 
     public UserModel(String email, String password){
         //default to basic user
         this.userType = UserType.BASIC_USER;
         this.email = email;
         this.password = password;
+        this.photoUrl = "";
     }
     public int getUserId() {return userId;}
 
@@ -49,6 +51,10 @@ public class UserModel {
     public String getDob() {return dob;}
 
     public void setDob(String dob) {this.dob = dob;}
+
+    public String getPhotoUrl(){return photoUrl;}
+
+    public void setPhotoUrl(String url) {this.photoUrl = url;}
 
 }
 

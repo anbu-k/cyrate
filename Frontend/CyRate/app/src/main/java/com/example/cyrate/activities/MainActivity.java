@@ -17,5 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        globalUser = new UserModel("anbu@gmail.com", "1234567");
+        globalUser.setUsername("anbuk");
+//        globalUser.set
+
     }
 }

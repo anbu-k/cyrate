@@ -2,6 +2,7 @@ package com.example.cyrate.Logic;
 
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,7 +44,7 @@ public class UserLogic {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                r.onError("error response: " + error.toString());
             }
         });
 
@@ -65,7 +66,7 @@ public class UserLogic {
             public void onResponse(JSONObject response) {
                 try{
                     JSONObject userObject = (JSONObject) response;
-                    UserModel user = convertToUserModel(userObject.toString());
+                    UserModel user = convertToUserModel(userObject);
                     r.onSuccess(user);
                 }catch(Exception e){
                     r.onError("OOF");
@@ -81,12 +82,21 @@ public class UserLogic {
 
         AppController.getInstance().addToRequestQueue(objectRequest);
 
-        // return new UserModel("megan", "megan");
-
     }
 
-    private  UserModel convertToUserModel(String s){
-        return new UserModel("megan", "megan");
+    private  UserModel convertToUserModel(JSONObject user) throws JSONException {
+        UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
+        newUserModel.setUsername(user.get("username").toString());
+        newUserModel.setUserType(UserType.BASIC_USER);
+        newUserModel.setFullName(user.get("realName").toString());
+        newUserModel.setPhoneNum(user.get("phoneNum").toString());
+        newUserModel.setDob(user.get("dob").toString());
+        newUserModel.setPhotoUrl(user.get("photoUrl").toString());
+        newUserModel.setUserId((int) user.get("userId"));
+
+        return newUserModel;
+
+//        return new UserModel("megan", "megan");
     }
 
     /**

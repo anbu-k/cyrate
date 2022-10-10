@@ -17,6 +17,7 @@ import com.example.cyrate.Logic.getAllUsersResponse;
 import com.example.cyrate.Logic.getUserByEmailResponse;
 import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
+import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.WelcomeActivity;
 import com.example.cyrate.models.UserModel;
 
@@ -101,6 +102,8 @@ public class SignUpTabFragment extends Fragment {
 
             @Override
             public void onError(String s) {
+                Toast.makeText(getActivity(), "this email is good to go", Toast.LENGTH_LONG).show();
+
                 keepChecking = true;
             }
         });
@@ -126,7 +129,7 @@ public class SignUpTabFragment extends Fragment {
                 @Override
                 public void onSuccess(List<UserModel> list) {
                     for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getUsername().equals(userUsername)) {
+                        if ((list.get(i).getUsername() != null) && (list.get(i).getUsername().equals(userUsername))) {
                             keepChecking = false;
                             Toast.makeText(getActivity(), "username is unavailable", Toast.LENGTH_LONG).show();
                         }
@@ -170,6 +173,26 @@ public class SignUpTabFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+
+        //get user by email
+        if (keepChecking) {
+            userLogic.getUserByEmail(userEmail, new getUserByEmailResponse() {
+                @Override
+                public void onSuccess(UserModel userModel) {
+                    //set global user
+                    MainActivity.globalUser = userModel;
+                }
+
+                @Override
+                public void onError(String s) {
+                    Toast.makeText(getActivity(), "oops: " + s, Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
+
 
         //return true
         if (!keepChecking){
