@@ -29,50 +29,44 @@ public class BusinessServiceLogic {
      */
     public void getBusinesses(getBusinessesResponse r) throws JSONException {
         List<BusinessListCardModel> businessModelsList = new ArrayList<>();
-
+        Log.d("TEST 1", "IN GETBUSSINESS");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-                Const.GET_BUSINESSES_URL, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        // Get each business from the JSON array
-                        JSONObject business = (JSONObject) response.get(i);
-                        Log.d("JSON OBJ", business.toString());
+                Const.GET_BUSINESSES_URL, null, response -> {
+                    Log.d("TEST 1", "IN ON RESPONSE");
 
-                        // Some priceGauges are null, lets do a check first
-                        String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            // Get each business from the JSON array
+                            JSONObject business = (JSONObject) response.get(i);
+                            Log.d("JSON OBJ", business.toString());
 
-                        BusinessListCardModel businessListCardModel = new BusinessListCardModel(
-                                (int) business.get("busId"),
-                                business.get("busName").toString(),
-                                business.get("busType").toString(),
-                                business.get("photoUrl").toString(),
-                                business.get("hours").toString(),
-                                business.get("location").toString(),
-                                (int) business.get("ownerId"),
-                                business.get("menuLink").toString(),
-                                priceGauge,
-                                (int) business.get("reviewSum"),
-                                (int) business.get("reviewCount")
-                        );
-                        businessModelsList.add(businessListCardModel);
+                            // Some priceGauges are null, lets do a check first
+                            String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            BusinessListCardModel businessListCardModel = new BusinessListCardModel(
+                                    (int) business.get("busId"),
+                                    business.get("busName").toString(),
+                                    business.get("busType").toString(),
+                                    business.get("photoUrl").toString(),
+                                    business.get("hours").toString(),
+                                    business.get("location").toString(),
+                                    (int) business.get("ownerId"),
+                                    business.get("menuLink").toString(),
+                                    priceGauge,
+                                    (int) business.get("reviewSum"),
+                                    (int) business.get("reviewCount")
+                            );
+                            businessModelsList.add(businessListCardModel);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                // Send the businessModelsList back to the BusinessListActivity
-                // as a async callback
-                r.onSuccess(businessModelsList);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                return;
-            }
-        }
+                    // Send the businessModelsList back to the BusinessListActivity
+                    // as a async callback
+                    r.onSuccess(businessModelsList);
+                }, error -> r.onError(error.toString())
 
         );
 
