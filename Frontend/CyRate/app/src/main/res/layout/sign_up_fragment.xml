@@ -75,6 +75,38 @@
         app:layout_constraintVertical_bias="0.053"
         app:layout_constraintWidth_percent=".8" />
 
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Phone Number"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintVertical_bias="0.053"
+        app:layout_constraintWidth_percent=".8" />
+
+    <EditText
+        android:id="@+id/dateOfBirth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Date of Birth"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        app:layout_constraintVertical_bias="0.053"
+        app:layout_constraintWidth_percent=".8" />
+
     <Button
         android:id="@+id/btn_signUp"
         android:layout_width="0dp"
@@ -86,7 +118,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+        app:layout_constraintTop_toBottomOf="@+id/dateOfBirth"
         app:layout_constraintVertical_bias=".7"
         app:layout_constraintWidth_percent=".8" />
 

@@ -2,7 +2,6 @@ package com.example.cyrate.Logic;
 
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class UserLogic {
@@ -67,6 +67,7 @@ public class UserLogic {
             public void onResponse(JSONObject response) {
                 try{
                     JSONObject userObject = (JSONObject) response;
+                    Log.d("getUserByEmail response", userObject.toString());
                     UserModel user = convertToUserModel(userObject);
                     r.onSuccess(user);
                 }catch(Exception e){
@@ -93,7 +94,7 @@ public class UserLogic {
         newUserModel.setPhoneNum(user.get("phoneNum").toString());
         newUserModel.setDob(user.get("dob").toString());
         newUserModel.setPhotoUrl(user.get("photoUrl").toString());
-        newUserModel.setUserId((int) user.get("userId"));
+        newUserModel.setUserId((int) user.get("userID"));
 
         return newUserModel;
 
@@ -104,7 +105,8 @@ public class UserLogic {
      * Makes a request to the server to post a new user
      * given some basic user info.
      */
-    public void addUser(addUserResponse r, String userType, String email, String password, String username) throws JSONException {
+    public void addUser(addUserResponse r, String userType, String email, String password,
+                        String username, String phoneNum, String dateOfBirth) throws JSONException {
 
         String url = Const.POST_USER_URL;
 
@@ -120,8 +122,8 @@ public class UserLogic {
         //TODO
         //need to add a username field in registration page.
         //if a user updates their username from edit profile to the email of a future user there will be problems
-        newUserObject.put("phoneNum", "mthis is a phone numb");
-        newUserObject.put("dob", "mdate of birth11");
+        newUserObject.put("phoneNum", phoneNum);
+        newUserObject.put("dob", dateOfBirth);
         newUserObject.put("photoUrl", "https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObject,
@@ -146,9 +148,9 @@ public class UserLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-    public void getAllUsernamePassword(getUsernamePasswordResponse r) {
+    public void getAllEmailPassword(getEmailPasswordResponse r) {
         String url = Const.GET_ALL_USERS_URL;
-        HashMap<String, String> usernamePasswordMap = new HashMap<>();
+        HashMap<String, String> emailPasswordMap = new HashMap<>();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -156,9 +158,65 @@ public class UserLogic {
                 try {
                     for(int i = 0; i < response.length(); i++){
                         JSONObject user = (JSONObject) response.get(i);
-                        usernamePasswordMap.put(user.get("username").toString(), user.get("userPass").toString());
+                        emailPasswordMap.put(user.get("email").toString(), user.get("userPass").toString());
                     }
-                    r.onSuccess(usernamePasswordMap);
+                    r.onSuccess(emailPasswordMap);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError("error response: " + error.toString());
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(arrayRequest);
+
+    }
+
+    public void getAllUsernames(getUsernamesResponse r) {
+        String url = Const.GET_ALL_USERS_URL;
+        HashSet<String> usernameMap = new HashSet<>();
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for(int i = 0; i < response.length(); i++){
+                        JSONObject user = (JSONObject) response.get(i);
+                        usernameMap.add(user.get("username").toString());
+                    }
+                    r.onSuccess(usernameMap);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError("error response: " + error.toString());
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(arrayRequest);
+
+    }
+
+    public void getAllPhoneNumbers(getUsernamesResponse r) {
+        String url = Const.GET_ALL_USERS_URL;
+        HashSet<String> phoneNumberSet = new HashSet<>();
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for(int i = 0; i < response.length(); i++){
+                        JSONObject user = (JSONObject) response.get(i);
+                        phoneNumberSet.add(user.get("phoneNum").toString());
+                    }
+                    r.onSuccess(phoneNumberSet);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

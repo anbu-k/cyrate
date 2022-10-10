@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cyrate.Logic.UserLogic;
-import com.example.cyrate.Logic.getUsernamePasswordResponse;
+import com.example.cyrate.Logic.getEmailPasswordResponse;
+import com.example.cyrate.Logic.getUsernamesResponse;
 import com.example.cyrate.R;
-import com.example.cyrate.models.UserModel;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -23,7 +24,12 @@ public class IntroActivity extends AppCompatActivity {
     TextView welcomeTxt, cyrateTxt;
     LottieAnimationView lottieAnimationView;
 
-    public static HashMap<String, String> usernamePasswordMap;
+    UserLogic userLogic;
+
+    public static HashMap<String, String> emailPasswordMap;
+    public static HashSet<String> usernamesSet;
+    public static HashSet<String> phoneNumberSet;
+
 
 
     private static final int NUM_PAGES = 2;
@@ -37,8 +43,11 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         final Handler handler = new Handler();
+        userLogic = new UserLogic();
 
-        getAllUsers();
+        initializeEmailPasswordMap();
+        initializeUsernameSet();
+        initializePhoneNumberSet();
 
         background = findViewById(R.id.bg_image);
         logo = findViewById(R.id.cy_logo);
@@ -68,15 +77,51 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
-    public void getAllUsers(){
-        UserLogic userLogic = new UserLogic();
+    public void initializeEmailPasswordMap(){
+        userLogic = new UserLogic();
 
-        userLogic.getAllUsernamePassword(new getUsernamePasswordResponse() {
+        userLogic.getAllEmailPassword(new getEmailPasswordResponse() {
             @Override
-            public void onSuccess(HashMap<String, String> usernamePassword) {
+            public void onSuccess(HashMap<String, String> emailPassword) {
                 Log.d("Success", "Hash Map initalized");
-                usernamePasswordMap = usernamePassword;
-                Log.d("Success", usernamePasswordMap.toString());
+                emailPasswordMap = emailPassword;
+                Log.d("Success", emailPasswordMap.toString());
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("ERROR IN Intro Act", s);
+            }
+        });
+    }
+
+    public void initializeUsernameSet(){
+        userLogic = new UserLogic();
+
+        userLogic.getAllUsernames(new getUsernamesResponse() {
+            @Override
+            public void onSuccess(HashSet<String> usernames) {
+                Log.d("Success", "Hash Set initalized");
+                usernamesSet = usernames;
+                Log.d("Success", usernames.toString());
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("ERROR IN Intro Act", s);
+            }
+        });
+    }
+
+    public void initializePhoneNumberSet(){
+        userLogic = new UserLogic();
+
+        userLogic.getAllPhoneNumbers(new getUsernamesResponse() {
+            @Override
+            public void onSuccess(HashSet<String> phoneNumber) {
+                Log.d("Success", "Hash Set initalized");
+                phoneNumberSet = phoneNumber;
+                Log.d("Success", phoneNumber.toString());
             }
 
             @Override

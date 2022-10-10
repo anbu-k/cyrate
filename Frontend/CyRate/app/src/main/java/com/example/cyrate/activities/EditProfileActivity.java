@@ -16,6 +16,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText passwordText;
     EditText nameText;
     EditText birthdayText;
+    EditText photoUrl;
     Button updateButton;
 
     @Override
@@ -29,6 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.edittext_password);
         nameText = findViewById(R.id.edittext_name);
         birthdayText = findViewById(R.id.edittext_birthday);
+        photoUrl = findViewById(R.id.edittext_photo_url);
         updateButton = findViewById(R.id.btn_update);
 
         updateButton.setOnClickListener((new View.OnClickListener() {
