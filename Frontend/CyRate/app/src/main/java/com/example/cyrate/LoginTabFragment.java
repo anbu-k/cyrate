@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.WelcomeActivity;
 
 public class LoginTabFragment extends Fragment {
 
@@ -48,7 +49,13 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), BusinessListActivity.class);
+                //get user by email
+
+                //verify password
+
+                //set global user
+
+                Intent i = new Intent(getActivity(), WelcomeActivity.class);
                 startActivity(i);
             }
         }));
