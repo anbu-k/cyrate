@@ -5,17 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.cyrate.Logic.UserLogic;
+import com.example.cyrate.Logic.getUsernamePasswordResponse;
 import com.example.cyrate.R;
+import com.example.cyrate.models.UserModel;
+
+import java.util.HashMap;
 
 public class IntroActivity extends AppCompatActivity {
 
     ImageView background, logo;
     TextView welcomeTxt, cyrateTxt;
     LottieAnimationView lottieAnimationView;
+
+    public static HashMap<String, String> usernamePasswordMap;
+
 
     private static final int NUM_PAGES = 2;
 //    private ViewPager viewPager;
@@ -28,6 +37,8 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         final Handler handler = new Handler();
+
+        getAllUsers();
 
         background = findViewById(R.id.bg_image);
         logo = findViewById(R.id.cy_logo);
@@ -55,6 +66,24 @@ public class IntroActivity extends AppCompatActivity {
             }
         }, 5000);
 
+    }
+
+    public void getAllUsers(){
+        UserLogic userLogic = new UserLogic();
+
+        userLogic.getAllUsernamePassword(new getUsernamePasswordResponse() {
+            @Override
+            public void onSuccess(HashMap<String, String> usernamePassword) {
+                Log.d("Success", "Hash Map initalized");
+                usernamePasswordMap = usernamePassword;
+                Log.d("Success", usernamePasswordMap.toString());
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("ERROR IN Intro Act", s);
+            }
+        });
     }
 
 //    private class ScreenSlidePageAdapter extends FragmentStatePagerAdapter {

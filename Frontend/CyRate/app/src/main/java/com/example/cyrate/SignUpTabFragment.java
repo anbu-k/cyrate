@@ -2,6 +2,7 @@ package com.example.cyrate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class SignUpTabFragment extends Fragment {
         return root;
     }
 
-    public boolean registerUser(View view){
+    public void registerUser(View view){
         //get the data from the textboxes
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
@@ -97,52 +98,63 @@ public class SignUpTabFragment extends Fragment {
             @Override
             public void onSuccess(UserModel userModel) {
                 Toast.makeText(getActivity(), "sorry, this email is already in use", Toast.LENGTH_LONG).show();
-                keepChecking = true;
+                keepChecking = false;
+
+                return;
             }
 
             @Override
             public void onError(String s) {
-                Toast.makeText(getActivity(), "this email is good to go", Toast.LENGTH_LONG).show();
-
+                Log.d("SUCCESS", "In onERROR (didnt find email)");
+                Toast.makeText(getActivity(), "this email is good to go", Toast.LENGTH_SHORT).show();
                 keepChecking = true;
-            }
-        });
 
-        keepChecking = true;
-
-        //if email is in database, display a toast "this email is already registered", return false
-
-        //confirm userPassword and userConfirmPassword are equal
-        if (keepChecking){
-            if (!userPassword.equals(userConfirmPassword)){
-                Toast.makeText(getActivity(), "oops! passwords don't match!", Toast.LENGTH_LONG).show();
-                keepChecking = false;
-            }
-        }
-
-        //check username
-        //TODO we don't have a good way to check if the username exists in the db.
-        //since it's unique this is important
-        //for now just loop through all users ig
-        if (keepChecking) {
-            UserLogic.getAllUsers(new getAllUsersResponse() {
-                @Override
-                public void onSuccess(List<UserModel> list) {
-                    for (int i = 0; i < list.size(); i++) {
-                        if ((list.get(i).getUsername() != null) && (list.get(i).getUsername().equals(userUsername))) {
-                            keepChecking = false;
-                            Toast.makeText(getActivity(), "username is unavailable", Toast.LENGTH_LONG).show();
-                        }
+                //confirm userPassword and userConfirmPassword are equal
+                if (keepChecking){
+                    if (!userPassword.equals(userConfirmPassword)){
+                        Log.d("USERPASS", "Passwords Don't match");
+                        Toast.makeText(getActivity(), "oops! passwords don't match!", Toast.LENGTH_SHORT).show();
+                        keepChecking = false;
+                        return;
                     }
                 }
 
-                @Override
-                public void onError(String s) {
-                    Toast.makeText(getActivity(), "uh oh in check username", Toast.LENGTH_LONG).show();
-
+                // Check if username already used
+                if(keepChecking){
+                    Log.d("SIGNUP TAB FRAG", IntroActivity.usernamePasswordMap.toString());
+                    if(IntroActivity.usernamePasswordMap.containsKey(userUsername) || userUsername == null){
+                        Log.d("USERNAME", "Username exists");
+                        keepChecking = false;
+                        Toast.makeText(getActivity(), "username is unavailable", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
-            });
-        }
+
+                if (keepChecking) {
+                    try {
+                        userLogic.addUser(new addUserResponse() {
+
+                            @Override
+                            public void onSuccess(String s) {
+                                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onError(String s) {
+                                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                                keepChecking = false;
+                            }
+                        }, "normal", userEmail, userPassword, userUsername);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        //if email is in database, display a toast "this email is already registered", return false
 
 
 
@@ -152,53 +164,23 @@ public class SignUpTabFragment extends Fragment {
 
         //POST new user to database
 
-        if (keepChecking) {
-            try {
-                userLogic.addUser(new addUserResponse() {
 
-                    @Override
-                    public void onSuccess(String s) {
-                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(getActivity(), WelcomeActivity.class);
-                        startActivity(i);
-                    }
+//        //get user by email
+//        if (keepChecking) {
+//            userLogic.getUserByEmail(userEmail, new getUserByEmailResponse() {
+//                @Override
+//                public void onSuccess(UserModel userModel) {
+//                    //set global user
+//                    MainActivity.globalUser = userModel;
+//                }
+//
+//                @Override
+//                public void onError(String s) {
+//                    Toast.makeText(getActivity(), "oops: " + s, Toast.LENGTH_LONG).show();
+//
+//                }
+//            });
+//        }
 
-                    @Override
-                    public void onError(String s) {
-                        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                        keepChecking = true;
-                    }
-                }, "normal", userEmail, userPassword, userUsername);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        //get user by email
-        if (keepChecking) {
-            userLogic.getUserByEmail(userEmail, new getUserByEmailResponse() {
-                @Override
-                public void onSuccess(UserModel userModel) {
-                    //set global user
-                    MainActivity.globalUser = userModel;
-                }
-
-                @Override
-                public void onError(String s) {
-                    Toast.makeText(getActivity(), "oops: " + s, Toast.LENGTH_LONG).show();
-
-                }
-            });
-        }
-
-
-
-        //return true
-        if (!keepChecking){
-            return false;
-        }
-
-        return true;
     }
 }

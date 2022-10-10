@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserLogic {
@@ -76,7 +77,7 @@ public class UserLogic {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                r.onError("OOF");
             }
         });
 
@@ -115,12 +116,12 @@ public class UserLogic {
 
 
         //not required for registration. default to empty. user can edit this in profile
-        newUserObject.put("realName", "m-1m");
+        newUserObject.put("realName", "m-1m11");
         //TODO
         //need to add a username field in registration page.
         //if a user updates their username from edit profile to the email of a future user there will be problems
-        newUserObject.put("phoneNum", "mthis is a phone number!m");
-        newUserObject.put("dob", "mdate of birth");
+        newUserObject.put("phoneNum", "mthis is a phone numb");
+        newUserObject.put("dob", "mdate of birth11");
         newUserObject.put("photoUrl", "https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObject,
@@ -143,5 +144,33 @@ public class UserLogic {
 
         //add to queue
         AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void getAllUsernamePassword(getUsernamePasswordResponse r) {
+        String url = Const.GET_ALL_USERS_URL;
+        HashMap<String, String> usernamePasswordMap = new HashMap<>();
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for(int i = 0; i < response.length(); i++){
+                        JSONObject user = (JSONObject) response.get(i);
+                        usernamePasswordMap.put(user.get("username").toString(), user.get("userPass").toString());
+                    }
+                    r.onSuccess(usernamePasswordMap);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError("error response: " + error.toString());
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(arrayRequest);
+
     }
 }
