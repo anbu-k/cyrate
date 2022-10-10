@@ -3,50 +3,74 @@ package com.example.cyrate.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.DateTimePatternGenerator;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cyrate.EditBusinessActivity;
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.BusinessServiceLogic;
+import com.example.cyrate.Logic.businessStringResponse;
 import com.example.cyrate.R;
+
+import org.json.JSONException;
 
 
 public class IndividualBusinessActivity extends AppCompatActivity {
 
-    ImageView back_btn, busImage, delete_btn;
+    ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge;
+    String busNameString;
+    int busId;
+    BusinessServiceLogic businessServiceLogic;
 
-
+    Bundle extras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_business);
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
+        busNameString = extras.getString("NAME");
 
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
+        edit_btn = (ImageView) findViewById(R.id.edit_icon);
+
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
         rating = (TextView) findViewById(R.id.ratings_text);
         priceGauge = (TextView) findViewById(R.id.price_text);
 
         new ImageLoaderTask(extras.getString("IMAGE"), busImage).execute();
-        busName.setText(extras.getString("NAME"));
+        busName.setText(busNameString);
         rating.setText("Rating:" + extras.getString("RATING"));
         priceGauge.setText(extras.getString("PRICE_GAUGE"));
+        busId = extras.getInt("ID");
 
+        businessServiceLogic = new BusinessServiceLogic();
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navigateBack();
+            }
+        });
+
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, EditBusinessActivity.class);
+
+                // Pass our extras from Business List to here (Individual Business Act) to EditBusiness Act
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 
@@ -60,7 +84,37 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(IndividualBusinessActivity.this, "Works", Toast.LENGTH_LONG).show();
+                                try {
+                                    businessServiceLogic.deleteBusiness(
+                                            new businessStringResponse() {
+                                                @Override
+                                                public void onSuccess(String s) {
+                                                    Toast.makeText(IndividualBusinessActivity.this,
+                                                            "Successfully Deleted " + busNameString, Toast.LENGTH_LONG).show();
+
+                                                    final Handler handler = new Handler();
+
+
+                                                    Intent intent = new Intent(IndividualBusinessActivity.this, BusinessListActivity.class);
+
+                                                    handler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            startActivity(intent);
+                                                        }
+                                                    }, 3000);
+                                                }
+
+                                                @Override
+                                                public void onError(String s) {
+                                                    Log.d("DELETE BUSSINESS ERROR", s);
+                                                    Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                                                }
+                                            }, busId
+                                    );
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
