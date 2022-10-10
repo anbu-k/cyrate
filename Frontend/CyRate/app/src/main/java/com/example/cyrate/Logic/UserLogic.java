@@ -22,7 +22,7 @@ import java.util.List;
 
 public class UserLogic {
 
-    public void getAllUsers(getAllUsersResponse r) {
+    public static void getAllUsers(getAllUsersResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         List<UserModel> userModelList = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public class UserLogic {
      * Makes a request to the server to post a new user
      * given some basic user info.
      */
-    public void addUser(addUserResponse r, String userType, String email, String password) throws JSONException {
+    public void addUser(addUserResponse r, String userType, String email, String password, String username) throws JSONException {
 
         String url = Const.POST_USER_URL;
 
@@ -101,13 +101,17 @@ public class UserLogic {
         newUserObject.put("userType", userType);
         newUserObject.put("email", email);
         newUserObject.put("userPass", password);
+        newUserObject.put("username", username);
+
 
         //not required for registration. default to empty. user can edit this in profile
-        newUserObject.put("realName", "-1");
-        newUserObject.put("username", email);
-        newUserObject.put("phoneNum", "this is a phone number!");
-        newUserObject.put("dob", "date of birth");
-        newUserObject.put("photoUrl", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw2iuBlwdkOaAAD8mFmUdIZM&ust=1665469241217000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCKi1zMWC1foCFQAAAAAdAAAAABAE");
+        newUserObject.put("realName", "m-1m");
+        //TODO
+        //need to add a username field in registration page.
+        //if a user updates their username from edit profile to the email of a future user there will be problems
+        newUserObject.put("phoneNum", "mthis is a phone number!m");
+        newUserObject.put("dob", "mdate of birth");
+        newUserObject.put("photoUrl", "https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObject,
                 new Response.Listener<JSONObject>() {
