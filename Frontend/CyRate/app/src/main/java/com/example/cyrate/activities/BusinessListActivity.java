@@ -34,6 +34,8 @@ import java.util.List;
 public class BusinessListActivity extends AppCompatActivity implements BusinessListInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
+    BusinessListAdapter busListAdapter;
+    LinearLayoutManager layoutManager;
     ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
     int[] restaurantImages = {R.drawable.provisions_hero};
 
@@ -52,10 +54,19 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         open_menu = (ImageView) findViewById(R.id.open_menu_icon);
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
+        layoutManager = new LinearLayoutManager(this);
 
         businessServiceLogic = new BusinessServiceLogic();
+        busListAdapter = new BusinessListAdapter(this,
+                businessListCardModel, this);
+
+        Log.d("TEST 1", "BEFORE SET ADAPTER");
+        recyclerView.setAdapter(busListAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
 
         try {
+            Log.d("TEST 1", "BEFORE SET BUS LIST CARD MODELS");
             setUpBusinessListCardModels(this, this, recyclerView);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -83,22 +94,25 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
     private void setUpBusinessListCardModels(Context ctx, BusinessListInterface busInterface,
                                              RecyclerView recyclerView) throws JSONException {
 
+
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
                 for (int i = 0; i < list.size(); i++) {
                     businessListCardModel.add(list.get(i));
                 }
-                BusinessListAdapter busListAdapter = new BusinessListAdapter(ctx,
-                        businessListCardModel, busInterface);
+//                busListAdapter = new BusinessListAdapter(ctx,
+//                        businessListCardModel, busInterface);
+                Log.d("TEST 1", "IN HERE");
+                busListAdapter.notifyDataSetChanged();
 
-                recyclerView.setAdapter(busListAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+
             }
 
             @Override
             public void onError(String s) {
-
+                Log.d("TEST 1", s);
+                Toast.makeText(BusinessListActivity.this, s.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
