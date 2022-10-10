@@ -100,13 +100,14 @@ public class UserLogic {
         JSONObject newUserObject = new JSONObject();
         newUserObject.put("userType", userType);
         newUserObject.put("email", email);
-        newUserObject.put("password", password);
+        newUserObject.put("userPass", password);
 
         //not required for registration. default to empty. user can edit this in profile
-        newUserObject.put("fullName", "");
-        newUserObject.put("username", "");
-        newUserObject.put("phoneNum", "");
-        newUserObject.put("dob", "");
+        newUserObject.put("realName", "-1");
+        newUserObject.put("username", email);
+        newUserObject.put("phoneNum", "this is a phone number!");
+        newUserObject.put("dob", "date of birth");
+        newUserObject.put("photoUrl", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw2iuBlwdkOaAAD8mFmUdIZM&ust=1665469241217000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCKi1zMWC1foCFQAAAAAdAAAAABAE");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObject,
                 new Response.Listener<JSONObject>() {
