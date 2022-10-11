@@ -15,11 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.getUserByEmailResponse;
-import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.MainActivity;
-import com.example.cyrate.activities.WelcomeActivity;
 import com.example.cyrate.models.UserModel;
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
 
 public class LoginTabFragment extends Fragment {
 
@@ -63,7 +62,6 @@ public class LoginTabFragment extends Fragment {
                 userEmail = email.getText().toString();
                 userPassword = password.getText().toString();
                 //get user by email
-                Log.d("email", email + " " + IntroActivity.emailPasswordMap.get(email));
 
                 String expectedPassword = IntroActivity.emailPasswordMap.get(userEmail);
 
@@ -72,7 +70,8 @@ public class LoginTabFragment extends Fragment {
                         //set global user
                         setGlobalUser(userEmail);
 
-                        Intent i = new Intent(getActivity(), WelcomeActivity.class);
+
+                        Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
                         startActivity(i);
                     }
                     else{

@@ -25,7 +25,7 @@ import org.json.JSONException;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
 
-    Button findUs_btn;
+    Button findUs_btn, reviews_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge;
     String busNameString;
@@ -45,6 +45,9 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
         edit_btn = (ImageView) findViewById(R.id.edit_icon);
         findUs_btn = (Button) findViewById(R.id.find_us_btn);
+        reviews_btn = (Button) findViewById(R.id.reviews_btn);
+
+
 
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
@@ -70,6 +73,16 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(IndividualBusinessActivity.this, FindUsActivity.class);
+
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
+        reviews_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, ReviewListActivity.class);
 
                 intent.putExtras(extras);
                 startActivity(intent);
