@@ -2,23 +2,33 @@ package com.example.cyrate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.cyrate.Logic.UserLogic;
+import com.example.cyrate.Logic.getUserByEmailResponse;
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.IntroActivity;
+import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.WelcomeActivity;
+import com.example.cyrate.models.UserModel;
 
 public class LoginTabFragment extends Fragment {
 
     EditText email, password;
     TextView forgotPass;
     Button login;
+
+    String userEmail;
+    String userPassword;
 
     float v = 0;
 
@@ -49,17 +59,51 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get email and password
+                userEmail = email.getText().toString();
+                userPassword = password.getText().toString();
                 //get user by email
+                Log.d("email", email + " " + IntroActivity.emailPasswordMap.get(email));
 
-                //verify password
+                String expectedPassword = IntroActivity.emailPasswordMap.get(userEmail);
 
-                //set global user
+                if (IntroActivity.emailPasswordMap.get(userEmail) != null) {
+                    if (userPassword.equals(expectedPassword)){
+                        //set global user
+                        setGlobalUser(userEmail);
 
-                Intent i = new Intent(getActivity(), WelcomeActivity.class);
-                startActivity(i);
+                        Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                        startActivity(i);
+                    }
+                    else{
+                        //password is wrong - make a toast
+                        Toast.makeText(getActivity(), "Password is incorrect", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    //email doesnt exist - make a toast
+                    Toast.makeText(getActivity(), "Email is incorrect", Toast.LENGTH_LONG).show();
+                }
             }
         }));
         return root;
 
+    }
+
+    public void setGlobalUser(String email){
+        UserLogic userLogic = new UserLogic();
+
+        userLogic.getUserByEmail(email, new getUserByEmailResponse() {
+            @Override
+            public void onSuccess(UserModel userModel) {
+                MainActivity.globalUser = userModel;
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("ERROR", "in login");
+                Toast.makeText(getActivity(), "something went wrong", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
