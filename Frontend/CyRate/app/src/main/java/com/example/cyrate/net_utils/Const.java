@@ -10,6 +10,7 @@ public class Const {
     public static final String ADD_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/create";
     public static final String DELETE_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/delete/";
     public static final String EDIT_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/updateById/";
+    public static final String EDIT_USER_URL = "http://coms-309-020.class.las.iastate.edu:8080/user/updateById/";
 
 
 

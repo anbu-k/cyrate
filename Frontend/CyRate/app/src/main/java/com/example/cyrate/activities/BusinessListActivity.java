@@ -164,6 +164,10 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
             case R.id.nav_profile:
                 // code here
                 break;
+            case R.id.nav_edit_profile:
+                Intent i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
+                startActivity(i);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
