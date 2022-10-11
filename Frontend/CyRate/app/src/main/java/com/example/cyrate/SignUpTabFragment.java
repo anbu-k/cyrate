@@ -14,18 +14,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.addUserResponse;
-import com.example.cyrate.Logic.getAllUsersResponse;
 import com.example.cyrate.Logic.getUserByEmailResponse;
-import com.example.cyrate.activities.AddBusinessActivity;
-import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.MainActivity;
-import com.example.cyrate.activities.WelcomeActivity;
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.models.UserModel;
 
 import org.json.JSONException;
-
-import java.util.List;
 
 public class SignUpTabFragment extends Fragment {
     public static boolean keepChecking = false;
@@ -176,7 +171,7 @@ public class SignUpTabFragment extends Fragment {
                                                 public void onSuccess(UserModel userModel) {
                                                     //set global user
                                                     MainActivity.globalUser = userModel;
-                                                    Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                                                    Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
                                                     startActivity(i);
                                                 }
 
