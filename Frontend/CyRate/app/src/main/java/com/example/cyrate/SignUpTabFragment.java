@@ -1,5 +1,9 @@
 package com.example.cyrate;
 
+import static com.example.cyrate.activities.IntroActivity.emailPasswordMap;
+import static com.example.cyrate.activities.IntroActivity.phoneNumberSet;
+import static com.example.cyrate.activities.IntroActivity.usernamesSet;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -124,7 +128,6 @@ public class SignUpTabFragment extends Fragment {
                         @Override
                         public void onError(String s) {
                             Log.d("SUCCESS", "In onERROR (didnt find email)");
-                            Toast.makeText(getActivity(), "this email is good to go", Toast.LENGTH_SHORT).show();
                             keepChecking = true;
 
                             //confirm userPassword and userConfirmPassword are equal
@@ -171,6 +174,7 @@ public class SignUpTabFragment extends Fragment {
                                                 public void onSuccess(UserModel userModel) {
                                                     //set global user
                                                     MainActivity.globalUser = userModel;
+
                                                     Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
                                                     startActivity(i);
                                                 }
@@ -200,15 +204,17 @@ public class SignUpTabFragment extends Fragment {
                     }
             );
 
-            //if email is in database, display a toast "this email is already registered", return false
-
-
-            //if not, display a toast "passwords do not match"
-
-            //if they do, create new userModel
-
-            //POST new user to database
-
+            //if we were successful, add to hashmap and sets
+            if (keepChecking){
+                addUserInfoToInstance(userEmail, userPassword, userUsername, userPhoneNumber);
+            }
         }
+    }
+
+    private void addUserInfoToInstance(String email, String password, String username, String phoneNum){
+        emailPasswordMap.put(email, password);
+        usernamesSet.add(username);
+        phoneNumberSet.add(phoneNum);
+        return;
     }
 }
