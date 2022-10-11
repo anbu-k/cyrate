@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import org.json.JSONException;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
 
+    Button findUs_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge;
     String busNameString;
@@ -42,6 +44,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
         edit_btn = (ImageView) findViewById(R.id.edit_icon);
+        findUs_btn = (Button) findViewById(R.id.find_us_btn);
 
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
@@ -60,6 +63,16 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 navigateBack();
+            }
+        });
+
+        findUs_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, FindUsActivity.class);
+
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 

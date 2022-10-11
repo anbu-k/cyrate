@@ -18,7 +18,12 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         TextView userName = findViewById(R.id.user_name);
-        userName.setText(MainActivity.globalUser.getFullName());
+        if(MainActivity.globalUser != null){
+            userName.setText(MainActivity.globalUser.getFullName());
+        }
+        else{
+            userName.setText("User");
+        }
 //        userName.setText("megan");
 
         final Handler handler = new Handler();
