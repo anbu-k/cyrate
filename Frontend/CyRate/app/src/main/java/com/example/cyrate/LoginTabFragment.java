@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.cyrate.activities.BusinessListActivity;
-import com.example.cyrate.activities.WelcomeActivity;
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
 
 public class LoginTabFragment extends Fragment {
 
@@ -55,7 +54,7 @@ public class LoginTabFragment extends Fragment {
 
                 //set global user
 
-                Intent i = new Intent(getActivity(), WelcomeActivity.class);
+                Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
                 startActivity(i);
             }
         }));

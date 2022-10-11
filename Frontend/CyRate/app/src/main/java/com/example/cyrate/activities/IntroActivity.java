@@ -1,5 +1,7 @@
 package com.example.cyrate.activities;
 
+import static com.example.cyrate.activities.MainActivity.globalUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +16,7 @@ import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.getEmailPasswordResponse;
 import com.example.cyrate.Logic.getUsernamesResponse;
 import com.example.cyrate.R;
+import com.example.cyrate.models.UserModel;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,6 +44,11 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        //set default user info - for testing only
+        globalUser = new UserModel("anbu@gmail.com", "1234567");
+        globalUser.setUsername("anbuk");
+        globalUser.setPhotoUrl("https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         final Handler handler = new Handler();
         userLogic = new UserLogic();
