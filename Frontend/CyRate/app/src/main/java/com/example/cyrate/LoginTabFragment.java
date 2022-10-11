@@ -68,11 +68,7 @@ public class LoginTabFragment extends Fragment {
                 if (IntroActivity.emailPasswordMap.get(userEmail) != null) {
                     if (userPassword.equals(expectedPassword)){
                         //set global user
-                        setGlobalUser(userEmail);
-
-
-                        Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
-                        startActivity(i);
+                        setGlobalUserAndNavigate(userEmail);
                     }
                     else{
                         //password is wrong - make a toast
@@ -89,13 +85,15 @@ public class LoginTabFragment extends Fragment {
 
     }
 
-    public void setGlobalUser(String email){
+    public void setGlobalUserAndNavigate(String email){
         UserLogic userLogic = new UserLogic();
 
         userLogic.getUserByEmail(email, new getUserByEmailResponse() {
             @Override
             public void onSuccess(UserModel userModel) {
                 MainActivity.globalUser = userModel;
+                Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
+                startActivity(i);
             }
 
             @Override
