@@ -97,8 +97,6 @@ public class UserLogic {
         newUserModel.setUserId((int) user.get("userID"));
 
         return newUserModel;
-
-//        return new UserModel("megan", "megan");
     }
 
     /**
@@ -229,6 +227,35 @@ public class UserLogic {
         });
 
         AppController.getInstance().addToRequestQueue(arrayRequest);
+
+    }
+
+    public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, editProfileResponse r) throws JSONException {
+        String url = Const.EDIT_USER_URL + String.valueOf(id);
+
+        JSONObject userObject = new JSONObject();
+        userObject.put("userType", "normal");
+        userObject.put("realName", name);
+        userObject.put("username", username);
+        userObject.put("userPass", password);
+        userObject.put("email", email);
+        userObject.put("phoneNum", phoneNum);
+        userObject.put("dob", dob);
+        userObject.put("photoUrl", photo);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, userObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Succesfully updated profile!");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        });
+
+
 
     }
 }

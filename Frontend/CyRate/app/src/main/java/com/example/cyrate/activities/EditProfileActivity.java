@@ -5,13 +5,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cyrate.Logic.UserLogic;
+import com.example.cyrate.Logic.editProfileResponse;
 import com.example.cyrate.R;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONException;
 
 public class EditProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     //declare variables
@@ -58,6 +62,8 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
             String newName = nameText.getText().toString();
             String newBirthday = birthdayText.getText().toString();
             String newPhoto = photoUrlText.getText().toString();
+            String phoneNum = MainActivity.globalUser.getPhoneNum();
+            int id = MainActivity.globalUser.getUserId();
 
             @Override
             public void onClick(View v) {
@@ -78,6 +84,22 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
                 photoUrlText.setText("");
 
                 //update
+                try{
+                    userLogic.editUser(id, newUsername, newEmail, newPassword, newName, newBirthday, newPhoto, phoneNum, new editProfileResponse() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Toast.makeText(EditProfileActivity.this, s, Toast.LENGTH_LONG);
+                        }
+
+                        @Override
+                        public void onError(String s) {
+                            Toast.makeText(EditProfileActivity.this, s, Toast.LENGTH_LONG);
+
+                        }
+                    });
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
             }
         }));
 
