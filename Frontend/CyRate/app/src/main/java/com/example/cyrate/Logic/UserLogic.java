@@ -55,22 +55,23 @@ public class UserLogic {
 
     /**
      * make request to server to get a specific user's info given their email
+     *
      * @param email
      * @param r
      */
-    public void getUserByEmail(String email, getUserByEmailResponse r){
+    public void getUserByEmail(String email, getUserByEmailResponse r) {
         String url = Const.GET_USER_BY_EMAIL_URL + email;
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                try{
+                try {
                     JSONObject userObject = (JSONObject) response;
                     Log.d("getUserByEmail response", userObject.toString());
                     UserModel user = convertToUserModel(userObject);
                     r.onSuccess(user);
-                }catch(Exception e){
+                } catch (Exception e) {
                     r.onError("OOF");
                     e.printStackTrace();
                 }
@@ -86,7 +87,7 @@ public class UserLogic {
 
     }
 
-    private  UserModel convertToUserModel(JSONObject user) throws JSONException {
+    private UserModel convertToUserModel(JSONObject user) throws JSONException {
         UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
         newUserModel.setUsername(user.get("username").toString());
         newUserModel.setUserType(UserType.BASIC_USER);
@@ -116,7 +117,7 @@ public class UserLogic {
 
 
         //not required for registration. default to empty. user can edit this in profile
-        newUserObject.put("realName", "m-1m11");
+        newUserObject.put("realName", "");
         //TODO
         //need to add a username field in registration page.
         //if a user updates their username from edit profile to the email of a future user there will be problems
@@ -154,7 +155,7 @@ public class UserLogic {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for(int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++) {
                         JSONObject user = (JSONObject) response.get(i);
                         emailPasswordMap.put(user.get("email").toString(), user.get("userPass").toString());
                     }
@@ -182,7 +183,7 @@ public class UserLogic {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for(int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++) {
                         JSONObject user = (JSONObject) response.get(i);
                         usernameMap.add(user.get("username").toString());
                     }
@@ -210,7 +211,7 @@ public class UserLogic {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for(int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++) {
                         JSONObject user = (JSONObject) response.get(i);
                         phoneNumberSet.add(user.get("phoneNum").toString());
                     }
@@ -254,8 +255,7 @@ public class UserLogic {
                 r.onError(error.toString());
             }
         });
-
-
+        AppController.getInstance().addToRequestQueue(request);
 
     }
 }

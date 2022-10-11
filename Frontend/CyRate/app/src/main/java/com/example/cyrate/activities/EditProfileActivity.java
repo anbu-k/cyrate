@@ -1,5 +1,6 @@
 package com.example.cyrate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,15 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
 
     UserLogic userLogic;
 
+
+//    String newName;
+//    String newUsername;
+//    String newBirthday;
+//    String newPassword;
+//    String newEmail;
+//    String newPhoto;
+//    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +66,21 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
         photoUrlText.setHint(MainActivity.globalUser.getPhotoUrl());
 
         updateButton.setOnClickListener((new View.OnClickListener() {
-            String newUsername = usernameText.getText().toString();
-            String newEmail = emailText.getText().toString();
-            String newPassword = passwordText.getText().toString();
-            String newName = nameText.getText().toString();
-            String newBirthday = birthdayText.getText().toString();
-            String newPhoto = photoUrlText.getText().toString();
-            String phoneNum = MainActivity.globalUser.getPhoneNum();
-            int id = MainActivity.globalUser.getUserId();
+
 
             @Override
             public void onClick(View v) {
+                userLogic = new UserLogic();
+
+                String newUsername = usernameText.getText().toString();
+                String newEmail = emailText.getText().toString();
+                String newPassword = passwordText.getText().toString();
+                String newName = nameText.getText().toString();
+                String newBirthday = birthdayText.getText().toString();
+                String newPhoto = photoUrlText.getText().toString();
+                String phoneNum = MainActivity.globalUser.getPhoneNum();
+                int id = MainActivity.globalUser.getUserId();
+
                 //check if anything is empty. if it is, fill with current contents of user
                 newUsername = !newUsername.isEmpty() ? newUsername : MainActivity.globalUser.getUsername();
                 newEmail = !newEmail.isEmpty() ? newEmail : MainActivity.globalUser.getEmail();
@@ -75,26 +89,25 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
                 newBirthday = !newBirthday.isEmpty() ? newName : MainActivity.globalUser.getDob();
                 newPhoto = !newPhoto.isEmpty() ? newPhoto : MainActivity.globalUser.getPhotoUrl();
 
-                //set fields back to empty
-                usernameText.setText("");
-                emailText.setText("");
-                passwordText.setText("");
-                nameText.setText("");
-                birthdayText.setText("");
-                photoUrlText.setText("");
-
                 //update
                 try{
                     userLogic.editUser(id, newUsername, newEmail, newPassword, newName, newBirthday, newPhoto, phoneNum, new editProfileResponse() {
                         @Override
                         public void onSuccess(String s) {
                             Toast.makeText(EditProfileActivity.this, s, Toast.LENGTH_LONG);
+                            //set fields back to empty
+                            usernameText.setText("");
+                            emailText.setText("");
+                            passwordText.setText("");
+                            nameText.setText("");
+                            birthdayText.setText("");
+                            photoUrlText.setText("");
+
                         }
 
                         @Override
                         public void onError(String s) {
                             Toast.makeText(EditProfileActivity.this, s, Toast.LENGTH_LONG);
-
                         }
                     });
                 }catch(JSONException e){
