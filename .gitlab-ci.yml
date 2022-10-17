@@ -9,6 +9,7 @@ maven-build: #this is a JOB
   script:
     - cd Backend/cy_rate/src/main/java/com/example/cy_rate/CyRateApplication.java #change directory to where you have your springboot application
     - mvn package
+
 # android-build: #this is another job
 #   image: gjandres/android-ci:latest # this is a directive to DOCKER
 #   stage: androidtry
