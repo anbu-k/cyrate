@@ -45,7 +45,7 @@ public class EditProfileActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_edit_profile);
 
         //set declared variables
-        usernameText = findViewById(R.id.edittext_email);
+        usernameText = findViewById(R.id.edittext_username);
         emailText = findViewById(R.id.edittext_email);
         passwordText = findViewById(R.id.edittext_password);
         nameText = findViewById(R.id.edittext_name);
