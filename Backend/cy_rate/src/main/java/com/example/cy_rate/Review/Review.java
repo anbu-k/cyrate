@@ -23,6 +23,7 @@ import javax.persistence.JoinColumn;
 public class Review {
     
    //testing ci 'only'
+   //test 2
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int review_id;
