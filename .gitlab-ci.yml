@@ -7,8 +7,7 @@ maven-build: #this is a JOB
     - springboot # this is LINK to the shell runner on the remote-server
   script:
     - cd Backend/cy_rate/ #change directory to where you have your springboot application
-    - echo $JAVA_HOME
-    #- mvn package -e
+    - mvn package 
 
 # android-build: #this is another job
 #   image: gjandres/android-ci:latest # this is a directive to DOCKER
