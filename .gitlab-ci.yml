@@ -6,7 +6,7 @@ maven-build: #this is a JOB
   tags:
     - springboot # this is LINK to the shell runner on the remote-server
   script:
-    - cd Backend/cy_rate/src/main/java/com/example/cy_rate/CyRateApplication.java #change directory to where you have your springboot application
+    - cd Backend/cy_rate/src/main/java/com/example/cy_rate/ #change directory to where you have your springboot application
     - mvn package
 
 # android-build: #this is another job
