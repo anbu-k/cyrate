@@ -1,5 +1,6 @@
 package com.example.cy_rate.Review;
 import com.example.cy_rate.Business.Business;
+import com.example.cy_rate.User.User;
 
 // JPA stuff
 import javax.persistence.Entity;
@@ -38,14 +39,20 @@ public class Review {
     @JoinColumn(name = "bus_id")
     private Business business;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Review(){
         this.business = null;
+        this.user = null;
         this.rateVal = 0;
         this.reviewTxt = "";
     }
 
-    public Review(Business business, int rateVal, String reviewTxt){
+    public Review(Business business, User user, int rateVal, String reviewTxt){
         this.business = business;
+        this.user = user;
         this.rateVal = rateVal;
         this.reviewTxt = reviewTxt;
     }
@@ -54,6 +61,26 @@ public class Review {
     //---------------  Getter & Setters-------------//
     public int get_id(){
         return review_id;
+    }
+
+    public Business getBusiness()
+    {
+        return business;
+    }
+
+    public void setBusiness(Business bus)
+    {
+        this.business = bus;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
     public void set_id(int id){
@@ -83,10 +110,11 @@ public class Review {
         this.reviewTxt = review;
     }
 
-
+    //Sam DeFrancisco's review for Potbelly 
+    //rating...
     @Override
     public String toString() {
-        return business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
+        return user.getrealName() + "'s review for " + business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
     }
     
 }
