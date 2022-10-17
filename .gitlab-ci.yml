@@ -1,6 +1,5 @@
 tages:
   - maventry
-  # - androidtry
 
 maven-build: #this is a JOB
   stage: maventry
