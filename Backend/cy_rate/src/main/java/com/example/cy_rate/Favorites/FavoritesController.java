@@ -28,7 +28,28 @@ public class FavoritesController {
         return favRepo.findAll();
     }
 
+    @GetMapping(path = "/favorites/byId/{id}")
+    Favorites getUserById(@PathVariable int id)
+    {
+        return favRepo.findById(id);
+    }
 
-    
-    
+    @PostMapping(path = "/favorites/create")
+    String chooseFavorite(@RequestBody Favorites fav)
+    {
+        if(fav == null)
+        {
+            return failure;
+        }
+        favRepo.save(fav);
+        return success;
+    }
+
+    @DeleteMapping(path = "/favorites/delete/{id}")
+    String deleteFavorite(@PathVariable int id)
+    {
+        favRepo.deleteById(id);
+        return success;
+    }   
+
 }

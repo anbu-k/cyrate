@@ -37,8 +37,24 @@ public class Favorites {
     @JoinColumn(name = "busId")
     private Business busId;
 
-    public Favorites(){
+    public Favorites(int favId){
+        this.favId= favId;
         
+    }
+
+    public int getFavoritesID()
+    {
+        return favId;
+    }
+
+    public void setFavoritesID(int favId)
+    {
+        this.favId = favId;
+    }
+
+    public String toString()
+    {
+        return favId + "\n";
     }
 
 
