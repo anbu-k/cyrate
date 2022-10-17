@@ -22,7 +22,7 @@ import javax.persistence.JoinColumn;
 @Table(name = "Reviews")
 public class Review {
     
-   
+   //testing ci 'only'
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int review_id;
@@ -36,7 +36,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "bus_id")
     private Business business;
-
 
     public Review(){
         this.business = null;
