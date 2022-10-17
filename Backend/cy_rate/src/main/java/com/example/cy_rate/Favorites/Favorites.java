@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+// unsure about these
+
 @Entity
 @Table(name = "Favorites")
 public class Favorites {

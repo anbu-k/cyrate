@@ -50,6 +50,6 @@ public class FavoritesController {
     {
         favRepo.deleteById(id);
         return success;
-    }   
+    }
 
 }
