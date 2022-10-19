@@ -110,7 +110,7 @@ public class UserLogic {
         String url = Const.POST_USER_URL;
 
         JSONObject newUserObject = new JSONObject();
-        newUserObject.put("userType", "normal");
+        newUserObject.put("userType", userType);
         newUserObject.put("email", email);
         newUserObject.put("userPass", password);
         newUserObject.put("username", username);

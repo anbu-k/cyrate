@@ -1,8 +1,8 @@
 package com.example.cyrate;
 
 public enum UserType {
-    GUEST,
-    BASIC_USER,
+    GUEST,              //guest
+    BASIC_USER,         //normal
     BUSINESS_OWNER,
     ADMIN;
 }
