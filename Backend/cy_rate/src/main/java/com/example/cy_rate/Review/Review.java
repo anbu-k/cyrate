@@ -51,7 +51,6 @@ public class Review {
     private Business business;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
@@ -88,7 +87,7 @@ public class Review {
     {
         this.business = bus;
     }
-
+    @JsonIgnore
     public User getUser()
     {
         return user;

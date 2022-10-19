@@ -52,25 +52,6 @@ public class ReviewController {
         return reviewRepo.findAll();
     }
 
-    /**
-     * @param userId - the users id
-     * @return Get All reviews from a specific user
-     */
-    @GetMapping(path="/reviews/user/{userId}")
-    List<Review> getUserReviews(@PathVariable int userId)
-    {
-        return reviewRepo.findByUser(userId);
-    }
-
-    /**
-     * @param busId - businesses id 
-     * @return Get All reviews for a specific business
-     */
-    @GetMapping(path="/reviews/business/{busId}")
-    List<Review> getBusinessReviews(@PathVariable int busId)
-    {
-        return reviewRepo.findByBusiness(busId);
-    }
 
     /**
      * 

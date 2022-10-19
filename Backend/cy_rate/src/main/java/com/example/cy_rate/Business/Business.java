@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //@Hidden
 import io.swagger.v3.oas.annotations.Hidden;
 
-
-
 @Entity
 public class Business {
     
@@ -220,7 +218,4 @@ public class Business {
         return busId + "\n" + busName + "\n" + busType 
         + "\n" + hours + "\n" + location + "\n" + priceGauge;
     }
-
-
-
 }

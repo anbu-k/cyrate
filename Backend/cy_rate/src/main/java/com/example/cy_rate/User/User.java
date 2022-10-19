@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.cy_rate.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+//@Hidden
+import io.swagger.v3.oas.annotations.Hidden;
 
 @Entity
 public class User {
     // pk 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Hidden
     private int userId;
     private String userType;
     private String realName;
