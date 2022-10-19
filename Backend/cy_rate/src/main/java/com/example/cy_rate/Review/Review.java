@@ -3,12 +3,15 @@ import com.example.cy_rate.Business.Business;
 import com.example.cy_rate.Business.BusinessRepository;
 import com.example.cy_rate.User.User;
 import com.example.cy_rate.User.UserRepository;
+import io.swagger.v3.oas.annotations.Hidden;
 
 // JPA stuff
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +35,9 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int review_id;
+    @Hidden //hides id in swagger docs
+    @Column(name="rid")
+    private int rid;
 
     @Column(name= "rateVal")
     private int rateVal;
@@ -41,10 +46,12 @@ public class Review {
     private String reviewTxt;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
@@ -61,8 +68,14 @@ public class Review {
 
 
     //---------------  Getter & Setters-------------//
-    public int get_id(){
-        return review_id;
+    public int getRid()
+    {
+        return rid;
+    }
+
+    public void setRid(int rid)
+    {
+        this.rid = rid;
     }
 
     public Business getBusiness()
@@ -86,18 +99,6 @@ public class Review {
         this.user = user;
     }
 
-    public void set_id(int id){
-        this.review_id = id;
-    }
-
-    
-    public String getRestName(){
-        return this.business.getBusName();
-    }
-    
-    public void setRestName(String givenName){
-        this.business.setBusName(givenName);
-    }
 
     public int getRateVal(){
         return this.rateVal;

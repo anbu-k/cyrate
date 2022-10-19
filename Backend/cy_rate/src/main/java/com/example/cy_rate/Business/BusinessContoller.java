@@ -35,6 +35,8 @@ public class BusinessContoller {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
+//-------------- GET MAPPING ----------------//
+    
     /**
      * Get all business from remote db
      * 
@@ -57,6 +59,23 @@ public class BusinessContoller {
         return businessRepo.findById(id);
     }
 
+    
+    /**
+     * Gather all reviews for a specific business
+     * 
+     * @param bid business id to get reviews for
+     * @return List<Review> 
+     */
+    @GetMapping(path="/business/getReviews/byId/{bid}")
+    List<Review> getReviews(@PathVariable int bid)
+    {
+        Business b = businessRepo.findById(bid);
+        return b.getReviews();
+    }
+
+
+//-------------- Post MAPPING ----------------//
+
     /**
      * Create a business by passing json obj
      * @param bus
@@ -73,7 +92,8 @@ public class BusinessContoller {
         
         return success;
     }
-
+    
+//-------------- Delete MAPPING ----------------//
     /**
      * Deletes business identified by id from business table in db
      * 
@@ -87,6 +107,7 @@ public class BusinessContoller {
         return success;
     }
 
+//-------------- Put MAPPING ----------------//
     /**
      * Update specific business by id
      * Pass new Business obj as body w updated values

@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+//@Hidden
+import io.swagger.v3.oas.annotations.Hidden;
+
 
 
 @Entity
@@ -25,6 +28,7 @@ public class Business {
     //----Business information-----//
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Hidden
     private int busId;
     private String busName;
     private String busType;
