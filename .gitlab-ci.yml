@@ -20,7 +20,7 @@ android-build: #this is another job
      - export GRADLE_USER_HOME=`pwd`/.gradle
      - chmod +x ./Frontend/CyRate/gradlew #change directory to where you have ‘gradlew’ in your android directory
    script:
-     - cd Frontend/CyRate/app #change directory to where you have your android application
+     - cd Frontend/CyRate #change directory to where you have your android application
      - ./gradlew assemble
    artifacts:
      paths:
@@ -30,10 +30,10 @@ android-test:
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - chmod +x ./Frontend/CyRate/gradlew
   tags:
     - android_studio
   script:
-    - cd Frontend
+    - cd Frontend/CyRate
     - ./gradlew test
 
