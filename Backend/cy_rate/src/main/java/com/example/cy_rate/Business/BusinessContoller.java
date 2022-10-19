@@ -1,6 +1,7 @@
 package com.example.cy_rate.Business;
 
 import com.example.cy_rate.Review.Review;
+import com.example.cy_rate.User.User;
 import com.example.cy_rate.Review.ReviewRepository;
 import com.example.cy_rate.User.UserRepository;
 
@@ -120,15 +121,5 @@ public class BusinessContoller {
         return success; 
     }
 
-    @PutMapping(path="/business/{bid}/user/{uid}/createReview")
-    String createReview(@PathVariable int bid, @PathVariable int uid, @RequestBody Review review)
-    {
-        Business b = businessRepo.findById(bid);
-        review.setBusiness(b);
-        b.addReview(review);
-        reviewRepo.save(review);
-        businessRepo.save(b);
-        
-        return success;
-    }
+
 }
