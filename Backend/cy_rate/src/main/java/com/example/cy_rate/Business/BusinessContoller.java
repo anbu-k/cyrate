@@ -1,5 +1,9 @@
 package com.example.cy_rate.Business;
 
+import com.example.cy_rate.Review.Review;
+import com.example.cy_rate.Review.ReviewRepository;
+import com.example.cy_rate.User.UserRepository;
+
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusinessContoller {
     @Autowired
     BusinessRepository businessRepo;
+
+    @Autowired
+    UserRepository userRepo;
+
+    @Autowired
+    ReviewRepository reviewRepo;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -108,5 +118,17 @@ public class BusinessContoller {
             return "Could not find business with id: " + id;
         }
         return success; 
+    }
+
+    @PutMapping(path="/business/{bid}/user/{uid}/createReview")
+    String createReview(@PathVariable int bid, @PathVariable int uid, @RequestBody Review review)
+    {
+        Business b = businessRepo.findById(bid);
+        review.setBusiness(b);
+        b.addReview(review);
+        reviewRepo.save(review);
+        businessRepo.save(b);
+        
+        return success;
     }
 }

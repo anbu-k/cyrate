@@ -1,16 +1,22 @@
 package com.example.cy_rate.Review;
 import com.example.cy_rate.Business.Business;
+import com.example.cy_rate.Business.BusinessRepository;
 import com.example.cy_rate.User.User;
+import com.example.cy_rate.User.UserRepository;
 
 // JPA stuff
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+import javax.persistence.Transient;
 
 
 /**
@@ -23,8 +29,7 @@ import javax.persistence.JoinColumn;
 @Table(name = "Reviews")
 public class Review {
     
-   //testing ci 'only'
-   //test 2
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int review_id;
@@ -36,23 +41,20 @@ public class Review {
     private String reviewTxt;
 
     @ManyToOne
-    @JoinColumn(name = "bus_id")
+    @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
+
     public Review(){
-        this.business = null;
-        this.user = null;
         this.rateVal = 0;
         this.reviewTxt = "";
     }
 
-    public Review(Business business, User user, int rateVal, String reviewTxt){
-        this.business = business;
-        this.user = user;
+    public Review(int rateVal, String reviewTxt){
         this.rateVal = rateVal;
         this.reviewTxt = reviewTxt;
     }
@@ -67,6 +69,7 @@ public class Review {
     {
         return business;
     }
+
 
     public void setBusiness(Business bus)
     {
@@ -86,6 +89,8 @@ public class Review {
     public void set_id(int id){
         this.review_id = id;
     }
+
+    
     public String getRestName(){
         return this.business.getBusName();
     }
