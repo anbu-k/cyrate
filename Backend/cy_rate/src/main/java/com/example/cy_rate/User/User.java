@@ -26,7 +26,8 @@ public class User {
     private String dob;
     private String resetPassword;
     private String profilePicture;
-
+    //test for CI
+    
     public User(){
 
     }

@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+// unsure about these
+
 @Entity
 @Table(name = "Favorites")
 public class Favorites {
@@ -37,8 +39,24 @@ public class Favorites {
     @JoinColumn(name = "busId")
     private Business busId;
 
-    public Favorites(){
+    public Favorites(int favId){
+        this.favId= favId;
         
+    }
+
+    public int getFavoritesID()
+    {
+        return favId;
+    }
+
+    public void setFavoritesID(int favId)
+    {
+        this.favId = favId;
+    }
+
+    public String toString()
+    {
+        return favId + "\n";
     }
 
 

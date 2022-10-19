@@ -52,6 +52,4 @@ public class FavoritesController {
         return success;
     }
 
-    
-    
 }

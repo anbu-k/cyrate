@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyrate.R;
@@ -23,6 +26,7 @@ import java.util.List;
 
 public class FindUsActivity extends FragmentActivity implements OnMapReadyCallback {
     TextView address, phoneNum, hours;
+    ImageView back_btn;
     GoogleMap map;
 
     Bundle extras;
@@ -32,6 +36,7 @@ public class FindUsActivity extends FragmentActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_us);
 
+        back_btn = (ImageView) findViewById(R.id.back_button_image);
         address = (TextView) findViewById(R.id.address_txt);
         phoneNum = (TextView) findViewById(R.id.phoneNumber_txt);
         hours = (TextView) findViewById(R.id.hours_txt);
@@ -48,7 +53,14 @@ public class FindUsActivity extends FragmentActivity implements OnMapReadyCallba
         phoneNum.setText("(515) 293-0180");
         hours.setText(hoursString);
 
-
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FindUsActivity.this, IndividualBusinessActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
