@@ -1,5 +1,6 @@
-tages:
+stages:
   - maventry
+  - androidtry
   # - androidtry
 
 maven-build: #this is a JOB
