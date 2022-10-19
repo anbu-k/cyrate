@@ -24,7 +24,7 @@ import org.json.JSONException;
 
 
 public class IndividualBusinessActivity extends AppCompatActivity {
-
+    // test push
     Button findUs_btn, reviews_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge;
