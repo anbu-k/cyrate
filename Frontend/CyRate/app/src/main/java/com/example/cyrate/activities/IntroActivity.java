@@ -10,10 +10,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.getEmailPasswordResponse;
+import com.example.cyrate.Logic.getUserByEmailResponse;
 import com.example.cyrate.Logic.getUsernamesResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.models.UserModel;
@@ -45,13 +47,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        //set default user info - for testing only
-        globalUser = new UserModel("anbu@gmail.com", "1234567");
-        globalUser.setUsername("anbuk");
-        globalUser.setPhotoUrl("https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
-
         final Handler handler = new Handler();
-        userLogic = new UserLogic();
 
         initializeEmailPasswordMap();
         initializeUsernameSet();
