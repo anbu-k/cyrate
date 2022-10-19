@@ -20,3 +20,19 @@ maven-build: #this is a JOB
    script:
      - cd Frontend/CyRate/app #change directory to where you have your android application
      - ./gradlew assemble
+   artifacts:
+     paths:
+       - Android_test/app/build/outputs/
+android-test:
+  image: gjandres/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/gradlew
+  tags:
+    - android_tag
+  script:
+    - cd Frontend
+    - ./gradlew test
+
+
