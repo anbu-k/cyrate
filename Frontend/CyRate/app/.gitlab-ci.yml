@@ -1,6 +1,7 @@
 stages:
   - maventry
   - androidtry
+  - androidtest
   # - androidtry
 
 maven-build: #this is a JOB
@@ -10,7 +11,7 @@ maven-build: #this is a JOB
   script:
     - cd Backend/cy_rate #change directory to where you have your springboot application
     - mvn package
- android-build: #this is another job
+android-build: #this is another job
    image: gjandres/android-ci:latest # this is a directive to DOCKER
    stage: androidtry
    tags:
