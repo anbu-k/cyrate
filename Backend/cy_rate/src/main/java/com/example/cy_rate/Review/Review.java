@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 import javax.persistence.GeneratedValue;
@@ -51,6 +52,7 @@ public class Review {
     private Business business;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 

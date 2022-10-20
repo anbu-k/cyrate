@@ -52,6 +52,12 @@ public class ReviewController {
         return reviewRepo.findAll();
     }
 
+    @GetMapping(path="/tester/{id}")
+    List<Review> test(@PathVariable int id)
+    {
+       List<Review> temp = reviewRepo.findByBusiness(id);
+       return temp;
+    }
 
     /**
      * 
