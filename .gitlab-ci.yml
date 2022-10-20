@@ -1,6 +1,7 @@
 stages:
   - maventry
   - maventest
+  - mavenDeploy
   - androidtry
   - androidtest
   # - androidtry
@@ -24,6 +25,19 @@ maven-test:
   artifacts:
     paths:
       - Backend/target/*.jar
+autoDeploy:
+  stage: mavenDeploy 
+  tags:
+    - springboot
+  script:
+    - cd Backend/cy_rate
+    - mvn package
+    - sudo mv target/*.jar /targe/web-demo.jar
+    - sudo systemct1 stop system-web-demo
+    - sudo systemct1 start system-web-demo
+
+    #basically builds, then copies the jar to the /target folder, then stops existing service, and finally restarts it.
+
 android-build: #this is another job
    image: gjandres/android-ci:latest # this is a directive to DOCKER
    stage: androidtry
