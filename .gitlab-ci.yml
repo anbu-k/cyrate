@@ -33,8 +33,8 @@ autoDeploy:
     - cd Backend/cy_rate
     - mvn package
     - sudo mv target/*.jar /target/web-demo.jar
-    - sudo systemct1 stop system-web-demo
-    - sudo systemct1 start system-web-demo
+    - sudo systemctl stop system-web-demo
+    - sudo systemctl start system-web-demo
 
     #basically builds, then copies the jar to the /target folder, then stops existing service, and finally restarts it.
 
