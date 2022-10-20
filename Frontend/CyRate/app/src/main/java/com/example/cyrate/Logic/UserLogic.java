@@ -90,7 +90,7 @@ public class UserLogic {
     private UserModel convertToUserModel(JSONObject user) throws JSONException {
         UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
         newUserModel.setUsername(user.get("username").toString());
-        newUserModel.setUserType(getUserType(user.get("userType").toString()));
+        newUserModel.setUserType(convertUserType(user.get("userType").toString()));
         newUserModel.setFullName(user.get("realName").toString());
         newUserModel.setPhoneNum(user.get("phoneNum").toString());
         newUserModel.setDob(user.get("dob").toString());
@@ -100,7 +100,7 @@ public class UserLogic {
         return newUserModel;
     }
 
-    private UserType getUserType(String jsonType){
+    private UserType convertUserType(String jsonType){
         switch (jsonType){
             case "guest":
                 return UserType.GUEST;
