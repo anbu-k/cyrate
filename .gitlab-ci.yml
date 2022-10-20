@@ -32,7 +32,7 @@ autoDeploy:
   script:
     - cd Backend/cy_rate
     - mvn package
-    - sudo mv target/*.jar /targe/web-demo.jar
+    - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemct1 stop system-web-demo
     - sudo systemct1 start system-web-demo
 
