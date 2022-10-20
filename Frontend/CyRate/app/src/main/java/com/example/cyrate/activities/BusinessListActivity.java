@@ -186,6 +186,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         return true;
     }
 
+    //set visibility of all menu items every time in case users log out and log back in?
     private void hideMenuItems(){
         Menu navMenu = navView.getMenu();
 
