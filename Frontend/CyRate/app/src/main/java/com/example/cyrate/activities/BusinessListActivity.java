@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,6 +51,13 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         open_menu = (ImageView) findViewById(R.id.open_menu_icon);
+
+        // Use this to hide any menu tabs depending on the user type
+        hideMenuItems();
+
+
+
+
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -172,6 +180,16 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void hideMenuItems(){
+        Menu navMenu = navView.getMenu();
+
+        // A guest user should not be able to edit the guest user profile
+        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
+            navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
+        }
+    }
+
 }
 
 

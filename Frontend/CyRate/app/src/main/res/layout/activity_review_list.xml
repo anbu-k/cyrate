@@ -33,7 +33,6 @@
             android:rotation="90"
             android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="@id/textView"
-            app:layout_constraintTop_toTopOf="@id/textView"
             app:layout_constraintStart_toStartOf="parent"
             />
 
@@ -59,17 +58,77 @@
             android:background="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/textView" />
 
+
+
+        <TextView
+            android:id="@+id/ratingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias=".15"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ratingBar"
+            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+            android:text="5.0"
+            />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:isIndicator="true"
+            android:layout_marginLeft="10dp"
+            android:numStars="5"
+            android:rating="5.0"
+            android:stepSize="0.5"
+            android:theme="@style/RatingGolden"
+            app:layout_constraintStart_toEndOf="@id/ratingValue"
+            app:layout_constraintTop_toBottomOf="@id/view" />
+
+        <TextView
+            android:id="@+id/reviewsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_reviews"
+            app:layout_constraintTop_toTopOf="@id/tv_reviews"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reviews"
+            android:text="1,291"
+            />
+
+        <TextView
+            android:id="@+id/tv_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias=".85"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="parent
+"           app:layout_constraintStart_toStartOf="parent"
+            android:text="Reviews"
+            />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/tv_reviews" />
+
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reviewList_recyclerView"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="570dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/view2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            app:layout_constraintVertical_bias="0.0" />
-
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
