@@ -1,5 +1,6 @@
 stages:
   - maventry
+  - maventest
   - androidtry
   - androidtest
   # - androidtry
@@ -13,6 +14,16 @@ maven-build: #this is a JOB
     - mvn package
   except:
     - reviews
+maven-test:
+  stage: maventest
+  tags:
+    - springboot
+  script:
+      - cd Backend/cy_rate
+      - mvn test
+  artifacts:
+    paths:
+      - Backend/target/*.jar
 android-build: #this is another job
    image: gjandres/android-ci:latest # this is a directive to DOCKER
    stage: androidtry
