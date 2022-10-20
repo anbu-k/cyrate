@@ -24,7 +24,7 @@ public class LoginTabFragment extends Fragment {
 
     EditText email, password;
     TextView forgotPass;
-    Button login;
+    Button login, continueAsGuest;
 
     String userEmail;
     String userPassword;
@@ -39,21 +39,25 @@ public class LoginTabFragment extends Fragment {
         password = root.findViewById(R.id.password);
         forgotPass = root.findViewById(R.id.forgotPassword);
         login = root.findViewById(R.id.btn_login);
+        continueAsGuest = root.findViewById(R.id.btn_use_as_guest);
 
         email.setTranslationX(800);
         password.setTranslationX(800);
         forgotPass.setTranslationX(800);
         login.setTranslationX(800);
+        continueAsGuest.setTranslationX(800);
 
         email.setAlpha(v);
         password.setAlpha(v);
         forgotPass.setAlpha(v);
         login.setAlpha(v);
+        continueAsGuest.setAlpha(v);
 
         email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         forgotPass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
+        continueAsGuest.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
 
         login.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -81,6 +85,14 @@ public class LoginTabFragment extends Fragment {
                 }
             }
         }));
+
+        continueAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setGlobalUserAndNavigate("guest-user-email");
+            }
+        });
+
         return root;
 
     }
