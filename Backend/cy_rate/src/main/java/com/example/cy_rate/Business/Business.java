@@ -1,6 +1,7 @@
 package com.example.cy_rate.Business;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import com.example.cy_rate.Review.Review; //review class
 
 
@@ -9,13 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+//@Hidden
+import io.swagger.v3.oas.annotations.Hidden;
 
 @Entity
 public class Business {
@@ -23,6 +26,7 @@ public class Business {
     //----Business information-----//
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Hidden
     private int busId;
     private String busName;
     private String busType;
@@ -37,6 +41,10 @@ public class Business {
 
     private int reviewSum;
     private int reviewCount;
+    
+    // @OneToMany(mappedBy = "business")   
+    // private List<Review> reviews;
+    
     
     public Business()
     {
@@ -154,6 +162,25 @@ public class Business {
         this.priceGauge = est;
     }
 
+
+
+    // Review Class Getter and setters for one to many relation
+    // public void addReview(Review review)
+    // {
+    //     this.reviews.add(review);
+    // }   
+
+    // public List<Review> getReviews()
+    // {
+    //     return reviews;
+    // }
+
+    // public void setReviews(List<Review> givenReviews)
+    // {
+    //     reviews = givenReviews;
+    // }
+
+    // Review utility
     public int getReviewCount()
     {
         return reviewCount;
@@ -183,11 +210,7 @@ public class Business {
     }
 
     //---------- Utility --------------//
-    public void add_review(Review review)
-    {
-        this.reviewSum += review.getRateVal();
-        this.reviewCount++;
-    }
+
 
     @Override
     public String toString()
@@ -195,7 +218,4 @@ public class Business {
         return busId + "\n" + busName + "\n" + busType 
         + "\n" + hours + "\n" + location + "\n" + priceGauge;
     }
-
-
-
 }
