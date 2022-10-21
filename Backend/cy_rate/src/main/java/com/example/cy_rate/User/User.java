@@ -32,8 +32,8 @@ public class User {
     private String profilePicture;
     
     //maps users to reviews
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
+    // @OneToMany(mappedBy = "user")
+    // private List<Review> reviews;
     
     public User(){
 
@@ -155,20 +155,20 @@ public class User {
     }
 
     // Review Class Getter and setters for one to many relation
-    public void addReview(Review review)
-    {
-        this.reviews.add(review);
-    }   
+    // public void addReview(Review review)
+    // {
+    //     this.reviews.add(review);
+    // }   
 
-    public List<Review> getReviews()
-    {
-        return reviews;
-    }
+    // public List<Review> getReviews()
+    // {
+    //     return reviews;
+    // }
 
-    public void setReviews(List<Review> givenReviews)
-    {
-        reviews = givenReviews;
-    }
+    // public void setReviews(List<Review> givenReviews)
+    // {
+    //     reviews = givenReviews;
+    // }
     
 
     @Override

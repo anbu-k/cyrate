@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 // JPA stuff
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,13 @@ public class Review {
     @Column(name = "reviewTxt")
     private String reviewTxt;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne //(fetch = FetchType.LAZY)
+    //@JsonIgnore
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne //(fetch = FetchType.LAZY)
+    //@JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
@@ -89,7 +90,7 @@ public class Review {
     {
         this.business = bus;
     }
-    @JsonIgnore
+
     public User getUser()
     {
         return user;

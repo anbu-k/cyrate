@@ -42,8 +42,8 @@ public class Business {
     private int reviewSum;
     private int reviewCount;
     
-    @OneToMany(mappedBy = "business")   
-    private List<Review> reviews;
+    // @OneToMany(mappedBy = "business")   
+    // private List<Review> reviews;
     
     
     public Business()
@@ -165,20 +165,20 @@ public class Business {
 
 
     // Review Class Getter and setters for one to many relation
-    public void addReview(Review review)
-    {
-        this.reviews.add(review);
-    }   
+    // public void addReview(Review review)
+    // {
+    //     this.reviews.add(review);
+    // }   
 
-    public List<Review> getReviews()
-    {
-        return reviews;
-    }
+    // public List<Review> getReviews()
+    // {
+    //     return reviews;
+    // }
 
-    public void setReviews(List<Review> givenReviews)
-    {
-        reviews = givenReviews;
-    }
+    // public void setReviews(List<Review> givenReviews)
+    // {
+    //     reviews = givenReviews;
+    // }
 
     // Review utility
     public int getReviewCount()

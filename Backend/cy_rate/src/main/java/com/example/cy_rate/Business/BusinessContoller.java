@@ -66,12 +66,12 @@ public class BusinessContoller {
      * @param bid business id to get reviews for
      * @return List<Review> 
      */
-    @GetMapping(path="/business/getReviews/byId/{bid}")
-    List<Review> getReviews(@PathVariable int bid)
-    {
-        Business b = businessRepo.findById(bid);
-        return b.getReviews();
-    }
+    // @GetMapping(path="/business/getReviews/byId/{bid}")
+    // List<Review> getReviews(@PathVariable int bid)
+    // {
+    //     Business b = businessRepo.findById(bid);
+    //     return b.getReviews();
+    // }
 
 
 //-------------- Post MAPPING ----------------//

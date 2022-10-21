@@ -52,12 +52,19 @@ public class ReviewController {
         return reviewRepo.findAll();
     }
 
-    @GetMapping(path="/tester/{id}")
-    List<Review> test(@PathVariable int id)
+    @GetMapping(path="/reviews/business/{bid}")
+    List<Review> getReviewsByBusiness(@PathVariable int bid)
     {
-       List<Review> temp = reviewRepo.findByBusiness(id);
-       return temp;
+        Business b = businessRepo.findById(bid);
+        return reviewRepo.findByBusiness(b);
     }
+
+    // @GetMapping(path="/tester/{id}")
+    // List<Review> test(@PathVariable int id)
+    // {
+    //    List<Review> temp = reviewRepo.findByBusiness(id);
+    //    return temp;
+    // }
 
     /**
      * 
@@ -79,13 +86,13 @@ public class ReviewController {
             review.setUser(u);
     
             // Add review to List<Reviews> within user and business objects
-            b.addReview(review);
-            u.addReview(review);
+            // b.addReview(review);
+            // u.addReview(review);
             
             // Save all changes
             reviewRepo.save(review);
-            businessRepo.save(b);
-            userRepo.save(u);
+            // businessRepo.save(b);
+            // userRepo.save(u);
             
             return success;
         } catch (Exception e) {
