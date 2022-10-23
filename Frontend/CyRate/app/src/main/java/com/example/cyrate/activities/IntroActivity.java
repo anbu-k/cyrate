@@ -1,41 +1,22 @@
 package com.example.cyrate.activities;
 
-import static com.example.cyrate.activities.MainActivity.globalUser;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.cyrate.Logic.UserLogic;
-import com.example.cyrate.Logic.getEmailPasswordResponse;
-import com.example.cyrate.Logic.getUserByEmailResponse;
-import com.example.cyrate.Logic.getUsernamesResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.models.UserModel;
-
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class IntroActivity extends AppCompatActivity {
 
     ImageView background, logo;
     TextView welcomeTxt, cyrateTxt;
     LottieAnimationView lottieAnimationView;
-
-    UserLogic userLogic;
-
-    public static HashMap<String, String> emailPasswordMap;
-    public static HashSet<String> usernamesSet;
-    public static HashSet<String> phoneNumberSet;
-
-
 
     private static final int NUM_PAGES = 2;
 //    private ViewPager viewPager;
@@ -49,9 +30,10 @@ public class IntroActivity extends AppCompatActivity {
 
         final Handler handler = new Handler();
 
-        initializeEmailPasswordMap();
-        initializeUsernameSet();
-        initializePhoneNumberSet();
+        //set some default user stuff
+        MainActivity.globalUser = new UserModel("anbu@gmail.com", "1234567");
+        MainActivity.globalUser.setUsername("anbuk");
+        MainActivity.globalUser.setPhotoUrl("https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         background = findViewById(R.id.bg_image);
         logo = findViewById(R.id.cy_logo);
@@ -79,60 +61,6 @@ public class IntroActivity extends AppCompatActivity {
             }
         }, 5000);
 
-    }
-
-    public void initializeEmailPasswordMap(){
-        userLogic = new UserLogic();
-
-        userLogic.getAllEmailPassword(new getEmailPasswordResponse() {
-            @Override
-            public void onSuccess(HashMap<String, String> emailPassword) {
-                Log.d("Success", "Hash Map initalized");
-                emailPasswordMap = emailPassword;
-                Log.d("Success", emailPasswordMap.toString());
-            }
-
-            @Override
-            public void onError(String s) {
-                Log.d("ERROR IN Intro Act", s);
-            }
-        });
-    }
-
-    public void initializeUsernameSet(){
-        userLogic = new UserLogic();
-
-        userLogic.getAllUsernames(new getUsernamesResponse() {
-            @Override
-            public void onSuccess(HashSet<String> usernames) {
-                Log.d("Success", "Hash Set initalized");
-                usernamesSet = usernames;
-                Log.d("Success", usernames.toString());
-            }
-
-            @Override
-            public void onError(String s) {
-                Log.d("ERROR IN Intro Act", s);
-            }
-        });
-    }
-
-    public void initializePhoneNumberSet(){
-        userLogic = new UserLogic();
-
-        userLogic.getAllPhoneNumbers(new getUsernamesResponse() {
-            @Override
-            public void onSuccess(HashSet<String> phoneNumber) {
-                Log.d("Success", "Hash Set initalized");
-                phoneNumberSet = phoneNumber;
-                Log.d("Success", phoneNumber.toString());
-            }
-
-            @Override
-            public void onError(String s) {
-                Log.d("ERROR IN Intro Act", s);
-            }
-        });
     }
 
 //    private class ScreenSlidePageAdapter extends FragmentStatePagerAdapter {

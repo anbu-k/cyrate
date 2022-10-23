@@ -2,6 +2,7 @@ package com.example.cyrate.Logic;
 
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -18,8 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class UserLogic {
@@ -55,23 +54,21 @@ public class UserLogic {
 
     /**
      * make request to server to get a specific user's info given their email
-     *
      * @param email
      * @param r
      */
-    public void getUserByEmail(String email, getUserByEmailResponse r) {
+    public void getUserByEmail(String email, getUserByEmailResponse r){
         String url = Const.GET_USER_BY_EMAIL_URL + email;
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                try {
+                try{
                     JSONObject userObject = (JSONObject) response;
-                    Log.d("getUserByEmail response", userObject.toString());
                     UserModel user = convertToUserModel(userObject);
                     r.onSuccess(user);
-                } catch (Exception e) {
+                }catch(Exception e){
                     r.onError("OOF");
                     e.printStackTrace();
                 }
@@ -79,7 +76,7 @@ public class UserLogic {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                r.onError("OOF");
+
             }
         });
 
@@ -87,7 +84,7 @@ public class UserLogic {
 
     }
 
-    private UserModel convertToUserModel(JSONObject user) throws JSONException {
+    private  UserModel convertToUserModel(JSONObject user) throws JSONException {
         UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
         newUserModel.setUsername(user.get("username").toString());
         newUserModel.setUserType(UserType.BASIC_USER);
@@ -95,17 +92,18 @@ public class UserLogic {
         newUserModel.setPhoneNum(user.get("phoneNum").toString());
         newUserModel.setDob(user.get("dob").toString());
         newUserModel.setPhotoUrl(user.get("photoUrl").toString());
-        newUserModel.setUserId((int) user.get("userID"));
+        newUserModel.setUserId((int) user.get("userId"));
 
         return newUserModel;
+
+//        return new UserModel("megan", "megan");
     }
 
     /**
      * Makes a request to the server to post a new user
      * given some basic user info.
      */
-    public void addUser(addUserResponse r, String userType, String email, String password,
-                        String username, String phoneNum, String dateOfBirth) throws JSONException {
+    public void addUser(addUserResponse r, String userType, String email, String password, String username) throws JSONException {
 
         String url = Const.POST_USER_URL;
 
@@ -117,12 +115,12 @@ public class UserLogic {
 
 
         //not required for registration. default to empty. user can edit this in profile
-        newUserObject.put("realName", "");
+        newUserObject.put("realName", "m-1m");
         //TODO
         //need to add a username field in registration page.
         //if a user updates their username from edit profile to the email of a future user there will be problems
-        newUserObject.put("phoneNum", phoneNum);
-        newUserObject.put("dob", dateOfBirth);
+        newUserObject.put("phoneNum", "mthis is a ijadf;kajdj;kphmdacajkcfnsdcfone number!m");
+        newUserObject.put("dob", "mdate of birth");
         newUserObject.put("photoUrl", "https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newUserObject,
@@ -139,123 +137,11 @@ public class UserLogic {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        r.onError("error in addUser");
                     }
                 });
 
         //add to queue
         AppController.getInstance().addToRequestQueue(request);
-    }
-
-    public void getAllEmailPassword(getEmailPasswordResponse r) {
-        String url = Const.GET_ALL_USERS_URL;
-        HashMap<String, String> emailPasswordMap = new HashMap<>();
-
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject user = (JSONObject) response.get(i);
-                        emailPasswordMap.put(user.get("email").toString(), user.get("userPass").toString());
-                    }
-                    r.onSuccess(emailPasswordMap);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError("error response: " + error.toString());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(arrayRequest);
-
-    }
-
-    public void getAllUsernames(getUsernamesResponse r) {
-        String url = Const.GET_ALL_USERS_URL;
-        HashSet<String> usernameMap = new HashSet<>();
-
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject user = (JSONObject) response.get(i);
-                        usernameMap.add(user.get("username").toString());
-                    }
-                    r.onSuccess(usernameMap);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError("error response: " + error.toString());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(arrayRequest);
-
-    }
-
-    public void getAllPhoneNumbers(getUsernamesResponse r) {
-        String url = Const.GET_ALL_USERS_URL;
-        HashSet<String> phoneNumberSet = new HashSet<>();
-
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject user = (JSONObject) response.get(i);
-                        phoneNumberSet.add(user.get("phoneNum").toString());
-                    }
-                    r.onSuccess(phoneNumberSet);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError("error response: " + error.toString());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(arrayRequest);
-
-    }
-
-    public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, editProfileResponse r) throws JSONException {
-        String url = Const.EDIT_USER_URL + String.valueOf(id);
-
-        JSONObject userObject = new JSONObject();
-        userObject.put("userType", "normal");
-        userObject.put("realName", name);
-        userObject.put("username", username);
-        userObject.put("userPass", password);
-        userObject.put("email", email);
-        userObject.put("phoneNum", phoneNum);
-        userObject.put("dob", dob);
-        userObject.put("photoUrl", photo);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, userObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                r.onSuccess("Succesfully updated profile!");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError(error.toString());
-            }
-        });
-        AppController.getInstance().addToRequestQueue(request);
-
     }
 }
