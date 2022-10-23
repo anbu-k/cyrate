@@ -14,10 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cyrate.EditBusinessActivity;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
-import com.example.cyrate.Logic.businessStringResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.R;
 
 import org.json.JSONException;
@@ -83,7 +82,6 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(IndividualBusinessActivity.this, ReviewListActivity.class);
-
                 intent.putExtras(extras);
                 startActivity(intent);
             }
