@@ -21,6 +21,7 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.UserType;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.google.android.material.navigation.NavigationView;
@@ -116,7 +117,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         });
     }
 
-
     @Override
     // onClick for each card in the list
     public void onItemClick(int position) {
@@ -170,6 +170,9 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
                 i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
                 startActivity(i);
                 break;
+            case R.id.nav_sign_in:
+                i = new Intent(BusinessListActivity.this, LoginActivity.class);
+                startActivity(i);
             case R.id.nav_logout:
                 i = new Intent(BusinessListActivity.this, LoginActivity.class);
                 startActivity(i);
@@ -178,11 +181,12 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         return true;
     }
 
+    //set visibility of all menu items every time in case users log out and log back in?
     private void hideMenuItems(){
         Menu navMenu = navView.getMenu();
 
-        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
-            // A guest user should not be able to edit the guest user profile
+        // A guest user should not be able to edit the guest user profile
+        if (MainActivity.globalUser.getUserType() == UserType.GUEST){
             navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
 
             //guest cannot add business
