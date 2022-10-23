@@ -34,6 +34,8 @@ public class SignUpTabFragment extends Fragment {
     EditText email, password, confirmPassword, username, phoneNumber, dateOfBirth;
     Button signUp;
     Spinner userTypeSpinner;
+    String selectedUserType = "normal";
+
 
     float v = 0;
     @Override
@@ -47,7 +49,6 @@ public class SignUpTabFragment extends Fragment {
         signUp = root.findViewById(R.id.btn_signUp);
         username = root.findViewById(R.id.username);
         phoneNumber = root.findViewById(R.id.phoneNumber);
-//        dateOfBirth = root.findViewById(R.id.dateOfBirth);
         userTypeSpinner = root.findViewById(R.id.user_type);
 
 
@@ -57,7 +58,7 @@ public class SignUpTabFragment extends Fragment {
         signUp.setTranslationX(800);
         username.setTranslationX(800);
         phoneNumber.setTranslationX(800);
-//        dateOfBirth.setTranslationX(800);
+        userTypeSpinner.setTranslationX(800);
 
         email.setAlpha(v);
         password.setAlpha(v);
@@ -65,16 +66,16 @@ public class SignUpTabFragment extends Fragment {
         signUp.setAlpha(v);
         username.setAlpha(v);
         phoneNumber.setAlpha(v);
-//        dateOfBirth.setAlpha(v);
+        userTypeSpinner.setAlpha(v);
 
 
         email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         confirmPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
-        signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
+        signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1500).start();
         username.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
-        phoneNumber.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1000).start();
-//        dateOfBirth.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1050).start();
+        phoneNumber.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
+        userTypeSpinner.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(230).start();
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(), R.array.userTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -85,16 +86,6 @@ public class SignUpTabFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         registerUser(view);
-                        //check if email exists in database
-
-                        //post new user
-
-                        //on error, display error message
-
-                        //set global user
-
-
-
                     }
                 }));
 
@@ -111,14 +102,17 @@ public class SignUpTabFragment extends Fragment {
             Toast.makeText(getActivity(), "Complete All Inputs", Toast.LENGTH_LONG).show();
         } else {
 
+            selectedUserType = userTypeSpinner.getSelectedItem().toString();
+            selectedUserType = selectedUserType == "Normal" ? "normal" : "owner";
+
             //get the data from the textboxes
             String userEmail = email.getText().toString();
             String userPassword = password.getText().toString();
             String userConfirmPassword = confirmPassword.getText().toString();
             String userUsername = username.getText().toString();
             String userPhoneNumber = phoneNumber.getText().toString();
-//            String userDateOfBirth = dateOfBirth.getText().toString();
-            String userDateOfBirth = "dateOfBirth.getText().toString()";
+            String userDateOfBirth = "";
+            String userType = selectedUserType;
 
 
             UserLogic userLogic = new UserLogic();
@@ -204,7 +198,7 @@ public class SignUpTabFragment extends Fragment {
                                             Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
                                             keepChecking = false;
                                         }
-                                    }, "normal", userEmail, userPassword, userUsername, userPhoneNumber, userDateOfBirth);
+                                    }, userType, userEmail, userPassword, userUsername, userPhoneNumber, userDateOfBirth);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
