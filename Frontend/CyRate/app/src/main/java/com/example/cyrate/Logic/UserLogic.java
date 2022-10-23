@@ -9,7 +9,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
+import com.example.cyrate.Logic.UserInterfaces.addUserResponse;
+import com.example.cyrate.Logic.UserInterfaces.editProfileResponse;
+import com.example.cyrate.Logic.UserInterfaces.getAllUsersResponse;
+import com.example.cyrate.Logic.UserInterfaces.getEmailPasswordResponse;
+import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
+import com.example.cyrate.Logic.UserInterfaces.getUsernamesResponse;
 import com.example.cyrate.UserType;
+import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.UserModel;
 import com.example.cyrate.net_utils.Const;
 
@@ -248,7 +255,7 @@ public class UserLogic {
         String url = Const.EDIT_USER_URL + String.valueOf(id);
 
         JSONObject userObject = new JSONObject();
-        userObject.put("userType", "normal");
+        userObject.put("userType", MainActivity.globalUser.getUserType().toString());
         userObject.put("realName", name);
         userObject.put("username", username);
         userObject.put("userPass", password);

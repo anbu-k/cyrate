@@ -1,21 +1,25 @@
 package com.example.cy_rate.User;
 
-
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.cy_rate.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+//@Hidden
+import io.swagger.v3.oas.annotations.Hidden;
 
 @Entity
 public class User {
     // pk 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Hidden
     private int userId;
     private String userType;
     private String realName;
@@ -26,7 +30,10 @@ public class User {
     private String dob;
     private String resetPassword;
     private String profilePicture;
-    //test for CI
+    
+    //maps users to reviews
+    // @OneToMany(mappedBy = "user")
+    // private List<Review> reviews;
     
     public User(){
 
@@ -146,6 +153,23 @@ public class User {
     {
         this.profilePicture = profilePicture;
     }
+
+    // Review Class Getter and setters for one to many relation
+    // public void addReview(Review review)
+    // {
+    //     this.reviews.add(review);
+    // }   
+
+    // public List<Review> getReviews()
+    // {
+    //     return reviews;
+    // }
+
+    // public void setReviews(List<Review> givenReviews)
+    // {
+    //     reviews = givenReviews;
+    // }
+    
 
     @Override
     public String toString()

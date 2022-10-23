@@ -3,7 +3,6 @@ package com.example.cyrate.activities;
 import static com.example.cyrate.activities.MainActivity.globalUser;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

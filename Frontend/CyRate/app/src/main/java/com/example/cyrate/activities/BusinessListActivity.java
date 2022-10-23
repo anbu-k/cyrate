@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
-import com.example.cyrate.Logic.getBusinessesResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
+import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.UserType;
-import com.example.cyrate.models.BusinessListInterface;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.google.android.material.navigation.NavigationView;
@@ -31,7 +31,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessListActivity extends AppCompatActivity implements BusinessListInterface, NavigationView.OnNavigationItemSelectedListener {
+public class BusinessListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
     BusinessListAdapter busListAdapter;
@@ -56,10 +56,6 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         // Use this to hide any menu tabs depending on the user type
         hideMenuItems();
 
-
-
-
-
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
 
@@ -74,7 +70,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
         try {
             Log.d("TEST 1", "BEFORE SET BUS LIST CARD MODELS");
-            setUpBusinessListCardModels(this, this, recyclerView);
+            setUpBusinessListCardModels();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -98,8 +94,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         }
     }
 
-    private void setUpBusinessListCardModels(Context ctx, BusinessListInterface busInterface,
-                                             RecyclerView recyclerView) throws JSONException {
+    private void setUpBusinessListCardModels() throws JSONException {
 
 
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
@@ -108,8 +103,6 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
                 for (int i = 0; i < list.size(); i++) {
                     businessListCardModel.add(list.get(i));
                 }
-//                busListAdapter = new BusinessListAdapter(ctx,
-//                        businessListCardModel, busInterface);
                 Log.d("TEST 1", "IN HERE");
                 busListAdapter.notifyDataSetChanged();
 
@@ -119,12 +112,13 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
             @Override
             public void onError(String s) {
                 Log.d("TEST 1", s);
-                Toast.makeText(BusinessListActivity.this, s.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(BusinessListActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
+    // onClick for each card in the list
     public void onItemClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
@@ -136,8 +130,6 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
         intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
-
-
 
         startActivity(intent);
     }
@@ -181,6 +173,9 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
             case R.id.nav_sign_in:
                 i = new Intent(BusinessListActivity.this, LoginActivity.class);
                 startActivity(i);
+            case R.id.nav_logout:
+                i = new Intent(BusinessListActivity.this, LoginActivity.class);
+                startActivity(i);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -193,38 +188,18 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
         // A guest user should not be able to edit the guest user profile
         if (MainActivity.globalUser.getUserType() == UserType.GUEST){
             navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
-            navMenu.findItem(R.id.nav_profile).setVisible(false);
+
+            //guest cannot add business
             navMenu.findItem(R.id.nav_addBusiness).setVisible(false);
+
+            //guest cannot log out
             navMenu.findItem(R.id.nav_logout).setVisible(false);
-            navMenu.findItem(R.id.nav_restaurants).setVisible(true);
-            navMenu.findItem(R.id.nav_sign_in).setVisible(true);
-        }
 
-        if(MainActivity.globalUser.getUserType() == UserType.BASIC_USER){
-            navMenu.findItem(R.id.nav_edit_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_addBusiness).setVisible(false);
-            navMenu.findItem(R.id.nav_logout).setVisible(true);
-            navMenu.findItem(R.id.nav_restaurants).setVisible(true);
-            navMenu.findItem(R.id.nav_sign_in).setVisible(false);
-        }
+            //guest cannot see their profile
+            navMenu.findItem(R.id.nav_profile).setVisible(false);
 
-        if(MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
-            navMenu.findItem(R.id.nav_edit_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_addBusiness).setVisible(true);
-            navMenu.findItem(R.id.nav_logout).setVisible(true);
-            navMenu.findItem(R.id.nav_restaurants).setVisible(true);
-            navMenu.findItem(R.id.nav_sign_in).setVisible(false);
-        }
+            //guest CAN sign in
 
-        if(MainActivity.globalUser.getUserType() == UserType.ADMIN){
-            navMenu.findItem(R.id.nav_edit_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_profile).setVisible(true);
-            navMenu.findItem(R.id.nav_addBusiness).setVisible(true);
-            navMenu.findItem(R.id.nav_logout).setVisible(true);
-            navMenu.findItem(R.id.nav_restaurants).setVisible(true);
-            navMenu.findItem(R.id.nav_sign_in).setVisible(false);
         }
     }
 

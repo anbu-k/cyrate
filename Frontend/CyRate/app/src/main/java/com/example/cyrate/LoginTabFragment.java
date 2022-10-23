@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.cyrate.Logic.UserLogic;
-import com.example.cyrate.Logic.getUserByEmailResponse;
+import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.UserModel;
