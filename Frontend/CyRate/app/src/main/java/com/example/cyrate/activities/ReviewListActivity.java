@@ -9,16 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.R;
-import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.adapters.ReviewListAdapter;
-import com.example.cyrate.models.BusinessListCardModel;
+import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import java.util.ArrayList;
 
-public class ReviewListActivity extends AppCompatActivity {
+public class ReviewListActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
     int[] profilePics = {R.drawable.profilepic};
@@ -37,7 +35,8 @@ public class ReviewListActivity extends AppCompatActivity {
         setUpReviewModels();
 
         ReviewListAdapter reviewListAdapter = new ReviewListAdapter(
-                this, reviewListCardModels
+                this, reviewListCardModels, this
+
         );
         recyclerView.setAdapter(reviewListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -60,5 +59,12 @@ public class ReviewListActivity extends AppCompatActivity {
                     profilePics[0]
             ));
         }
+    }
+
+    @Override
+    // onClick for each card in the list
+    public void onItemClick(int position) {
+        Intent intent = new Intent(ReviewListActivity.this, IndividualReviewActivity.class);
+        startActivity(intent);
     }
 }

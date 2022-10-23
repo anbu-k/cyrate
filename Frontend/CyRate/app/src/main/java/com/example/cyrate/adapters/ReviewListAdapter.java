@@ -1,7 +1,6 @@
 package com.example.cyrate.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.R;
-import com.example.cyrate.models.BusinessListCardModel;
-import com.example.cyrate.models.BusinessListInterface;
+import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import java.util.ArrayList;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
+    private final RecyclerViewInterface recyclerViewInterface;
 
     Context ctx;
     ArrayList<ReviewListCardModel> reviewListCardModels;
 
     public ReviewListAdapter(
             Context ctx,
-            ArrayList<ReviewListCardModel> reviewListCardModels
+            ArrayList<ReviewListCardModel> reviewListCardModels,
+            RecyclerViewInterface recyclerViewInterface
     ){
         this.ctx = ctx;
         this.reviewListCardModels = reviewListCardModels;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
@@ -36,7 +37,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     public ReviewListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.review_list_card, parent, false);
-        return new ReviewListAdapter.MyViewHolder(view);
+        return new ReviewListAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -58,12 +59,25 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         ImageView profilePic;
         TextView reviewerName, review;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             profilePic = itemView.findViewById(R.id.profilePic);
             reviewerName = itemView.findViewById(R.id.reviewerName);
             review = itemView.findViewById(R.id.review_txt);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }
