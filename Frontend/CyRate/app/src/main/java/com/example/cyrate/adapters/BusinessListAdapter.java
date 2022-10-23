@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.R;
-import com.example.cyrate.models.BusinessListInterface;
+import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.BusinessListCardModel;
 
 
@@ -20,18 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.MyViewHolder> {
-    private final BusinessListInterface businessListInterface;
+    private final RecyclerViewInterface recyclerViewInterface;
     Context ctx;
     ArrayList<BusinessListCardModel> businessCardList;
 
     public BusinessListAdapter(
             Context ctx,
             ArrayList<BusinessListCardModel> businessCardList,
-            BusinessListInterface businessListInterface
+            RecyclerViewInterface recyclerViewInterface
             ){
         this.ctx = ctx;
         this.businessCardList = businessCardList;
-        this.businessListInterface = businessListInterface;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
     // This is where we inflate our layout (RestaurantListCard) for each of our rows in the view
     @NonNull
@@ -39,7 +39,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     public BusinessListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.business_list_card, parent, false);
-        return new BusinessListAdapter.MyViewHolder(view, businessListInterface);
+        return new BusinessListAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     // Since this is a recycle view, cards will be discarded when they go off screen.
@@ -73,7 +73,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         ImageView restImg;
         TextView restName, restCategory, restAddress, restRating, restHours;
 
-        public MyViewHolder(@NonNull View itemView, BusinessListInterface businessListInterface) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             restImg = itemView.findViewById(R.id.restaurant_img);
@@ -87,11 +87,11 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(businessListInterface != null){
+                            if(recyclerViewInterface != null){
                                 int pos = getAdapterPosition();
 
                                 if(pos != RecyclerView.NO_POSITION){
-                                    businessListInterface.onItemClick(pos);
+                                    recyclerViewInterface.onItemClick(pos);
                                 }
                             }
                         }

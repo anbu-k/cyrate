@@ -1,37 +1,68 @@
 package com.example.cyrate.models;
 
 public class ReviewListCardModel {
-    private String reviewerName;
-    private String review;
-    int image;
+    private int reviewId;
+    private int rateVal;
+    private String reviewText;
+    private int businessId;
+    private ReviewUserModel reviewUser;
 
-    public String getReviewerName() {
-        return reviewerName;
+    public ReviewListCardModel(int reviewId, int rateVal, String reviewText, int businessId, ReviewUserModel reviewUser) {
+        this.reviewId = reviewId;
+        this.rateVal = rateVal;
+        this.reviewText = reviewText;
+        this.businessId = businessId;
+        this.reviewUser = reviewUser;
     }
 
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public String getReview() {
-        return review;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public int getRateVal() {
+        return rateVal;
     }
 
-    public int getImage() {
-        return image;
+    public void setRateVal(int rateVal) {
+        this.rateVal = rateVal;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public String getReviewText() {
+        return reviewText;
     }
 
-    public ReviewListCardModel(String reviewerName, String review, int image) {
-        this.reviewerName = reviewerName;
-        this.review = review;
-        this.image = image;
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+    }
+
+    public int getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(int businessId) {
+        this.businessId = businessId;
+    }
+
+    public ReviewUserModel getReviewUser() {
+        return reviewUser;
+    }
+
+    public void setReviewUser(ReviewUserModel reviewUser) {
+        this.reviewUser = reviewUser;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewListCardModel{" +
+                "reviewId=" + reviewId +
+                ", rateVal=" + rateVal +
+                ", reviewText='" + reviewText + '\'' +
+                ", businessId=" + businessId +
+                ", reviewUserId=" + reviewUser +
+                '}';
     }
 }

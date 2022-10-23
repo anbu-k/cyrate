@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="3dp"
                 android:fontFamily="@font/raleway_thin"
-                android:paddingRight="30dp"
+                android:paddingRight="15dp"
                 android:text="5.0"
                 android:textFontWeight="600"
                 android:textSize="11dp"
