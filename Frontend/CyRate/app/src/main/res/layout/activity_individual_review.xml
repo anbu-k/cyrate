@@ -71,67 +71,69 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reviewerNameIndiv" />
 
-    <TextView
-       android:id="@+id/reviewHeading"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       app:layout_constraintTop_toBottomOf="@id/reviewRating"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       android:text="This Place is Amazing!"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:letterSpacing=".1"
-       android:textColor="@color/black"
-       android:fontFamily="@font/sf_pro_medium"
-       android:textFontWeight="700"
-       android:textSize="30dp"
-       />
 
-    <TextView
-        android:id="@+id/reviewBody"
-        android:layout_width="280dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/reviewCard"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias=".15"
-        android:fontFamily="@font/sf_pro_reg"
-        android:gravity="center"
-        android:text="If you are shopping in downtown Ames, this is the place to go for a quick coffee break and a bite to see the historical Downtown Ames.Cafe Diem has great coffee, food, and has an overall amazing atmosphere!!!"
-        android:textColor="@color/black"
-        android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/lightGray"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/reviewRating"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviewHeading" />
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-    <TextView
-        android:id="@+id/quote1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingVertical="25dp"
+        android:paddingHorizontal="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro_reg"
-        android:gravity="center"
-        android:text=" &quot; "
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/reviewBody"
-        app:layout_constraintTop_toBottomOf="@id/reviewHeading"
-        />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/reviewBody"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="25dp"
+            app:layout_constraintVertical_bias=".15"
+            android:fontFamily="@font/sf_pro_reg"
+            android:gravity="center"
+            android:text="If you are shopping in downtown Ames, this is the place to go for a quick coffee break and a bite to see the historical Downtown Ames.Cafe Diem has great coffee, food, and has an overall amazing atmosphere!!!"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/quote2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro_reg"
-        android:gravity="center"
-        android:text=" &quot; "
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/quote1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0"
+            android:fontFamily="@font/sf_pro_reg"
+            android:gravity="center"
+            android:text=" &quot; "
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reviewBody"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        app:layout_constraintStart_toEndOf="@id/reviewBody"
-        app:layout_constraintTop_toTopOf="@+id/reviewBody" />
-
+        <TextView
+            android:id="@+id/quote2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_reg"
+            android:gravity="center"
+            android:text=" &quot; "
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/reviewBody"
+            app:layout_constraintStart_toEndOf="@id/reviewBody"
+             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
 
@@ -144,7 +146,7 @@
             app:layout_constraintHorizontal_bias=".4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reviewBody"
+            app:layout_constraintTop_toBottomOf="@id/reviewCard"
             />
 
         <ImageView
@@ -156,7 +158,7 @@
             app:layout_constraintHorizontal_bias=".6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reviewBody"
+            app:layout_constraintTop_toBottomOf="@id/reviewCard"
             />
 
 

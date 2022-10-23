@@ -46,6 +46,9 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
         TextView emptyView = findViewById(R.id.empty_view);
 
+        // Set this to non-visible initially
+        emptyView.setVisibility(View.GONE);
+
         reviewServiceLogic = new ReviewServiceLogic();
         reviewListAdapter = new ReviewListAdapter(
                 this, reviewListCardModels, this
@@ -103,6 +106,15 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
     // onClick for each card in the list
     public void onItemClick(int position) {
         Intent intent = new Intent(ReviewListActivity.this, IndividualReviewActivity.class);
+        // Put in new extras for review info + prev extras (business info)
+        intent.putExtras(extras);
+        intent.putExtra("REVIEWER_NAME", reviewListCardModels.get(position).getReviewUser().getFullName());
+        intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
+        intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
+        intent.putExtra("REVIEWER_PROFILE_PIC", reviewListCardModels.get(position).getReviewUser().getPhotoUrl());
+
+
+
         startActivity(intent);
     }
 }
