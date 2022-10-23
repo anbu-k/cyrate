@@ -1,7 +1,5 @@
 package com.example.cyrate.activities;
 
-import static com.example.cyrate.activities.MainActivity.globalUser;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,15 +8,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cyrate.Logic.UserLogic;
-import com.example.cyrate.Logic.getEmailPasswordResponse;
-import com.example.cyrate.Logic.getUserByEmailResponse;
-import com.example.cyrate.Logic.getUsernamesResponse;
+import com.example.cyrate.Logic.UserInterfaces.getEmailPasswordResponse;
+import com.example.cyrate.Logic.UserInterfaces.getUsernamesResponse;
 import com.example.cyrate.R;
-import com.example.cyrate.models.UserModel;
 
 import java.util.HashMap;
 import java.util.HashSet;

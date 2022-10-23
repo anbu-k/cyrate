@@ -1,4 +1,4 @@
-package com.example.cyrate.Logic;
+package com.example.cyrate.Logic.UserInterfaces;
 
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.models.UserModel;

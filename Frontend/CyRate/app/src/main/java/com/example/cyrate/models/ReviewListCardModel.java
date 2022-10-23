@@ -5,14 +5,14 @@ public class ReviewListCardModel {
     private int rateVal;
     private String reviewText;
     private int businessId;
-    private int reviewUserId;
+    private ReviewUserModel reviewUser;
 
-    public ReviewListCardModel(int reviewId, int rateVal, String reviewText, int businessId, int reviewUserId) {
+    public ReviewListCardModel(int reviewId, int rateVal, String reviewText, int businessId, ReviewUserModel reviewUser) {
         this.reviewId = reviewId;
         this.rateVal = rateVal;
         this.reviewText = reviewText;
         this.businessId = businessId;
-        this.reviewUserId = reviewUserId;
+        this.reviewUser = reviewUser;
     }
 
     public int getReviewId() {
@@ -47,12 +47,12 @@ public class ReviewListCardModel {
         this.businessId = businessId;
     }
 
-    public int getReviewUserId() {
-        return reviewUserId;
+    public ReviewUserModel getReviewUser() {
+        return reviewUser;
     }
 
-    public void setReviewUserId(int reviewUserId) {
-        this.reviewUserId = reviewUserId;
+    public void setReviewUser(ReviewUserModel reviewUser) {
+        this.reviewUser = reviewUser;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ReviewListCardModel {
                 ", rateVal=" + rateVal +
                 ", reviewText='" + reviewText + '\'' +
                 ", businessId=" + businessId +
-                ", reviewUserId=" + reviewUserId +
+                ", reviewUserId=" + reviewUser +
                 '}';
     }
 }

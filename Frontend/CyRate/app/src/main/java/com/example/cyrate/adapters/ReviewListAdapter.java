@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.R;
 import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
@@ -42,9 +43,11 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull ReviewListAdapter.MyViewHolder holder, int position) {
-        holder.profilePic.setImageResource(reviewListCardModels.get(position).getImage());
-        holder.reviewerName.setText(reviewListCardModels.get(position).getReviewerName());
-        holder.review.setText(reviewListCardModels.get(position).getReview());
+        new ImageLoaderTask(reviewListCardModels.get(position).getReviewUser().getPhotoUrl(), holder.profilePic).execute();
+
+        holder.reviewerName.setText(reviewListCardModels.get(position).getReviewUser().getFullName());
+        holder.reviewText.setText(reviewListCardModels.get(position).getReviewText());
+        holder.rateVal.setText(String.valueOf(reviewListCardModels.get(position).getRateVal()));
 
     }
 
@@ -57,14 +60,15 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView profilePic;
-        TextView reviewerName, review;
+        TextView reviewerName, reviewText, rateVal;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             profilePic = itemView.findViewById(R.id.profilePic);
             reviewerName = itemView.findViewById(R.id.reviewerName);
-            review = itemView.findViewById(R.id.review_txt);
+            reviewText = itemView.findViewById(R.id.review_txt);
+            rateVal = itemView.findViewById(R.id.rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

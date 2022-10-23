@@ -1,6 +1,5 @@
 package com.example.cyrate.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cyrate.Logic.UserLogic;
-import com.example.cyrate.Logic.editProfileResponse;
+import com.example.cyrate.Logic.UserInterfaces.editProfileResponse;
 import com.example.cyrate.R;
 import com.google.android.material.navigation.NavigationView;
 

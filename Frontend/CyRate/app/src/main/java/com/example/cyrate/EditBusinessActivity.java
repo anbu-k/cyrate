@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
-import com.example.cyrate.Logic.businessStringResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.activities.AddBusinessActivity;
 import com.example.cyrate.activities.BusinessListActivity;
 import com.google.android.material.navigation.NavigationView;

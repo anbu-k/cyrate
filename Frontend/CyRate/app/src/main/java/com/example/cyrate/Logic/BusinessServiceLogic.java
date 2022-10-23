@@ -8,6 +8,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
 

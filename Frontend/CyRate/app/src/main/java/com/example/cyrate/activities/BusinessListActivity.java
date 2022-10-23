@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
-import com.example.cyrate.Logic.getBusinessesResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.adapters.BusinessListAdapter;
@@ -55,10 +55,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         // Use this to hide any menu tabs depending on the user type
         hideMenuItems();
 
-
-
-
-
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
 
@@ -73,7 +69,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
         try {
             Log.d("TEST 1", "BEFORE SET BUS LIST CARD MODELS");
-            setUpBusinessListCardModels(this, this, recyclerView);
+            setUpBusinessListCardModels();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,8 +93,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         }
     }
 
-    private void setUpBusinessListCardModels(Context ctx, RecyclerViewInterface busInterface,
-                                             RecyclerView recyclerView) throws JSONException {
+    private void setUpBusinessListCardModels() throws JSONException {
 
 
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
@@ -107,8 +102,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
                 for (int i = 0; i < list.size(); i++) {
                     businessListCardModel.add(list.get(i));
                 }
-//                busListAdapter = new BusinessListAdapter(ctx,
-//                        businessListCardModel, busInterface);
                 Log.d("TEST 1", "IN HERE");
                 busListAdapter.notifyDataSetChanged();
 
@@ -118,7 +111,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
             @Override
             public void onError(String s) {
                 Log.d("TEST 1", s);
-                Toast.makeText(BusinessListActivity.this, s.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(BusinessListActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
     }
