@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cyrate.AddReviewActivity;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
@@ -32,7 +33,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
     Bundle extras;
     ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
     int[] profilePics = {R.drawable.profilepic};
-    ImageView back_btn;
+    ImageView back_btn, addReview_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         extras = getIntent().getExtras();
 
         back_btn = (ImageView) findViewById(R.id.back_btn_icon);
+        addReview_btn = findViewById(R.id.addReviewIcon);
+
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
         TextView emptyView = findViewById(R.id.empty_view);
@@ -67,6 +70,15 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ReviewListActivity.this, IndividualBusinessActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
+        addReview_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ReviewListActivity.this, AddReviewActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
             }

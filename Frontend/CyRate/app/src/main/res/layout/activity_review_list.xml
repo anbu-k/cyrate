@@ -47,8 +47,19 @@
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/back_btn_icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/addReviewIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/add_review_icon"
+            app:layout_constraintStart_toEndOf="@id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView"
+            app:layout_constraintBottom_toBottomOf="@id/textView"
+            />
 
         <View
             android:id="@+id/view"
