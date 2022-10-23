@@ -45,6 +45,11 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         back_btn = (ImageView) findViewById(R.id.back_btn_icon);
         addReview_btn = findViewById(R.id.addReviewIcon);
 
+        // Guest users should not be able to add a review
+        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
+            addReview_btn.setVisibility(View.GONE);
+        }
+
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
         TextView emptyView = findViewById(R.id.empty_view);
