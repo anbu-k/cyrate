@@ -162,20 +162,24 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Intent i;
         switch(menuItem.getItemId()){
             case R.id.nav_restaurants:
                 break;
             case R.id.nav_addBusiness:
-                Intent intent = new Intent(BusinessListActivity.this, AddBusinessActivity.class);
-                startActivity(intent);
+                i = new Intent(BusinessListActivity.this, AddBusinessActivity.class);
+                startActivity(i);
                 break;
             case R.id.nav_profile:
                 // code here
                 break;
             case R.id.nav_edit_profile:
-                Intent i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
+                i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
                 startActivity(i);
                 break;
+            case R.id.nav_logout:
+                i = new Intent(BusinessListActivity.this, LoginActivity.class);
+                startActivity(i);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -184,9 +188,21 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessL
     private void hideMenuItems(){
         Menu navMenu = navView.getMenu();
 
-        // A guest user should not be able to edit the guest user profile
         if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
+            // A guest user should not be able to edit the guest user profile
             navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
+
+            //guest cannot add business
+            navMenu.findItem(R.id.nav_addBusiness).setVisible(false);
+
+            //guest cannot log out
+            navMenu.findItem(R.id.nav_logout).setVisible(false);
+
+            //guest cannot see their profile
+            navMenu.findItem(R.id.nav_profile).setVisible(false);
+
+            //guest CAN sign in
+
         }
     }
 
