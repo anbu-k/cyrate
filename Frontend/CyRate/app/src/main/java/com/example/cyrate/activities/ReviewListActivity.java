@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
@@ -43,6 +44,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         back_btn = (ImageView) findViewById(R.id.back_btn_icon);
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
+        TextView emptyView = findViewById(R.id.empty_view);
 
         reviewServiceLogic = new ReviewServiceLogic();
         reviewListAdapter = new ReviewListAdapter(
@@ -53,7 +55,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         try {
-            setUpReviewModels();
+            setUpReviewModels(recyclerView, emptyView);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,7 +70,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         });
     }
 
-   private void setUpReviewModels() throws JSONException {
+   private void setUpReviewModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
         int busId = extras.getInt("ID");
         reviewServiceLogic.getReviews(busId, new getReviewsResponse() {
             @Override
@@ -78,6 +80,15 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
                 }
                 Log.d("TEST 2", "IN HERE");
                 reviewListAdapter.notifyDataSetChanged();
+
+                if(list.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
             }
 
             @Override
