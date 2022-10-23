@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -71,7 +73,18 @@ public class AddReviewActivity extends AppCompatActivity {
                                 new reviewStringResponse() {
                                     @Override
                                     public void onSuccess(String s) {
-                                        Toast.makeText(AddReviewActivity.this, "Review Added!", Toast.LENGTH_LONG).show();
+                                        Log.d("ADD REVIEW ON SUCCESS", s);
+                                        Toast.makeText(AddReviewActivity.this, "Thanks for your review!", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(AddReviewActivity.this, ReviewListActivity.class);
+                                        intent.putExtras(extras);
+
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                startActivity(intent);
+                                            }
+                                        }, 3000);
                                     }
 
                                     @Override

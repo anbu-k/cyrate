@@ -76,7 +76,9 @@ public class ReviewServiceLogic {
     }
 
     public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
-        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
+        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview/";
+
+        Log.d("ADD REVIEW URL", url);
 
         BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
 
