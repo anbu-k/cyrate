@@ -31,11 +31,9 @@ public class IndividualReviewActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.reviewRating);
 
         extras = getIntent().getExtras();
-        String fullName = extras.getString("REVIEWER_NAME");
-        String displayName = fullName.isEmpty() ? "Anonymous User" : fullName;
 
         new ImageLoaderTask(extras.getString("REVIEWER_PROFILE_PIC"), reviewerProfilePic).execute();
-        reviewerName.setText(displayName);
+        reviewerName.setText(extras.getString("REVIEWER_USERNAME"));
         reviewBody.setText(extras.getString("REVIEW_BODY"));
         ratingBar.setRating(extras.getInt("RATING_VAL"));
 

@@ -127,6 +127,8 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
         intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
         intent.putExtra("REVIEWER_PROFILE_PIC", reviewListCardModels.get(position).getReviewUser().getPhotoUrl());
+        intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
+
 
 
 
