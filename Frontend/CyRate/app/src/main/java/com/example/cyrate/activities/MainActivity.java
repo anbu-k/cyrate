@@ -16,11 +16,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        globalUser = new UserModel("anbu@gmail.com", "1234567");
-        globalUser.setUsername("anbuk");
-        globalUser.setPhotoUrl("https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png");
-//        globalUser.set
-
     }
 }
