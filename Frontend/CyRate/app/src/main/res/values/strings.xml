@@ -22,4 +22,10 @@
     <string-array name="restaurantListHours">
         <item>9:00a - 9:00p</item>
     </string-array>
+
+    <string name="user_types_dropdown">userTypesDropDown</string>
+    <string-array name="userTypes">
+        <item>Normal</item>
+        <item>Business Owner</item>
+    </string-array>
 </resources>
