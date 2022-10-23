@@ -1,4 +1,4 @@
-package com.example.cyrate;
+package com.example.cyrate.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
-import com.example.cyrate.activities.AddBusinessActivity;
-import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;

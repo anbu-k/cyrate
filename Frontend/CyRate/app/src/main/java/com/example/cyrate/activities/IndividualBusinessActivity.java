@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cyrate.EditBusinessActivity;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;

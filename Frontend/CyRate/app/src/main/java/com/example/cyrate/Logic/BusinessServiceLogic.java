@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
@@ -73,6 +74,45 @@ public class BusinessServiceLogic {
 
         AppController.getInstance().addToRequestQueue(request);
     }
+
+    public void getBusinessesById(int busId, getBusinessByIDResponse r) throws JSONException {
+        String url = Const.GET_BUSINESS_BY_ID_URL + String.valueOf(busId);
+        final BusinessListCardModel[] businessListCardModel = new BusinessListCardModel[1];
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
+                try {
+
+                    String priceGauge = response.get("priceGauge").toString().equals("null") ? "$" : response.get("priceGauge").toString();
+
+                    businessListCardModel[0] = new BusinessListCardModel(
+                            (int) response.get("busId"),
+                            response.get("busName").toString(),
+                            response.get("busType").toString(),
+                            response.get("photoUrl").toString(),
+                            response.get("hours").toString(),
+                            response.get("location").toString(),
+                            (int) response.get("ownerId"),
+                            response.get("menuLink").toString(),
+                            priceGauge,
+                            (int) response.get("reviewSum"),
+                            (int) response.get("reviewCount")
+                    );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            // Send the businessModelsList back to the BusinessListActivity
+            // as a async callback
+            r.onSuccess(businessListCardModel[0]);
+        }, error -> r.onError(error.toString())
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+
 
     /**
      * Adds a business to the DB

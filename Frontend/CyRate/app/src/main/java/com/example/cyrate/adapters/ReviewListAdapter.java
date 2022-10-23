@@ -45,7 +45,11 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     public void onBindViewHolder(@NonNull ReviewListAdapter.MyViewHolder holder, int position) {
         new ImageLoaderTask(reviewListCardModels.get(position).getReviewUser().getPhotoUrl(), holder.profilePic).execute();
 
-        holder.reviewerName.setText(reviewListCardModels.get(position).getReviewUser().getFullName());
+        // If the user's Full Name is empty, we'll set it to a default
+        String fullName = reviewListCardModels.get(position).getReviewUser().getFullName();
+        String displayName = fullName.isEmpty() ? "Anonymous User" : fullName;
+
+        holder.reviewerName.setText(displayName);
         holder.reviewText.setText(reviewListCardModels.get(position).getReviewText());
         holder.rateVal.setText(String.valueOf(reviewListCardModels.get(position).getRateVal()));
 
