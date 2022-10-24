@@ -21,12 +21,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 // unsure about these
 
 @Entity
 @Table(name = "Favorites")
 public class Favorites {
      //int favId, int userId, int busId
+    @Hidden
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int favId;

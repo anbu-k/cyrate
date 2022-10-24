@@ -49,10 +49,12 @@ public class Review {
     @Column(name = "reviewTxt")
     private String reviewTxt;
 
+    @Hidden
     @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
+    @Hidden
     @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
