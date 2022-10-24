@@ -160,6 +160,9 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         if (menuItem.getItemId() != R.id.nav_restaurants){
             nav_menu_utils.onNavItemSelected(menuItem, BusinessListActivity.this);
         }
+        else{
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
