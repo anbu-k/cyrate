@@ -21,6 +21,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
+import com.example.cyrate.nav_menu_utils;
+
 public class AddBusinessActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
@@ -59,6 +61,8 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
 
         navigationDrawer();
         drawerLayout.setScrimColor(getResources().getColor(R.color.red));
+
+        nav_menu_utils.hideMenuItems(navView.getMenu());
 
         // Submit Logic
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -143,15 +147,12 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.nav_restaurants:
-                Intent intent = new Intent(AddBusinessActivity.this, BusinessListActivity.class);
-                startActivity(intent);
-                ;
-            case R.id.nav_addBusiness:
-                break;
+        if (menuItem.getItemId() != R.id.nav_addBusiness){
+            nav_menu_utils.onNavItemSelected(menuItem, AddBusinessActivity.this);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }
+
+
