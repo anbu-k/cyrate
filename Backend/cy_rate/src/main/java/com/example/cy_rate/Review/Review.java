@@ -44,16 +44,16 @@ public class Review {
     @Column(name= "rateVal")
     private int rateVal;
 
+    @Column(name="reviewHeader")
+    private String reviewHeader;
     @Column(name = "reviewTxt")
     private String reviewTxt;
 
     @ManyToOne //(fetch = FetchType.LAZY)
-    //@JsonIgnore
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
     @ManyToOne //(fetch = FetchType.LAZY)
-    //@JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
@@ -61,11 +61,13 @@ public class Review {
     public Review(){
         this.rateVal = 0;
         this.reviewTxt = "";
+        this.reviewHeader="";
     }
 
-    public Review(int rateVal, String reviewTxt){
+    public Review(int rateVal, String reviewTxt, String reviewHeader){
         this.rateVal = rateVal;
         this.reviewTxt = reviewTxt;
+        this.reviewHeader = reviewHeader;
     }
 
 
@@ -84,8 +86,7 @@ public class Review {
     {
         return business;
     }
-
-
+    
     public void setBusiness(Business bus)
     {
         this.business = bus;
@@ -116,6 +117,16 @@ public class Review {
     
     public void setReviewTxt(String review){
         this.reviewTxt = review;
+    }
+
+    public String getReviewHeader()
+    {
+        return reviewHeader;
+    }
+
+    public void setReviewHeader(String reviewHeader)
+    {
+        this.reviewHeader=reviewHeader;
     }
 
     //Sam DeFrancisco's review for Potbelly 

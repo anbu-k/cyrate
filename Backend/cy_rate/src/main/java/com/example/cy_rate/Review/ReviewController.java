@@ -52,19 +52,29 @@ public class ReviewController {
         return reviewRepo.findAll();
     }
 
+    /**
+     * 
+     * @param bid specific business id
+     * @return all reviews for a specific business
+     */
     @GetMapping(path="/reviews/business/{bid}")
     List<Review> getReviewsByBusiness(@PathVariable int bid)
     {
         Business b = businessRepo.findById(bid);
         return reviewRepo.findByBusiness(b);
     }
-
-    // @GetMapping(path="/tester/{id}")
-    // List<Review> test(@PathVariable int id)
-    // {
-    //    List<Review> temp = reviewRepo.findByBusiness(id);
-    //    return temp;
-    // }
+    
+    /**
+     *  
+     * @param uid the user id
+     * @return all reviews for a specific user
+     */
+    @GetMapping(path="/reviews/user/{uid}")
+    List<Review> getReviewsByUser(@PathVariable int uid)
+    {
+        User u = userRepo.findById(uid);
+        return reviewRepo.findByUser(u);
+    }
 
     /**
      * 
@@ -96,7 +106,7 @@ public class ReviewController {
             
             return success;
         } catch (Exception e) {
-            return failure;
+            return e.toString();
         }
     }
        
