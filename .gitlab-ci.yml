@@ -15,6 +15,8 @@ maven-build: #this is a JOB
     - mvn package
   except:
     - reviews
+  only:
+    - main
 maven-test:
   stage: maventest
   tags:
@@ -25,6 +27,8 @@ maven-test:
   artifacts:
     paths:
       - Backend/target/*.jar
+  only:
+    - main
 autoDeploy:
   stage: mavenDeploy 
   tags:
@@ -35,8 +39,8 @@ autoDeploy:
     - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
-
-    #basically builds, then copies the jar to the /target folder, then stops existing service, and finally restarts it.
+  only:
+    - main
 
 android-build: #this is another job
    image: gjandres/android-ci:latest # this is a directive to DOCKER
@@ -52,6 +56,8 @@ android-build: #this is another job
    artifacts:
      paths:
        - Android_test/app/build/outputs/
+   only:
+     - main
 android-test:
   image: gjandres/android-ci:latest
   stage: androidtest
@@ -63,4 +69,6 @@ android-test:
   script:
     - cd Frontend/CyRate
     - ./gradlew test
+  only:
+    - main
 
