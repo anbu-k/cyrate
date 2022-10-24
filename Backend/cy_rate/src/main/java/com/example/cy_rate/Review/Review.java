@@ -86,7 +86,7 @@ public class Review {
     {
         return business;
     }
-    
+
     public void setBusiness(Business bus)
     {
         this.business = bus;
@@ -133,7 +133,7 @@ public class Review {
     //rating...
     @Override
     public String toString() {
-        return user.getrealName() + "'s review for " + business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
+        return user.getRealName() + "'s review for " + business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
     }
     
 }
