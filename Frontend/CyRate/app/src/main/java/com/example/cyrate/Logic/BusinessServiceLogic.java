@@ -194,36 +194,54 @@ public class BusinessServiceLogic {
                              String busHours, String busLocation, String priceGauge, String photoUrl, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_BUSINESS_URL + String.valueOf(businessId);
 
-        JSONObject newUserObj = new JSONObject();
-        newUserObj.put("busName", busName);
-        newUserObj.put("busType", busType);
-        newUserObj.put("hours", busHours);
-        newUserObj.put("location", busLocation);
-        newUserObj.put("priceGauge", priceGauge);
-        newUserObj.put("photoUrl", photoUrl);
-
-        // Defaults to fill the required JSON object
-        newUserObj.put("ownerId", -1);
-        newUserObj.put("menuLink", "");
-        newUserObj.put("reviewSum", 0);
-        newUserObj.put("reviewCount", 0);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,
-                url, newUserObj, new Response.Listener<JSONObject>() {
+        // Get the business first in order to get the current ReviewSum and Review Count so that they
+        // don't reset to the default values
+        this.getBusinessesById(businessId, new getBusinessByIDResponse() {
             @Override
-            public void onResponse(JSONObject response) {
-                r.onSuccess("Successfully Updated Business!");
+            public void onSuccess(BusinessListCardModel business) {
+                JSONObject newUserObj = new JSONObject();
+                try {
+                    newUserObj.put("busName", busName);
+                    newUserObj.put("busType", busType);
+                    newUserObj.put("hours", busHours);
+                    newUserObj.put("location", busLocation);
+                    newUserObj.put("priceGauge", priceGauge);
+                    newUserObj.put("photoUrl", photoUrl);
+                    newUserObj.put("reviewSum", business.getReviewCount());
+                    newUserObj.put("reviewCount", business.getReviewCount());
+
+                    // Defaults to fill the required JSON object
+                    newUserObj.put("ownerId", -1);
+                    newUserObj.put("menuLink", "");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,
+                        url, newUserObj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        r.onSuccess("Successfully Updated Business!");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        r.onError(error.toString());
+                    }
+                }
+
+                );
+
+                AppController.getInstance().addToRequestQueue(request);
             }
-        }, new Response.ErrorListener() {
+
+            @SuppressLint("LongLogTag")
             @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError(error.toString());
+            public void onError(String s) {
+                Log.d("editBusiness - getBusinessById - ERROR", s);
             }
-        }
-
-        );
-
-        AppController.getInstance().addToRequestQueue(request);
+        });
     }
 
     public void editRatingAndReviewCount(int busId, int ratingUpdate, int reviewCountUpdate, businessStringResponse r) throws JSONException {
@@ -236,8 +254,20 @@ public class BusinessServiceLogic {
             public void onSuccess(BusinessListCardModel business) {
                 JSONObject obj = new JSONObject();
                 try {
+                    // Update only the reviewSum and reviewCount
                     obj.put("reviewSum", business.getReviewSum() + ratingUpdate);
                     obj.put("reviewCount", business.getReviewCount() + reviewCountUpdate);
+
+                    // Keep the previous information for the rest
+                    obj.put("busName", business.getBusName());
+                    obj.put("busType", business.getBusType());
+                    obj.put("hours", business.getHours());
+                    obj.put("location", business.getLocation());
+                    obj.put("priceGauge", business.getPriceGauge());
+                    obj.put("photoUrl", business.getPhotoUrl());
+                    obj.put("ownerId", -1);
+                    obj.put("menuLink", "");
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
