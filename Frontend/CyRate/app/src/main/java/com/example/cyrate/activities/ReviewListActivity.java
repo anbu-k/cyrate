@@ -57,7 +57,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         noReviewTxt = findViewById(R.id.noReviewsText);
 
         // Guest users should not be able to add a review
-        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
+        if (MainActivity.globalUser.getEmail().equals("guest-user-email")) {
             addReview_btn.setVisibility(View.GONE);
         }
 
@@ -105,7 +105,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         });
     }
 
-   private void setUpReviewModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
+    private void setUpReviewModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
         int busId = extras.getInt("ID");
         reviewServiceLogic.getReviews(busId, new getReviewsResponse() {
             @Override
@@ -116,11 +116,10 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
                 Log.d("TEST 2", "IN HERE");
                 reviewListAdapter.notifyDataSetChanged();
 
-                if(list.isEmpty()){
+                if (list.isEmpty()) {
                     recyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     recyclerView.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
                 }
@@ -132,41 +131,42 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
                 Toast.makeText(ReviewListActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
-   }
+    }
 
-   private void setRatingAndReviewCount() throws JSONException {
-       int busId = extras.getInt("ID");
-       businessServiceLogic.getBusinessesById(busId, new getBusinessByIDResponse() {
-           @Override
-           public void onSuccess(BusinessListCardModel business) {
-               int totalReviews = business.getReviewCount();
-               int ratingSum = business.getReviewSum();
+    private void setRatingAndReviewCount() throws JSONException {
+        int busId = extras.getInt("ID");
+        businessServiceLogic.getBusinessesById(busId, new getBusinessByIDResponse() {
+            @Override
+            public void onSuccess(BusinessListCardModel business) {
+                int totalReviews = business.getReviewCount();
+                int ratingSum = business.getReviewSum();
 
-               float avgRating = totalReviews == 0 ? 0 : ratingSum / totalReviews;
-               ratingTxt.setText(String.valueOf(avgRating));
-               reviewCount.setText(String.valueOf(totalReviews));
+                float avgRating = totalReviews == 0 ? 0 : (float) ratingSum / totalReviews;
+                ratingTxt.setText(String.valueOf(avgRating));
+                reviewCount.setText(String.valueOf(totalReviews));
+                extras.putInt("RATING_SUM", ratingSum);
+                extras.putInt("REVIEW_COUNT", totalReviews);
 
-               if(totalReviews == 0){
-                   ratingTxt.setVisibility(View.GONE);
-                   ratingBar.setVisibility(View.GONE);
-                   noReviewTxt.setVisibility(View.VISIBLE);
-               }
-               else{
-                   ratingTxt.setVisibility(View.VISIBLE);
-                   ratingBar.setVisibility(View.VISIBLE);
-                   noReviewTxt.setVisibility(View.GONE);
-                   ratingBar.setRating(avgRating);
-               }
-           }
+                if (totalReviews == 0) {
+                    ratingTxt.setVisibility(View.GONE);
+                    ratingBar.setVisibility(View.GONE);
+                    noReviewTxt.setVisibility(View.VISIBLE);
+                } else {
+                    ratingTxt.setVisibility(View.VISIBLE);
+                    ratingBar.setVisibility(View.VISIBLE);
+                    noReviewTxt.setVisibility(View.GONE);
+                    ratingBar.setRating(avgRating);
+                }
+            }
 
-           @SuppressLint("LongLogTag")
-           @Override
-           public void onError(String s) {
-               Log.d("setRatingAndReviewCount ERROR", s);
-           }
-       });
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onError(String s) {
+                Log.d("setRatingAndReviewCount ERROR", s);
+            }
+        });
 
-   }
+    }
 
     @Override
     // onClick for each card in the list
@@ -179,8 +179,6 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
         intent.putExtra("REVIEWER_PROFILE_PIC", reviewListCardModels.get(position).getReviewUser().getPhotoUrl());
         intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
-
-
 
 
         startActivity(intent);

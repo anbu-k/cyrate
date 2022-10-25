@@ -127,11 +127,13 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
         intent.putExtra("CATEGORY", businessListCardModel.get(position).getBusType());
         intent.putExtra("ADDRESS", businessListCardModel.get(position).getLocation());
-        intent.putExtra("RATING", "4.7"); // Hard coded for now
         intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
         intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
         intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
+        intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
+        intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
+
 
         startActivity(intent);
     }
