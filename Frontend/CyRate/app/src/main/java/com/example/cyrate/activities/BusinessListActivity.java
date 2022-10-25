@@ -31,6 +31,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.cyrate.nav_menu_utils;
+
 public class BusinessListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
@@ -54,7 +56,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         open_menu = (ImageView) findViewById(R.id.open_menu_icon);
 
         // Use this to hide any menu tabs depending on the user type
-        hideMenuItems();
+        nav_menu_utils.hideMenuItems(navView.getMenu());
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -155,54 +157,15 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Intent i;
-        switch(menuItem.getItemId()){
-            case R.id.nav_restaurants:
-                break;
-            case R.id.nav_addBusiness:
-                i = new Intent(BusinessListActivity.this, AddBusinessActivity.class);
-                startActivity(i);
-                break;
-            case R.id.nav_profile:
-                // code here
-                break;
-            case R.id.nav_edit_profile:
-                i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
-                startActivity(i);
-                break;
-            case R.id.nav_sign_in:
-                i = new Intent(BusinessListActivity.this, LoginActivity.class);
-                startActivity(i);
-            case R.id.nav_logout:
-                i = new Intent(BusinessListActivity.this, LoginActivity.class);
-                startActivity(i);
+        if (menuItem.getItemId() != R.id.nav_restaurants){
+            nav_menu_utils.onNavItemSelected(menuItem, BusinessListActivity.this);
+        }
+        else{
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    //set visibility of all menu items every time in case users log out and log back in?
-    private void hideMenuItems(){
-        Menu navMenu = navView.getMenu();
-
-        // A guest user should not be able to edit the guest user profile
-        if (MainActivity.globalUser.getUserType() == UserType.GUEST){
-            navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
-
-            //guest cannot add business
-            navMenu.findItem(R.id.nav_addBusiness).setVisible(false);
-
-            //guest cannot log out
-            navMenu.findItem(R.id.nav_logout).setVisible(false);
-
-            //guest cannot see their profile
-            navMenu.findItem(R.id.nav_profile).setVisible(false);
-
-            //guest CAN sign in
-
-        }
-    }
-
 }
 
 

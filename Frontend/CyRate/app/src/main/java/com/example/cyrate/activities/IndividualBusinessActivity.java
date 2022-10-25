@@ -18,6 +18,7 @@ import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.R;
+import com.example.cyrate.UserType;
 
 import org.json.JSONException;
 
@@ -152,10 +153,19 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             }
         });
 
+        hideButtons();
+
     }
 
     private void navigateBack() {
         Intent intent = new Intent(this, BusinessListActivity.class);
         startActivity(intent);
+    }
+
+    private void hideButtons(){
+        if (MainActivity.globalUser.getUserType() == UserType.GUEST){
+            edit_btn.setVisibility(View.GONE);
+            delete_btn.setVisibility(View.GONE);
+        }
     }
 }
