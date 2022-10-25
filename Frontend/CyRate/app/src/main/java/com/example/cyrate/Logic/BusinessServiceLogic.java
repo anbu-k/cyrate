@@ -207,7 +207,7 @@ public class BusinessServiceLogic {
                     newUserObj.put("location", busLocation);
                     newUserObj.put("priceGauge", priceGauge);
                     newUserObj.put("photoUrl", photoUrl);
-                    newUserObj.put("reviewSum", business.getReviewCount());
+                    newUserObj.put("reviewSum", business.getReviewSum());
                     newUserObj.put("reviewCount", business.getReviewCount());
 
                     // Defaults to fill the required JSON object
