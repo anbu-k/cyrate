@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ReviewServiceLogic {
 
-    public void getReviews(int busId, getReviewsResponse r){
+    public void getReviews(int busId, getReviewsResponse r) {
         List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
         String url = Const.GET_REVIEWS_BY_BUS_ID + String.valueOf(busId);
 
@@ -37,25 +37,25 @@ public class ReviewServiceLogic {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("REVIEWS", response.toString());
-                for(int i = 0; i < response.length(); i++){
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject review = (JSONObject) response.get(i);
                         Log.d("REVIEW JSON OBJ", review.toString());
 
                         JSONObject reviewUserJSON = review.getJSONObject("user");
                         ReviewUserModel reviewUserModel = new ReviewUserModel(
-                            reviewUserJSON.getInt("userID"),
-                            reviewUserJSON.getString("realName"),
-                            reviewUserJSON.getString("username"),
-                            reviewUserJSON.getString("photoUrl")
+                                reviewUserJSON.getInt("userID"),
+                                reviewUserJSON.getString("realName"),
+                                reviewUserJSON.getString("username"),
+                                reviewUserJSON.getString("photoUrl")
                         );
 
                         ReviewListCardModel reviewListCardModel = new ReviewListCardModel(
-                            review.getInt("rid"),
-                            review.getInt("rateVal"),
-                            review.getString("reviewTxt"),
-                            review.getJSONObject("business").getInt("busId"),
-                            reviewUserModel
+                                review.getInt("rid"),
+                                review.getInt("rateVal"),
+                                review.getString("reviewTxt"),
+                                review.getJSONObject("business").getInt("busId"),
+                                reviewUserModel
                         );
 
                         reviewModelsList.add(reviewListCardModel);
@@ -82,100 +82,46 @@ public class ReviewServiceLogic {
 
         Log.d("ADD REVIEW URL", url);
 
-        BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("reviewTxt", reviewTxt);
+        params.put("reviewHeader", "Test");
+        params.put("rateVal", ratingVal);
 
-        businessServiceLogic.getBusinessesById(busId, new getBusinessByIDResponse() {
-            @Override
-            public void onSuccess(BusinessListCardModel business) {
-                Log.d("addReview - getBusiness", business.toString());
-                Log.d("addReview - globalUser", MainActivity.globalUser.toString());
-
-                JSONObject user = new JSONObject();
-                JSONObject bus = new JSONObject();
-                try {
-                    user.put("userType", MainActivity.globalUser.getUserType());
-                    user.put("realName", MainActivity.globalUser.getFullName());
-                    user.put("username", MainActivity.globalUser.getUsername());
-                    user.put("photoUrl", MainActivity.globalUser.getPhotoUrl());
-                    user.put("userPass", MainActivity.globalUser.getPassword());
-                    user.put("email", MainActivity.globalUser.getEmail());
-                    user.put("phoneNum", MainActivity.globalUser.getPhoneNum());
-                    user.put("dob", MainActivity.globalUser.getDob());
-                    user.put("userID", MainActivity.globalUser.getUserId());
-
-                    bus.put("busName", business.getBusName());
-                    bus.put("busType", business.getBusType());
-                    bus.put("photoUrl", business.getPhotoUrl());
-                    bus.put("hours", business.getHours());
-                    bus.put("location", business.getLocation());
-                    bus.put("busName", business.getBusName());
-                    bus.put("ownerId", -1);
-                    bus.put("menuLink", "");
-                    bus.put("priceGauge", business.getPriceGauge());
-                    bus.put("reviewSum", business.getReviewSum());
-                    bus.put("reviewCount", business.getReviewCount());
-
-                    Log.d("addReview - userJSON", user.toString());
-                    Log.d("addReview - busJSON", bus.toString());
-
-                    HashMap<String, Object> params = new HashMap<>();
-                    params.put("reviewTxt", reviewTxt);
-                    params.put("reviewHeader", "Test");
-                    params.put("rateVal", ratingVal);
-
-//                    JSONObject newReview = new JSONObject();
-//                    newReview.put("reviewTxt", reviewTxt);
-//                    newReview.put("reviewHeader", "Test");
-//                    newReview.put("rateVal", ratingVal);
-//                    newReview.put("user", user);
-//                    newReview.put("business", bus);
-
-                    Log.d("addReview - newReview", params.toString());
+        Log.d("addReview - newReview", params.toString());
 
 
-                    StringRequest request = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (response != null) {
-                                        r.onSuccess(response);
-                                    } else {
-                                        r.onError("Null Response object received");
-                                    }
-                                }
-                            },
-
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("ADD REVIEW ERROR", error.toString());
-                                    r.onError(error.getMessage());
-                                }
-                            }
-                    ){
-                        @Override
-                        public byte[] getBody() {
-                            return new JSONObject(params).toString().getBytes();
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response != null) {
+                            r.onSuccess(response);
+                        } else {
+                            r.onError("Null Response object received");
                         }
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json";
-                        }
-                    };
+                    }
+                },
 
-                    AppController.getInstance().addToRequestQueue(request);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ADD REVIEW ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
                 }
-
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
             }
 
             @Override
-            public void onError(String s) {
-                r.onError(s);
+            public String getBodyContentType() {
+                return "application/json";
             }
-        });
+        };
+
+        AppController.getInstance().addToRequestQueue(request);
 
 
     }
