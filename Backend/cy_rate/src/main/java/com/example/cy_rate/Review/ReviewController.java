@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
 
 
 /**
@@ -43,7 +44,7 @@ public class ReviewController {
     private String failure = "{\"message\":\"failure\"}";
 
     /**
-     * 
+     *
      * @return all reviews in database table
      */
     @GetMapping(path="/reviews/all")
@@ -57,6 +58,7 @@ public class ReviewController {
      * @param bid specific business id
      * @return all reviews for a specific business
      */
+    @Operation(summary = "Get all reviews for a specific business")
     @GetMapping(path="/reviews/business/{bid}")
     List<Review> getReviewsByBusiness(@PathVariable int bid)
     {
@@ -69,6 +71,7 @@ public class ReviewController {
      * @param uid the user id
      * @return all reviews for a specific user
      */
+    @Operation(summary = "Get all reviews for a specific user")
     @GetMapping(path="/reviews/user/{uid}")
     List<Review> getReviewsByUser(@PathVariable int uid)
     {
@@ -83,6 +86,7 @@ public class ReviewController {
      * @param review - Review Object {"rateVal": int, "reviewTxt": Str}
      * @return suc/fail string
      */
+    @Operation(summary = "Create a review that connects to a business and a user")
     @PostMapping(path="/review/{bid}/user/{uid}/createReview")
     String createReview(@PathVariable int bid, @PathVariable int uid, @RequestBody Review review)
     {
@@ -94,20 +98,45 @@ public class ReviewController {
             // Set reviews business and user to ones found above
             review.setBusiness(b);
             review.setUser(u);
-    
-            // Add review to List<Reviews> within user and business objects
-            // b.addReview(review);
-            // u.addReview(review);
-            
+
             // Save all changes
             reviewRepo.save(review);
-            // businessRepo.save(b);
-            // userRepo.save(u);
-            
             return success;
         } catch (Exception e) {
             return e.toString();
         }
+    }
+
+    /**
+     * Update a specific review, only able to update reviewHeader, raateVal, and reviewTxt
+     * Cannot change what user left the review or what business it is for 
+     * @param rid review id
+     * @param newR new review object to update old
+     * @return success/failure str
+     */
+    @Operation(summary = "Update reviewHeader, rateVal, and reviewTxt for a specific review")
+    @PutMapping(path="/reveiw/update/{rid}")
+    String updateReview(@PathVariable int rid, @RequestBody Review newR)
+    {
+        Review r = reviewRepo.findById(rid);
+        r.setReviewHeader(newR.getReviewHeader());
+        r.setRateVal(newR.getRateVal());
+        r.setReviewTxt(newR.getReviewTxt());
+        reviewRepo.save(r);
+        return success;
+    }
+
+    /***
+     * Delete Review
+     * @param rid review id to delete
+     * @return success/failure str
+     */
+    @Operation(summary = "Delete a review from DB")
+    @DeleteMapping(path="/review/delete/{rid}")
+    String deleteReview(@PathVariable int rid)
+    {
+        reviewRepo.deleteById(rid);
+        return success;
     }
        
 }
