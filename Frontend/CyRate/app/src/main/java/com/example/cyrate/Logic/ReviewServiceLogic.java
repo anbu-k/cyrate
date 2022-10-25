@@ -1,5 +1,6 @@
 package com.example.cyrate.Logic;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -9,6 +10,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cyrate.AppController;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
@@ -94,11 +96,26 @@ public class ReviewServiceLogic {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response != null) {
-                            r.onSuccess(response);
-                        } else {
-                            r.onError("Null Response object received");
+                        // After we do a POST for the new review, we need to update the business
+                        // Total Review Count and Total Rating Sum to display / use for later calculations.
+                        BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
+                        try {
+                            businessServiceLogic.editRatingAndReviewCount(busId, ratingVal, 1, new businessStringResponse() {
+                                @Override
+                                public void onSuccess(String s) {
+                                    r.onSuccess(response);
+                                }
+
+                                @SuppressLint("LongLogTag")
+                                @Override
+                                public void onError(String s) {
+                                    Log.d("addReview - editRatingAndReviewCount - ERROR", s);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
                     }
                 },
 

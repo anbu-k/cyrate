@@ -1,5 +1,6 @@
 package com.example.cyrate.Logic;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -223,6 +224,50 @@ public class BusinessServiceLogic {
         );
 
         AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void editRatingAndReviewCount(int busId, int ratingUpdate, int reviewCountUpdate, businessStringResponse r) throws JSONException {
+        String url = Const.EDIT_BUSINESS_URL + String.valueOf(busId);
+
+
+
+        this.getBusinessesById(busId, new getBusinessByIDResponse() {
+            @Override
+            public void onSuccess(BusinessListCardModel business) {
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("reviewSum", business.getReviewSum() + ratingUpdate);
+                    obj.put("reviewCount", business.getReviewCount() + reviewCountUpdate);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,
+                        url, obj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        r.onSuccess("Updated Rating and Review Count!");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        r.onError(error.toString());
+                    }
+                }
+
+                );
+
+                AppController.getInstance().addToRequestQueue(request);
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onError(String s) {
+                Log.d("editRatingAndReviewCount - getBusById - ERROR", s);
+            }
+        });
+
     }
 
 }
