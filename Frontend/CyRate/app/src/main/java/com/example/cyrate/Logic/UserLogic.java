@@ -3,6 +3,9 @@ package com.example.cyrate.Logic;
 
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -188,6 +191,10 @@ public class UserLogic {
             @Override
             public void onErrorResponse(VolleyError error) {
                 r.onError("error response: " + error.toString());
+
+                Log.d("USER LOGIC ERROR", error.toString());
+                if (error instanceof NoConnectionError)
+                   Log.d("USER LOGIC ERROR", "Unable to connect to the server! Please ensure your internet is working!");
             }
         });
 

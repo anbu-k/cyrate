@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cyrate.AppController;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReviewServiceLogic {
@@ -76,7 +78,7 @@ public class ReviewServiceLogic {
     }
 
     public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
-        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview/";
+        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
 
         Log.d("ADD REVIEW URL", url);
 
@@ -85,6 +87,9 @@ public class ReviewServiceLogic {
         businessServiceLogic.getBusinessesById(busId, new getBusinessByIDResponse() {
             @Override
             public void onSuccess(BusinessListCardModel business) {
+                Log.d("addReview - getBusiness", business.toString());
+                Log.d("addReview - globalUser", MainActivity.globalUser.toString());
+
                 JSONObject user = new JSONObject();
                 JSONObject bus = new JSONObject();
                 try {
@@ -110,18 +115,30 @@ public class ReviewServiceLogic {
                     bus.put("reviewSum", business.getReviewSum());
                     bus.put("reviewCount", business.getReviewCount());
 
-                    JSONObject newReview = new JSONObject();
-                    newReview.put("reviewTxt", reviewTxt);
-                    newReview.put("rateVal", ratingVal);
-                    newReview.put("user", user);
-                    newReview.put("business", bus);
+                    Log.d("addReview - userJSON", user.toString());
+                    Log.d("addReview - busJSON", bus.toString());
 
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newReview,
-                            new Response.Listener<JSONObject>() {
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("reviewTxt", reviewTxt);
+                    params.put("reviewHeader", "Test");
+                    params.put("rateVal", ratingVal);
+
+//                    JSONObject newReview = new JSONObject();
+//                    newReview.put("reviewTxt", reviewTxt);
+//                    newReview.put("reviewHeader", "Test");
+//                    newReview.put("rateVal", ratingVal);
+//                    newReview.put("user", user);
+//                    newReview.put("business", bus);
+
+                    Log.d("addReview - newReview", params.toString());
+
+
+                    StringRequest request = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
                                 @Override
-                                public void onResponse(JSONObject response) {
+                                public void onResponse(String response) {
                                     if (response != null) {
-                                        r.onSuccess(response.toString());
+                                        r.onSuccess(response);
                                     } else {
                                         r.onError("Null Response object received");
                                     }
@@ -135,7 +152,16 @@ public class ReviewServiceLogic {
                                     r.onError(error.getMessage());
                                 }
                             }
-                    );
+                    ){
+                        @Override
+                        public byte[] getBody() {
+                            return new JSONObject(params).toString().getBytes();
+                        }
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json";
+                        }
+                    };
 
                     AppController.getInstance().addToRequestQueue(request);
 
