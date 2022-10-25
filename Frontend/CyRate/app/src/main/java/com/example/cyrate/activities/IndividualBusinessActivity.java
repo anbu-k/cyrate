@@ -59,7 +59,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         int ratingSum = extras.getInt("RATING_SUM");
 
         float avgRating = totalReviews == 0 ? 0 : ratingSum / (float) totalReviews;
-        rating.setText(String.valueOf(avgRating));
+        rating.setText(String.format("%.1f", avgRating));
         reviewCount.setText(String.valueOf(totalReviews));
 
         new ImageLoaderTask(extras.getString("IMAGE"), busImage).execute();

@@ -142,7 +142,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
                 int ratingSum = business.getReviewSum();
 
                 float avgRating = totalReviews == 0 ? 0 : (float) ratingSum / totalReviews;
-                ratingTxt.setText(String.valueOf(avgRating));
+                ratingTxt.setText(String.format("%.1f",avgRating));
                 reviewCount.setText(String.valueOf(totalReviews));
                 extras.putInt("RATING_SUM", ratingSum);
                 extras.putInt("REVIEW_COUNT", totalReviews);
