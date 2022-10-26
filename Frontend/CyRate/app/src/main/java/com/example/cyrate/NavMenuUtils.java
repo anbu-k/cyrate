@@ -10,8 +10,9 @@ import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.activities.ProfileActivity;
 
-public class nav_menu_utils {
+public class NavMenuUtils {
     public static void hideMenuItems(Menu navMenu){
         //set visibility of all menu items every time in case users log out and log back in?
             // A guest user should not be able to edit the guest user profile
@@ -84,6 +85,8 @@ public class nav_menu_utils {
                 break;
             case R.id.nav_profile:
                 // code here
+                i = new Intent(context, ProfileActivity.class);
+                context.startActivity(i);
                 break;
             case R.id.nav_edit_profile:
                 i = new Intent(context, EditProfileActivity.class);
