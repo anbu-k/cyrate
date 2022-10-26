@@ -99,6 +99,9 @@ public class ReviewController {
             review.setBusiness(b);
             review.setUser(u);
 
+            // update business review count and sum
+            b.setReviewCount(b.getReviewCount() + 1);
+            b.setReviewSum(b.getReviewSum() + review.getRateVal());
             // Save all changes
             reviewRepo.save(review);
             return success;
@@ -135,6 +138,14 @@ public class ReviewController {
     @DeleteMapping(path="/review/delete/{rid}")
     String deleteReview(@PathVariable int rid)
     {
+        // update business review count and sum
+        Review r = reviewRepo.findById(rid);
+        Business b = r.getBusiness();
+        b.setReviewCount(b.getReviewCount() - 1);
+        b.setReviewSum(b.getReviewSum() - r.getRateVal());
+        businessRepo.save(b);
+
+        // delete review
         reviewRepo.deleteById(rid);
         return success;
     }

@@ -7,35 +7,38 @@ import datetime
 import time
 import sqlalchemy
 
-
 db_u = 'cyrate'
 db_p = 'password'
 db_host = 'coms-309-020.class.las.iastate.edu'
 db_name = 'cy_rate'
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
 
-
-def find_menu(url: str, rest: str):
+# Tries to find /menu yelp link
+# if not found it calls google(rest)
+def find_menu(url: str, rest: str) -> str:
     link = try_yelp_menu(url)
     if  link == "":
         link = google(rest)
     return link
     
-
+# returns most frequent link that appears in google search
 def google(rest: str) -> str:
+    # Get all links from google search using {rest}
     response = requests.get(f'https://www.google.com/search?q={rest}')
     soup = BeautifulSoup(response.text, "html.parser")
     links = soup.find_all('a')
+    # empty list so we can calculate most freq
     results = []
     for a in links:
+        # finds only urls that arent related to google search elements
         if '/url?q' in a['href']:
             linkHref = a['href']
             linkHref = linkHref.split('q=')[1]
-            # gives www.{site}.com without all extra bs
+            # Parses Url into object
+            # can access just 'www.whateversite.com' w/ .netloc
             s = urlparse(linkHref).netloc
             results.append(s)
     mostFreq = max(set(results), key=results.count)
-    print(mostFreq + '\n')
     return mostFreq
 
 
@@ -49,16 +52,13 @@ def try_yelp_menu(url: str):
     # ['https://www.yelp.com/', 'cornbred-ames?adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_ campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A']
     # after split 2
     # ['/cornbred-ames', 'adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A']
-    # name = '/cornbred-ames'
-        
+    # name = '/cornbred-ames'     
     name = url.split('/biz')[1]
     name = name.split('?')[0]
-    
     search = 'https://www.yelp.com/menu' + name
-
     try:
         response = requests.get(search)
-        # redirected to biz page
+        # if redirected wont equal search, return empty
         if response.url != search:
             return ""
         return search
@@ -66,7 +66,8 @@ def try_yelp_menu(url: str):
         # sleep to avoid another timeout
         # try again
         time.sleep(2)
-        try_yelp_menu(url)
+        s = try_yelp_menu(url)
+        return s
     
     
 
@@ -114,16 +115,13 @@ def main():
             start = datetime.datetime.strptime(start, '%H%M').strftime('%I:%M %p')
             end = datetime.datetime.strptime(end, '%H%M').strftime('%I:%M %p')
             hours_str += f" {days_dic.get(day.get('day'))}: {start} - {end} |"
-        
-        # Try to find menu
-        menu_link = find_menu(element.get('url'), element.get('name'))
-        print(menu_link)
+
         # Create Business Obj basically
         bus = {
         'bus_name': element.get('name'),
         'bus_type': element.get('categories')[0].get('title'), 
         'location': f"{element.get('location').get('address1')}, {element.get('location').get('city')} ({element.get('location').get('zip_code')})",
-        'menu_link': "",
+        'menu_link': find_menu(element.get('url'), element.get('name')),
         'owner_id': -1,
         'hours': hours_str,
         'photo_url': element.get('image_url'),
@@ -139,8 +137,8 @@ def main():
     df = pd.DataFrame(data=bus_uni)
     # rename index to match sql table
     df.index.names = ['bus_id']
-    # df.to_sql(con=conn, name='business', if_exists='replace')
-    # print('Success Business table updated....')
+    df.to_sql(con=conn, name='business', if_exists='replace')
+    print('Success: Business table updated')
     return
 
 if __name__ == '__main__':
