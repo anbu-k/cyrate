@@ -1,6 +1,7 @@
 package com.example.cyrate;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,6 +15,10 @@ public class nav_menu_utils {
     public static void hideMenuItems(Menu navMenu){
         //set visibility of all menu items every time in case users log out and log back in?
             // A guest user should not be able to edit the guest user profile
+
+            if(MainActivity.globalUser == null){
+                Log.d("GLOBAL USER", "Global User NULL");
+            }
             if (MainActivity.globalUser.getUserType() == UserType.GUEST){
                 navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
 

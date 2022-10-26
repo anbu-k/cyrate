@@ -90,6 +90,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onError(String s) {
                 Log.d("ERROR IN Intro Act", s);
+
             }
         });
     }

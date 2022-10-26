@@ -27,7 +27,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
     Button findUs_btn, reviews_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn;
-    TextView busName, rating, priceGauge;
+    TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
     int busId;
     BusinessServiceLogic businessServiceLogic;
@@ -46,6 +46,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         edit_btn = (ImageView) findViewById(R.id.edit_icon);
         findUs_btn = (Button) findViewById(R.id.find_us_btn);
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
+        reviewCount = findViewById(R.id.reviews_text);
 
 
 
@@ -54,9 +55,15 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         rating = (TextView) findViewById(R.id.ratings_text);
         priceGauge = (TextView) findViewById(R.id.price_text);
 
+        int totalReviews = extras.getInt("REVIEW_COUNT");
+        int ratingSum = extras.getInt("RATING_SUM");
+
+        float avgRating = totalReviews == 0 ? 0 : ratingSum / (float) totalReviews;
+        rating.setText(String.format("%.1f", avgRating));
+        reviewCount.setText(String.valueOf(totalReviews));
+
         new ImageLoaderTask(extras.getString("IMAGE"), busImage).execute();
         busName.setText(busNameString);
-        rating.setText("Rating:" + extras.getString("RATING"));
         priceGauge.setText(extras.getString("PRICE_GAUGE"));
         busId = extras.getInt("ID");
 
