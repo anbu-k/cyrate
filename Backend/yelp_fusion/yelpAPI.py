@@ -1,5 +1,7 @@
 import requests
-import json
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+
 import pandas as pd
 import datetime
 import time
@@ -13,8 +15,33 @@ db_name = 'cy_rate'
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
 
 
+def find_menu(url: str, rest: str):
+    link = try_yelp_menu(url)
+    if  link == "":
+        link = google(rest)
+    return link
+    
+
+def google(rest: str) -> str:
+    response = requests.get(f'https://www.google.com/search?q={rest}')
+    soup = BeautifulSoup(response.text, "html.parser")
+    links = soup.find_all('a')
+    results = []
+    for a in links:
+        if '/url?q' in a['href']:
+            linkHref = a['href']
+            linkHref = linkHref.split('q=')[1]
+            # gives www.{site}.com without all extra bs
+            s = urlparse(linkHref).netloc
+            results.append(s)
+    mostFreq = max(set(results), key=results.count)
+    print(mostFreq + '\n')
+    return mostFreq
+
+
 # returns yelp /menu link if found
 def try_yelp_menu(url: str):
+    # Example url =
     # 'https://www.yelp.com/biz/cornbred-ames?adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_
     #           campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A'
     #
@@ -33,10 +60,13 @@ def try_yelp_menu(url: str):
         response = requests.get(search)
         # redirected to biz page
         if response.url != search:
-            return f"No /menu page for {name}"
+            return ""
         return search
     except:
-        print('hello')
+        # sleep to avoid another timeout
+        # try again
+        time.sleep(2)
+        try_yelp_menu(url)
     
     
 
@@ -85,8 +115,10 @@ def main():
             end = datetime.datetime.strptime(end, '%H%M').strftime('%I:%M %p')
             hours_str += f" {days_dic.get(day.get('day'))}: {start} - {end} |"
         
+        # Try to find menu
+        menu_link = find_menu(element.get('url'), element.get('name'))
+        print(menu_link)
         # Create Business Obj basically
-        print(try_yelp_menu(element.get('url')))
         bus = {
         'bus_name': element.get('name'),
         'bus_type': element.get('categories')[0].get('title'), 

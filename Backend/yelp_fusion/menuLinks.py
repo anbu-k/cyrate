@@ -5,33 +5,39 @@ Trying to scrape /menu pages from yelp
 
 """
 
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 import requests
+from bs4 import BeautifulSoup
 import json
 
-# Not really doing anything
-def google(rest: str):
+
+
+
+def google(rest: str) -> str:
     response = requests.get(f'https://www.google.com/search?q={rest}')
     soup = BeautifulSoup(response.text, "html.parser")
-    divs = soup.find_all('div')
-    for div in divs:
-        if 'Menu' in div.text:
-            print(f'{div.find("a")}\n')
+    links = soup.find_all('a')
+    results = []
+    for a in links:
+        if '/url?q' in a['href']:
+            linkHref = a['href']
+            linkHref = linkHref.split('q=')[1]
+            # gives www.{site}.com without all extra bs
+            s = urlparse(linkHref).netloc
+            results.append(s)
+    mostFreq = max(set(results), key=results.count)
+    print(mostFreq + '\n')
+    return mostFreq
 
 
-def try_yelp_menu(url: str):
-    # 'https://www.yelp.com/biz/four-barrel-coffee-san-francisco'
-    # after split
-    # ['https://www.yelp.com/', 'four-barrel-coffee-san-francisco']
-    rs = url.split('/biz')
-    name = rs[1]
-    search = 'https://www.yelp.com/menu' + name
-    response = requests.get(search)
-    if response.url != search:
-        return f"No /menu page for {name}"
-    return search
-    
-
+google('Hickory Park')
+google('Potbelly')
+google('Freddys')
+google('blaze pizza')
+google('Cafe Beaudelaire')
+google('Ichiban Japanese Restaurant')
+google('macubana')
+google('Stomping Grounds Cafe')
 # # Gets yelp landing page for resturant
 # # found out this is pointless bc business search returns the yelp /biz page
 # def yelp_biz_str(rest: str):
@@ -59,9 +65,9 @@ def try_yelp_menu(url: str):
 #print(soup.prettify())
 
 
-# found /menu
-print(try_yelp_menu('https://www.yelp.com/biz/mr-burrito-ames'))
-# didnt find menu
-print(try_yelp_menu('https://www.yelp.com/biz/provisions-lot-f-ames-2'))
+# # found /menu
+# print(try_yelp_menu('https://www.yelp.com/biz/mr-burrito-ames'))
+# # didnt find menu
+# print(try_yelp_menu('https://www.yelp.com/biz/provisions-lot-f-ames-2'))
 
-print(try_yelp_menu('https://www.yelp.com/biz/taste-place-ames'))
+# print(try_yelp_menu('https://www.yelp.com/biz/taste-place-ames'))
