@@ -12,6 +12,34 @@ db_host = 'coms-309-020.class.las.iastate.edu'
 db_name = 'cy_rate'
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
 
+
+# returns yelp /menu link if found
+def try_yelp_menu(url: str):
+    # 'https://www.yelp.com/biz/cornbred-ames?adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_
+    #           campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A'
+    #
+    # after split 1
+    # ['https://www.yelp.com/', 'cornbred-ames?adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_ campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A']
+    # after split 2
+    # ['/cornbred-ames', 'adjust_creative=Jzh_gvi4YouhU5-CrA6Z8A&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Jzh_gvi4YouhU5-CrA6Z8A']
+    # name = '/cornbred-ames'
+        
+    name = url.split('/biz')[1]
+    name = name.split('?')[0]
+    
+    search = 'https://www.yelp.com/menu' + name
+
+    try:
+        response = requests.get(search)
+        # redirected to biz page
+        if response.url != search:
+            return f"No /menu page for {name}"
+        return search
+    except:
+        print('hello')
+    
+    
+
 # returns all results from business search location = "ames" from yelp_api
 # need to return hours from yelp 'Business Details'
 def main():
@@ -27,7 +55,7 @@ def main():
 
     # for each business in json response
     for element in businesses:
-        time.sleep(.7) # sleep between each iteration to not freak out yelp
+        time.sleep(1) # sleep between each iteration to not freak out yelp
         print(f"Starting {element.get('name')}")
         print(f'\tGathering hours...')
         
@@ -58,6 +86,7 @@ def main():
             hours_str += f" {days_dic.get(day.get('day'))}: {start} - {end} |"
         
         # Create Business Obj basically
+        print(try_yelp_menu(element.get('url')))
         bus = {
         'bus_name': element.get('name'),
         'bus_type': element.get('categories')[0].get('title'), 
@@ -78,8 +107,8 @@ def main():
     df = pd.DataFrame(data=bus_uni)
     # rename index to match sql table
     df.index.names = ['bus_id']
-    df.to_sql(con=conn, name='business', if_exists='replace')
-    print('Success Business table updated....')
+    # df.to_sql(con=conn, name='business', if_exists='replace')
+    # print('Success Business table updated....')
     return
 
 if __name__ == '__main__':
