@@ -7,16 +7,10 @@ import datetime
 import time
 import sqlalchemy
 
-# db_u = 'cyrate'
-# db_p = 'password'
-# db_host = 'coms-309-020.class.las.iastate.edu'
-# db_name = 'cy_rate'
-
-db_u = 'tester'
+db_u = 'cyrate'
 db_p = 'password'
-db_host = 'localhost'
+db_host = 'coms-309-020.class.las.iastate.edu'
 db_name = 'cy_rate'
-
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
 
 # Tries to find /menu yelp link
