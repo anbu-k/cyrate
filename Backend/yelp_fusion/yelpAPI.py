@@ -7,10 +7,16 @@ import datetime
 import time
 import sqlalchemy
 
-db_u = 'cyrate'
+# db_u = 'cyrate'
+# db_p = 'password'
+# db_host = 'coms-309-020.class.las.iastate.edu'
+# db_name = 'cy_rate'
+
+db_u = 'tester'
 db_p = 'password'
-db_host = 'coms-309-020.class.las.iastate.edu'
+db_host = 'localhost'
 db_name = 'cy_rate'
+
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
 
 # Tries to find /menu yelp link
@@ -119,7 +125,8 @@ def main():
         # Create Business Obj basically
         bus = {
         'bus_name': element.get('name'),
-        'bus_type': element.get('categories')[0].get('title'), 
+        'bus_type': element.get('categories')[0].get('title'),
+        'phone': element.get('phone'),
         'location': f"{element.get('location').get('address1')}, {element.get('location').get('city')} ({element.get('location').get('zip_code')})",
         'menu_link': find_menu(element.get('url'), element.get('name')),
         'owner_id': -1,
