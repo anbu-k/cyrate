@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 
 @Entity
-@Table(name = "Business Posts")
+@Table(name = "BusinessPosts")
 public class Post {
     // pk
     @Id

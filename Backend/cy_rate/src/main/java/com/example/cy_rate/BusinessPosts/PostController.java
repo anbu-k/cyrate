@@ -46,7 +46,7 @@ public class PostController {
     List<Post> getPostsByBusiness(@PathVariable int bid)
     {
         Business b = businessRepo.findById(bid);
-        return postRepo.findByBusinessId(b);
+        return postRepo.findByBusiness(b);
     }
 
     /**
@@ -71,25 +71,25 @@ public class PostController {
      * @param bid
      * @return if the deletion was succesful or a failure
      */
-    @DeleteMapping(path = "/posts/delete/{bid}")
-    String deletePost(@PathVariable int bid)
+    @DeleteMapping(path = "/posts/delete/{pid}")
+    String deletePost(@PathVariable int pid)
     {
-        postRepo.deleteByBid(bid);
+        postRepo.deleteById(pid);
         return success;
     }
 
     /**
-     * Updates a post by its Business Id
+     * Updates a post by its Business Id.
      *  Allows you to edit a business post
      * @param bid
      * @param p
      * @return
      */
     @PutMapping(path = "/posts/updateByBid/{bid}")
-    String editPost(@PathVariable int bid, @RequestBody Post p)
+    String editPost(@PathVariable int pid, @RequestBody Post p)
     {
         try{
-            Post editPost = postRepo.findByBid(bid);
+            Post editPost = postRepo.findById(pid);
 
             editPost.setDate(p.getDate());
             editPost.setPostTxt(p.getPostTxt());
@@ -97,7 +97,7 @@ public class PostController {
             postRepo.save(editPost);
         }
         catch(Exception e){
-            return "Not able to find Post with id: " + bid;
+            return "Not able to find Post with id: " + pid;
         }
         return success;
     }

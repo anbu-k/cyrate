@@ -5,9 +5,9 @@ import java.util.List;
 import com.example.cy_rate.Business.Business;
 
 public interface PostRepository extends JpaRepository<Post, Integer>{
-    Post findByBid(int bid);
-    void deleteByBid(int bid);
-    List<Post> findByBusinessId(Business b);
+    Post findById(int pid);
+    void deleteById(int pid);
+    List<Post> findByBusiness(Business b);
     
 }
 
