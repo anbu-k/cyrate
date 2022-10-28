@@ -15,7 +15,7 @@ import com.example.cyrate.R;
 public class IndividualReviewActivity extends AppCompatActivity {
 
     ImageView back_btn, reviewerProfilePic;
-    TextView reviewerName, reviewBody;
+    TextView reviewerName, reviewBody, reviewHeading;
     RatingBar ratingBar;
     Bundle extras;
 
@@ -27,6 +27,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         reviewerProfilePic = findViewById(R.id.profilePic);
         reviewerName = findViewById(R.id.reviewerNameIndiv);
+        reviewHeading = findViewById(R.id.reviewHeading_individualReview);
         reviewBody = findViewById(R.id.reviewBody);
         ratingBar = findViewById(R.id.reviewRating);
 
@@ -34,6 +35,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
         new ImageLoaderTask(extras.getString("REVIEWER_PROFILE_PIC"), reviewerProfilePic).execute();
         reviewerName.setText(extras.getString("REVIEWER_USERNAME"));
+        reviewHeading.setText(extras.getString("REVIEW_HEADING"));
         reviewBody.setText(extras.getString("REVIEW_BODY"));
         ratingBar.setRating(extras.getInt("RATING_VAL"));
 

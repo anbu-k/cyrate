@@ -56,6 +56,7 @@ public class ReviewServiceLogic {
                                 review.getInt("rid"),
                                 review.getInt("rateVal"),
                                 review.getString("reviewTxt"),
+                                review.getString("reviewHeader"),
                                 review.getJSONObject("business").getInt("busId"),
                                 reviewUserModel
                         );
@@ -79,14 +80,14 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-    public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
+    public void addReview(int busId, int userId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
         String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
 
         Log.d("ADD REVIEW URL", url);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("reviewTxt", reviewTxt);
-        params.put("reviewHeader", "Test");
+        params.put("reviewHeader", reviewHeading);
         params.put("rateVal", ratingVal);
 
         Log.d("addReview - newReview", params.toString());
