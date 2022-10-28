@@ -1,6 +1,8 @@
 package com.example.cyrate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,12 +21,13 @@ import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
+import com.example.cyrate.UserType;
 
 import org.json.JSONException;
 
 public class IndividualReviewActivity extends AppCompatActivity {
 
-    ImageView back_btn, reviewerProfilePic, deleteIcon;
+    ImageView back_btn, reviewerProfilePic, deleteIcon, thumbsUpIcon, commentIcon;
     TextView reviewerName, reviewBody, reviewHeading;
     RatingBar ratingBar;
     Bundle extras;
@@ -40,6 +43,8 @@ public class IndividualReviewActivity extends AppCompatActivity {
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         reviewerProfilePic = findViewById(R.id.profilePic);
         deleteIcon = findViewById(R.id.deleteReviewIcon);
+        thumbsUpIcon = findViewById(R.id.thumbsUpIcon);
+        commentIcon = findViewById(R.id.commentIcon);
 
         reviewerName = findViewById(R.id.reviewerNameIndiv);
         reviewHeading = findViewById(R.id.reviewHeading_individualReview);
@@ -56,6 +61,34 @@ public class IndividualReviewActivity extends AppCompatActivity {
         reviewBody.setText(extras.getString("REVIEW_BODY"));
         ratingBar.setRating(extras.getInt("RATING_VAL"));
         reviewId = extras.getInt("REVIEW_ID");
+
+
+
+
+
+        // Remove the delete icon if the current User is not the original reviewer or not an Admin
+        deleteIcon.setVisibility(View.GONE);
+
+        // Update the thumbsUpIcon and CommentIcon position since we removed the deleteIcon
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.constraintSet_individualReview);
+        ConstraintSet cs = new ConstraintSet();
+        cs.clone(cl);
+
+        cs.setHorizontalBias(R.id.thumbsUpIcon, (float) 0.4);
+        cs.setHorizontalBias(R.id.commentIcon, (float) 0.6);
+        cs.applyTo(cl);
+
+        int originalReviewerId = extras.getInt("REVIEWER_ID");
+        if (MainActivity.globalUser.getUserId() == originalReviewerId ||
+                MainActivity.globalUser.getUserType() == UserType.ADMIN) {
+
+            cs.setHorizontalBias(R.id.thumbsUpIcon, (float) 0.3);
+            cs.setHorizontalBias(R.id.commentIcon, (float) 0.5);
+            cs.applyTo(cl);
+
+            deleteIcon.setVisibility(View.VISIBLE);
+        }
+
 
         // Navigates back to review list
         back_btn.setOnClickListener(new View.OnClickListener() {
