@@ -120,7 +120,25 @@ public class ReviewServiceLogic {
         };
 
         AppController.getInstance().addToRequestQueue(request);
+    }
 
+    public void deleteReview(int reviewId, reviewStringResponse r) throws JSONException {
+        String url = Const.DELETE_REVIEW_BY_ID + String.valueOf(reviewId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Review Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
 
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
     }
 }

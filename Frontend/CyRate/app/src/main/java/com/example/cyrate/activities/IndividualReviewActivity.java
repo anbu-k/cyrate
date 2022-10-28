@@ -2,22 +2,35 @@ package com.example.cyrate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
+import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
+import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
+
+import org.json.JSONException;
 
 public class IndividualReviewActivity extends AppCompatActivity {
 
-    ImageView back_btn, reviewerProfilePic;
+    ImageView back_btn, reviewerProfilePic, deleteIcon;
     TextView reviewerName, reviewBody, reviewHeading;
     RatingBar ratingBar;
     Bundle extras;
+
+    ReviewServiceLogic reviewServiceLogic;
+    int reviewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +39,8 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         reviewerProfilePic = findViewById(R.id.profilePic);
+        deleteIcon = findViewById(R.id.deleteReviewIcon);
+
         reviewerName = findViewById(R.id.reviewerNameIndiv);
         reviewHeading = findViewById(R.id.reviewHeading_individualReview);
         reviewBody = findViewById(R.id.reviewBody);
@@ -33,11 +48,14 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
 
+        reviewServiceLogic = new ReviewServiceLogic();
+
         new ImageLoaderTask(extras.getString("REVIEWER_PROFILE_PIC"), reviewerProfilePic).execute();
         reviewerName.setText(extras.getString("REVIEWER_USERNAME"));
         reviewHeading.setText(extras.getString("REVIEW_HEADING"));
         reviewBody.setText(extras.getString("REVIEW_BODY"));
         ratingBar.setRating(extras.getInt("RATING_VAL"));
+        reviewId = extras.getInt("REVIEW_ID");
 
         // Navigates back to review list
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +64,61 @@ public class IndividualReviewActivity extends AppCompatActivity {
                 Intent intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
+            }
+        });
+
+        deleteIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(IndividualReviewActivity.this);
+
+                builder.setMessage("Are you sure you want to delete this review?")
+                        .setCancelable(false)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                try {
+                                    reviewServiceLogic.deleteReview(reviewId,
+                                            new reviewStringResponse() {
+                                                @Override
+                                                public void onSuccess(String s) {
+                                                    Toast.makeText(IndividualReviewActivity.this,
+                                                            "Successfully Deleted Review!", Toast.LENGTH_LONG).show();
+
+                                                    final Handler handler = new Handler();
+
+
+                                                    Intent intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
+                                                    intent.putExtras(extras);
+
+                                                    handler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            startActivity(intent);
+                                                        }
+                                                    }, 3000);
+                                                }
+
+                                                @Override
+                                                public void onError(String s) {
+                                                    Log.d("DELETE REVIEW ERROR", s);
+                                                    Toast.makeText(IndividualReviewActivity.this, s, Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                    );
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }

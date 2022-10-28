@@ -159,7 +159,7 @@
             android:layout_height="40dp"
             android:src="@drawable/thumbs_up"
             android:layout_marginTop="20dp"
-            app:layout_constraintHorizontal_bias=".4"
+            app:layout_constraintHorizontal_bias=".3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reviewCard"
@@ -171,11 +171,23 @@
             android:layout_height="40dp"
             android:src="@drawable/comment_icon"
             android:layout_marginTop="20dp"
-            app:layout_constraintHorizontal_bias=".6"
+            app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reviewCard"
             />
+
+    <ImageView
+        android:id="@+id/deleteReviewIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/delete_icon"
+        android:layout_marginTop="20dp"
+        app:layout_constraintHorizontal_bias=".7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reviewCard"
+        />
 
 
 
