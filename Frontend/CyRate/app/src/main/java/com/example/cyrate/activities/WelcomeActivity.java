@@ -30,15 +30,6 @@ public class WelcomeActivity extends AppCompatActivity {
         final Handler handler = new Handler();
 
 
-        Intent intent = new Intent(this, BusinessListActivity.class);
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(intent);
-            }
-        }, 5000);
-
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
