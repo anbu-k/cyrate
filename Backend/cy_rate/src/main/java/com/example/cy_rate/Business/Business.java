@@ -1,21 +1,10 @@
 package com.example.cy_rate.Business;
 
-
-import java.util.List;
-import com.example.cy_rate.Review.Review; //review class
-
-
 // JPA stuff
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //@Hidden
 import io.swagger.v3.oas.annotations.Hidden;
@@ -30,6 +19,7 @@ public class Business {
     private int busId;
     private String busName;
     private String busType;
+    private String phone;
     private String photoUrl;
     private String hours;
     private String location;
@@ -62,9 +52,10 @@ public class Business {
         */
     }
 
-    public Business(String busType, String busName, String photoUrl, String hours, String location, int ownerId, String menuLink, String priceGauge, int reviewCount, int reviewSum){
+    public Business(String busType, String busName, String phone, String photoUrl, String hours, String location, int ownerId, String menuLink, String priceGauge, int reviewCount, int reviewSum){
         this.busType = busType;
         this.busName = busName;
+        this.phone = phone;
         this.photoUrl = photoUrl;
         this.hours = hours;
         this.location = location;
@@ -160,6 +151,16 @@ public class Business {
     public void setPriceGauge(String est)
     {
         this.priceGauge = est;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
     }
 
 

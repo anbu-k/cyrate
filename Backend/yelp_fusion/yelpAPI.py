@@ -80,8 +80,8 @@ def main():
     # Create pandas dataframe using bus_uni
     df = pd.DataFrame(data=bus_uni)
     # rename index to match sql table
-    df.index.names = ['bus_id']
-    df.to_sql(con=conn, name='business', if_exists='replace')
+    #df.index = df.index.astype(int)
+    df.to_sql(con=conn, name='business', if_exists='replace', dtype={'bus_id':sqlalchemy.types.Integer, 'review_count': sqlalchemy.types.Integer, 'review_sum': sqlalchemy.types.Integer}, index_label='bus_id')
     print('Success: Business table updated')
     return
 
