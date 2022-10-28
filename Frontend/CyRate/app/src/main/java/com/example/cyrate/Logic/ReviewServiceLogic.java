@@ -96,29 +96,9 @@ public class ReviewServiceLogic {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // After we do a POST for the new review, we need to update the business
-                        // Total Review Count and Total Rating Sum to display / use for later calculations.
-                        BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
-                        try {
-                            businessServiceLogic.editRatingAndReviewCount(busId, ratingVal, 1, new businessStringResponse() {
-                                @Override
-                                public void onSuccess(String s) {
-                                    r.onSuccess(response);
-                                }
-
-                                @SuppressLint("LongLogTag")
-                                @Override
-                                public void onError(String s) {
-                                    Log.d("addReview - editRatingAndReviewCount - ERROR", s);
-                                }
-                            });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        r.onSuccess(response);
                     }
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
