@@ -15,8 +15,6 @@ maven-build: #this is a JOB
     - mvn package
   except:
     - reviews
-  only:
-    - main
 maven-test:
   stage: maventest
   tags:
@@ -27,8 +25,6 @@ maven-test:
   artifacts:
     paths:
       - Backend/target/*.jar
-  only:
-    - main
 autoDeploy:
   stage: mavenDeploy 
   tags:
@@ -56,8 +52,6 @@ android-build: #this is another job
    artifacts:
      paths:
        - Android_test/app/build/outputs/
-   only:
-     - main
 android-test:
   image: gjandres/android-ci:latest
   stage: androidtest
@@ -69,6 +63,4 @@ android-test:
   script:
     - cd Frontend/CyRate
     - ./gradlew test
-  only:
-    - main
 
