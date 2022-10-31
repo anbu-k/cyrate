@@ -6,13 +6,23 @@ public class ReviewListCardModel {
     private String reviewText;
     private int businessId;
     private ReviewUserModel reviewUser;
+    private String reviewHeader;
 
-    public ReviewListCardModel(int reviewId, int rateVal, String reviewText, int businessId, ReviewUserModel reviewUser) {
+    public ReviewListCardModel(int reviewId, int rateVal, String reviewText, String reviewHeader, int businessId, ReviewUserModel reviewUser) {
         this.reviewId = reviewId;
         this.rateVal = rateVal;
         this.reviewText = reviewText;
+        this.reviewHeader = reviewHeader;
         this.businessId = businessId;
         this.reviewUser = reviewUser;
+    }
+
+    public String getReviewHeader() {
+        return reviewHeader;
+    }
+
+    public void setReviewHeader(String reviewHeader) {
+        this.reviewHeader = reviewHeader;
     }
 
     public int getReviewId() {

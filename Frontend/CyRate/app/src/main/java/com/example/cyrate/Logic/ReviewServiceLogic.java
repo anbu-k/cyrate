@@ -56,6 +56,7 @@ public class ReviewServiceLogic {
                                 review.getInt("rid"),
                                 review.getInt("rateVal"),
                                 review.getString("reviewTxt"),
+                                review.getString("reviewHeader"),
                                 review.getJSONObject("business").getInt("busId"),
                                 reviewUserModel
                         );
@@ -79,14 +80,14 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-    public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
+    public void addReview(int busId, int userId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
         String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
 
         Log.d("ADD REVIEW URL", url);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("reviewTxt", reviewTxt);
-        params.put("reviewHeader", "Test");
+        params.put("reviewHeader", reviewHeading);
         params.put("rateVal", ratingVal);
 
         Log.d("addReview - newReview", params.toString());
@@ -96,29 +97,9 @@ public class ReviewServiceLogic {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // After we do a POST for the new review, we need to update the business
-                        // Total Review Count and Total Rating Sum to display / use for later calculations.
-                        BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
-                        try {
-                            businessServiceLogic.editRatingAndReviewCount(busId, ratingVal, 1, new businessStringResponse() {
-                                @Override
-                                public void onSuccess(String s) {
-                                    r.onSuccess(response);
-                                }
-
-                                @SuppressLint("LongLogTag")
-                                @Override
-                                public void onError(String s) {
-                                    Log.d("addReview - editRatingAndReviewCount - ERROR", s);
-                                }
-                            });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        r.onSuccess(response);
                     }
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -139,7 +120,25 @@ public class ReviewServiceLogic {
         };
 
         AppController.getInstance().addToRequestQueue(request);
+    }
 
+    public void deleteReview(int reviewId, reviewStringResponse r) throws JSONException {
+        String url = Const.DELETE_REVIEW_BY_ID + String.valueOf(reviewId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Review Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
 
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
     }
 }
