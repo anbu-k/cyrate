@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 
 import com.example.cy_rate.Business.Business;
 
+@RestController
 public class PostController {
 
     @Autowired
@@ -60,6 +61,7 @@ public class PostController {
     @PostMapping(path = "/posts/create/{bid}")
     String createPost(@RequestBody Post post, @PathVariable int bid)
     {
+        
         try{
             Business b = businessRepo.findById(bid);
             post.setBusiness(b);
@@ -70,6 +72,7 @@ public class PostController {
         {
             return e.toString();
         }
+        
     }
 
     /**

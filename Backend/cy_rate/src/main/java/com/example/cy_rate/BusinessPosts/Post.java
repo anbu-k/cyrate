@@ -105,7 +105,7 @@ public void setPhotoUrl(String photo)
 @Override
 public String toString()
 {
-    return business.getBusName() + postTxt + date + photoUrl;
+    return postTxt + "\n" + date + "\n" + photoUrl + "\n";
 }
 }
 
