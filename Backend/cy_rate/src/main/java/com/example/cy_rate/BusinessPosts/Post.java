@@ -30,7 +30,7 @@ public class Post {
     private String date;
 
     @Column(name = "photoUrl")
-    private String photo;
+    private String photoUrl;
 
     @ManyToOne
     @JoinColumn(name = "bid", referencedColumnName = "busId")
@@ -39,15 +39,15 @@ public class Post {
 public Post(){
     this.postTxt = "";
     this.date = "";
-    this.photo = "";
+    this.photoUrl = "";
 
 }
 
-public Post(String postTxt, String date, int likes, int dislikes, String photo)
+public Post(String postTxt, String date, String photo)
 {
     this.postTxt = postTxt;
     this.date = date;
-    this.photo = photo;
+    this.photoUrl = photo;
     // this.likes = likes;
     // this.dislikes = dislikes;
 }
@@ -94,37 +94,19 @@ public void setPostTxt(String postTxt)
 
 public String getPhotoUrl()
 {
-    return photo;
+    return photoUrl;
 }
 
 public void setPhotoUrl(String photo)
 {
-    this.photo = photo;
+    this.photoUrl = photo;
 }
 
-// public int getLikes()
-// {
-//     return likes;
-// }
-
-// public void setLikes(int likes)
-// {
-//     this.likes = likes;
-// }
-
-// public int getDislikes()
-// {
-//     return dislikes;
-// }
-
-// public void setDislikes(int dislikes)
-// {
-//     this.dislikes = dislikes;
-// }
-
-
-
-
+@Override
+public String toString()
+{
+    return business.getBusName() + postTxt + date + photoUrl;
+}
 }
 
 

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cy_rate.Business.BusinessRepository;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.example.cy_rate.Business.Business;
 
 public class PostController {
@@ -42,7 +45,7 @@ public class PostController {
      * @param bid
      * @return get all the posts for a business by their ID
      */
-    @GetMapping(path = "/posts/byBid/{bid}")
+    @GetMapping(path = "/posts/{bid}")
     List<Post> getPostsByBusiness(@PathVariable int bid)
     {
         Business b = businessRepo.findById(bid);
@@ -51,19 +54,22 @@ public class PostController {
 
     /**
      * 
-     * @param p
+     * @param post , bid
      * @return create a business post
      */
-    @PostMapping(path = "/posts/create")
-    String createPost(@RequestBody Post p)
+    @PostMapping(path = "/posts/create/{bid}")
+    String createPost(@RequestBody Post post, @PathVariable int bid)
     {
-        if(p == null)
-        {
-            return failure;
+        try{
+            Business b = businessRepo.findById(bid);
+            post.setBusiness(b);
+            postRepo.save(post);
+            return success;
         }
-
-        postRepo.save(p);
-        return success;
+        catch(Exception e)
+        {
+            return e.toString();
+        }
     }
 
     /**
@@ -85,20 +91,14 @@ public class PostController {
      * @param p
      * @return
      */
-    @PutMapping(path = "/posts/updateByBid/{bid}")
-    String editPost(@PathVariable int pid, @RequestBody Post p)
+    @PutMapping(path = "/posts/update/{bid}")
+    String editPost(@PathVariable int pid, @RequestBody Post eP)
     {
-        try{
-            Post editPost = postRepo.findById(pid);
-
-            editPost.setDate(p.getDate());
-            editPost.setPostTxt(p.getPostTxt());
-            editPost.setPhotoUrl(p.getPhotoUrl());
-            postRepo.save(editPost);
-        }
-        catch(Exception e){
-            return "Not able to find Post with id: " + pid;
-        }
+        Post p = postRepo.findById(pid);
+        p.setPostTxt(eP.getPostTxt());
+        p.setPhotoUrl(eP.getPhotoUrl());
+        p.setDate(eP.getDate());
+        postRepo.save(p);
         return success;
     }
 }
