@@ -42,7 +42,7 @@ public class BusinessPostFeed extends AppCompatActivity {
         extras = getIntent().getExtras();
 
 
-        RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.busFeed_recyclerView);
         layoutManager = new LinearLayoutManager(this);
 
         businessServiceLogic = new BusinessServiceLogic();

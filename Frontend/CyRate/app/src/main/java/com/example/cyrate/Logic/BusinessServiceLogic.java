@@ -323,7 +323,7 @@ public class BusinessServiceLogic {
                             busJSON.getString("busName"),
                             busJSON.getString("busType"),
                             busJSON.getString("phone"),
-                            busJSON.getString("busPhotoUrl"),
+                            busJSON.getString("photoUrl"),
                             busJSON.getString("hours"),
                             busJSON.getString("location"),
                             busJSON.getInt("ownerId"),

@@ -35,7 +35,7 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
     @Override
     public BusinessFeedAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.review_list_card, parent, false);
+        View view = inflater.inflate(R.layout. business_post_card, parent, false);
         return new BusinessFeedAdapter.MyViewHolder(view);
     }
 
