@@ -8,6 +8,8 @@ public class Const {
     public static final String ADD_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/create";
 
     public static final String GET_BUSINESS_POSTS_BY_ID = "http://coms-309-020.class.las.iastate.edu:8080/posts/";
+    public static final String CREATE_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/create/";
+
 
 
     public static final String GET_USER_BY_EMAIL_URL = "http://coms-309-020.class.las.iastate.edu:8080/user/byEmail/";

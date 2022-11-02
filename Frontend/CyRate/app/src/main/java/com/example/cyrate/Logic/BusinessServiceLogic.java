@@ -8,11 +8,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cyrate.AppController;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessPostsByID;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
+import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.models.BusinessPostCardModel;
 import com.example.cyrate.net_utils.Const;
@@ -20,7 +22,10 @@ import com.example.cyrate.net_utils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class BusinessServiceLogic {
@@ -353,6 +358,53 @@ public class BusinessServiceLogic {
         }, error -> r.onError(error.toString())
 
         );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void addPost(int busId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
+        String url = Const.CREATE_POST + String.valueOf(busId);
+
+        Log.d("ADD POST URL", url);
+
+        // Get the current date
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+        String dateStr = formatter.format(date);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("postTxt", postTxt);
+        params.put("date", dateStr);
+        params.put("photoUrl", photoUrl);
+
+        Log.d("addPost - newPost", params.toString());
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        r.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ADD POST ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
 
         AppController.getInstance().addToRequestQueue(request);
     }
