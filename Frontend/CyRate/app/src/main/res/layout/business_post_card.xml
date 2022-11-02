@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/busCard_constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -106,7 +107,7 @@
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
                 android:src="@drawable/thumbs_up"
-                app:layout_constraintHorizontal_bias=".4"
+                app:layout_constraintHorizontal_bias=".3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>
@@ -116,11 +117,23 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
-                app:layout_constraintHorizontal_bias=".6"
+                app:layout_constraintHorizontal_bias=".5"
                 android:src="@drawable/comment_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>
+
+            <ImageView
+                android:id="@+id/busPost_deleteIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintHorizontal_bias=".7"
+                android:src="@drawable/delete_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>
+
 
             <ImageView
                 android:id="@+id/heart_icon"
@@ -132,6 +145,7 @@
                 app:layout_constraintEnd_toStartOf="@id/busPost_likeCount"
                 app:layout_constraintTop_toTopOf="@id/busPost_name"
                 />
+
 
             <TextView
                 android:id="@+id/busPost_likeCount"

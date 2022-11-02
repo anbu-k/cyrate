@@ -59,7 +59,7 @@ public class BusinessPostFeed extends AppCompatActivity {
 
         businessServiceLogic = new BusinessServiceLogic();
         busFeedAdapter = new BusinessFeedAdapter(this,
-                businessPostList);
+                businessPostList, extras);
 
         Log.d("TEST 1", "BEFORE SET ADAPTER");
         recyclerView.setAdapter(busFeedAdapter);

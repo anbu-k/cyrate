@@ -409,5 +409,25 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    public void deleteBusinessPost(int postId, businessStringResponse r) throws JSONException {
+        String url = Const.DELETE_POST + String.valueOf(postId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Post Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
 }
 
