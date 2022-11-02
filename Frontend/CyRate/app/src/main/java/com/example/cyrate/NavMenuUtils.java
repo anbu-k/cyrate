@@ -11,6 +11,7 @@ import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.ProfileActivity;
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
 
 public class NavMenuUtils {
     public static void hideMenuItems(Menu navMenu){
@@ -98,6 +99,9 @@ public class NavMenuUtils {
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
+            case R.id.nav_home:
+            default:
+                i = new Intent(context, WelcomeToCyRateActivity.class);
         }
 
 
