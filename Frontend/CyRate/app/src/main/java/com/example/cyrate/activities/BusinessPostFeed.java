@@ -35,7 +35,7 @@ public class BusinessPostFeed extends AppCompatActivity {
     ArrayList<BusinessPostCardModel> businessPostList = new ArrayList<>();
     Bundle extras;
 
-    ImageView back_btn;
+    ImageView back_btn, addPost_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class BusinessPostFeed extends AppCompatActivity {
 
         extras = getIntent().getExtras();
         back_btn = findViewById(R.id.busFeed_backBtn);
+        addPost_btn = findViewById(R.id.busFeed_addPost);
 
 
 
@@ -69,6 +70,15 @@ public class BusinessPostFeed extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BusinessPostFeed.this, IndividualBusinessActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
+        addPost_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BusinessPostFeed.this, AddBusinessPostActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
