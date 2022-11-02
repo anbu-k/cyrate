@@ -4,6 +4,7 @@ public class BusinessListCardModel {
     private int busId;
     private String busName;
     private String busType;
+    private String phoneNumber;
     private String photoUrl;
     private String hours;
     private String location;
@@ -16,12 +17,13 @@ public class BusinessListCardModel {
     private int reviewSum;
     private int reviewCount;
 
-    public BusinessListCardModel(int busId, String busName, String busType, String photoUrl,
+    public BusinessListCardModel(int busId, String busName, String busType, String phoneNumber, String photoUrl,
                                  String hours, String location, int ownerId, String menuLink,
                                  String priceGauge, int reviewSum, int reviewCount) {
         this.busId = busId;
         this.busName = busName;
         this.busType = busType;
+        this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
         this.hours = hours;
         this.location = location;
@@ -54,6 +56,14 @@ public class BusinessListCardModel {
 
     public void setBusType(String busType) {
         this.busType = busType;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhotoUrl() {
