@@ -31,6 +31,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
     TextView reviewerName, reviewBody, reviewHeading;
     RatingBar ratingBar;
     Bundle extras;
+    String previousActivity;
 
     ReviewServiceLogic reviewServiceLogic;
     int reviewId;
@@ -90,11 +91,25 @@ public class IndividualReviewActivity extends AppCompatActivity {
         }
 
 
+
+        previousActivity = extras.getString("PREVIOUS_ACTIVITY");
+        Log.d("prev activity", previousActivity);
+
         // Navigates back to review list
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
+                Intent intent;
+                if (previousActivity.equals("PersonalReviewListActivity")){
+                    Log.d("prev activity", "navigating to myReviews");
+
+                    intent = new Intent(IndividualReviewActivity.this, PersonalReviewListActivity.class);
+                }
+                else{
+                    Log.d("prev activity", "navigating to review list");
+
+                    intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
+                }
                 intent.putExtras(extras);
                 startActivity(intent);
             }

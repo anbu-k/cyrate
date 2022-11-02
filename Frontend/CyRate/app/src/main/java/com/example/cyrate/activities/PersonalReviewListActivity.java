@@ -37,9 +37,7 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_review_list);
 
-        Log.d("my reviews:", "set content");
         extras = getIntent().getExtras();
-        Log.d("my reviews:", "got extras");
 
         back_btn = (ImageView) findViewById(R.id.back_btn_icon);
 
@@ -47,8 +45,6 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
         TextView emptyView = findViewById(R.id.empty_view);
-
-        Log.d("my reviews:", "found elements");
 
 
         // Set this to non-visible initially
@@ -73,7 +69,7 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PersonalReviewListActivity.this, IndividualBusinessActivity.class);
+                Intent intent = new Intent(PersonalReviewListActivity.this, BusinessListActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -86,7 +82,6 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         reviewServiceLogic.getReviewsByUser(MainActivity.globalUser.getUserId(), new getReviewsResponse() {
             @Override
             public void onSuccess(List<ReviewListCardModel> list) {
-                Log.d("my reviews:", "successfully got reviews");
 
                 for (int i = 0; i < list.size(); i++) {
                     reviewListCardModels.add(list.get(i));
@@ -116,16 +111,14 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
     // onClick for each card in the list
     public void onItemClick(int position) {
         Intent intent = new Intent(PersonalReviewListActivity.this, IndividualReviewActivity.class);
-        // Put in new extras for review info + prev extras (business info)
-        intent.putExtras(extras);
+
+
+        intent.putExtra("PREVIOUS_ACTIVITY", "PersonalReviewListActivity");
         intent.putExtra("REVIEWER_NAME", reviewListCardModels.get(position).getReviewUser().getFullName());
         intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
         intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
         intent.putExtra("REVIEWER_PROFILE_PIC", reviewListCardModels.get(position).getReviewUser().getPhotoUrl());
         intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
-
-
-
 
         startActivity(intent);
     }

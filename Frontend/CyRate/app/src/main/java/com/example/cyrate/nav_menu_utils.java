@@ -35,6 +35,9 @@ public class nav_menu_utils {
                 //guest CAN sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(true);
 
+                //guest CANNOT see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
+
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BASIC_USER){
@@ -52,6 +55,9 @@ public class nav_menu_utils {
 
                 //normal user cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //normal user can see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(true);
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
@@ -69,6 +75,9 @@ public class nav_menu_utils {
 
                 //business owner cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //business owner CANNOT see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
             }
     }
 
