@@ -1,7 +1,10 @@
 package com.example.cyrate.Logic;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -369,7 +372,7 @@ public class BusinessServiceLogic {
 
         // Get the current date
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
         String dateStr = formatter.format(date);
 
         HashMap<String, Object> params = new HashMap<>();
