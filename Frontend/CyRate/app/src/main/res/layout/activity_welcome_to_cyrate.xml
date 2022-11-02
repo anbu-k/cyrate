@@ -7,11 +7,17 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="7dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="411dp"
-        android:layout_height="192dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="523dp" />
+    <View
+        android:id="@+id/user_info_bottom3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.667" />
 
     <TextView
         android:id="@+id/my_reviews_label"
@@ -235,9 +241,4 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="266dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="410dp"
-        android:layout_height="183dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="300dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

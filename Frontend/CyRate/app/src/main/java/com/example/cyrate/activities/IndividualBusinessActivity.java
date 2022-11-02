@@ -174,5 +174,8 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             edit_btn.setVisibility(View.GONE);
             delete_btn.setVisibility(View.GONE);
         }
+        if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
+            delete_btn.setVisibility(View.GONE);
+        }
     }
 }
