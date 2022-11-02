@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessPostsByID;
@@ -36,6 +37,7 @@ public class BusinessPostFeed extends AppCompatActivity {
     Bundle extras;
 
     ImageView back_btn, addPost_btn;
+    TextView emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,11 @@ public class BusinessPostFeed extends AppCompatActivity {
         extras = getIntent().getExtras();
         back_btn = findViewById(R.id.busFeed_backBtn);
         addPost_btn = findViewById(R.id.busFeed_addPost);
+        emptyView = findViewById(R.id.empty_view_busFeed);
 
+
+        // Set this to non-visible initially
+        emptyView.setVisibility(View.GONE);
 
 
         RecyclerView recyclerView = findViewById(R.id.busFeed_recyclerView);
@@ -61,7 +67,7 @@ public class BusinessPostFeed extends AppCompatActivity {
 
         try {
             Log.d("TEST 1", "BEFORE SET BUS LIST CARD MODELS");
-            setUpBusinessPostModels();
+            setUpBusinessPostModels(recyclerView, emptyView);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -85,7 +91,7 @@ public class BusinessPostFeed extends AppCompatActivity {
         });
     }
 
-    private void setUpBusinessPostModels() throws JSONException {
+    private void setUpBusinessPostModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
         int busId = extras.getInt("ID");
 
         businessServiceLogic.getBusinessPostsByID(busId, new getBusinessPostsByID() {
@@ -96,6 +102,14 @@ public class BusinessPostFeed extends AppCompatActivity {
                 }
                 Log.d("TEST 1", "IN HERE");
                 busFeedAdapter.notifyDataSetChanged();
+
+                if (list.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
 
 
             }
