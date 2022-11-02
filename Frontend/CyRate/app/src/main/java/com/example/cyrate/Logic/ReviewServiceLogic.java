@@ -75,6 +75,55 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    public void getReviewsByUser(int uid, getReviewsResponse r){
+        List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
+        String url = Const.GET_REVIEWS_BY_USER_ID + String.valueOf(uid);
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("REVIEWS", response.toString());
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject review = (JSONObject) response.get(i);
+                        Log.d("REVIEW JSON OBJ", review.toString());
+
+                        JSONObject reviewUserJSON = review.getJSONObject("user");
+                        ReviewUserModel reviewUserModel = new ReviewUserModel(
+                                reviewUserJSON.getInt("userID"),
+                                reviewUserJSON.getString("realName"),
+                                reviewUserJSON.getString("username"),
+                                reviewUserJSON.getString("photoUrl")
+                        );
+
+                        ReviewListCardModel reviewListCardModel = new ReviewListCardModel(
+                                review.getInt("rid"),
+                                review.getInt("rateVal"),
+                                review.getString("reviewTxt"),
+                                review.getJSONObject("business").getInt("busId"),
+                                reviewUserModel
+                        );
+
+                        reviewModelsList.add(reviewListCardModel);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                r.onSuccess(reviewModelsList);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(request);
+
+    }
+
     public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
         String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview/";
 
