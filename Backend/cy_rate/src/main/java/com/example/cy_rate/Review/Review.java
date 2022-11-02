@@ -44,16 +44,18 @@ public class Review {
     @Column(name= "rateVal")
     private int rateVal;
 
+    @Column(name="reviewHeader")
+    private String reviewHeader;
     @Column(name = "reviewTxt")
     private String reviewTxt;
 
+    @Hidden
     @ManyToOne //(fetch = FetchType.LAZY)
-    //@JsonIgnore
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
 
+    @Hidden
     @ManyToOne //(fetch = FetchType.LAZY)
-    //@JsonIgnore
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 
@@ -61,11 +63,13 @@ public class Review {
     public Review(){
         this.rateVal = 0;
         this.reviewTxt = "";
+        this.reviewHeader="";
     }
 
-    public Review(int rateVal, String reviewTxt){
+    public Review(int rateVal, String reviewTxt, String reviewHeader){
         this.rateVal = rateVal;
         this.reviewTxt = reviewTxt;
+        this.reviewHeader = reviewHeader;
     }
 
 
@@ -84,7 +88,6 @@ public class Review {
     {
         return business;
     }
-
 
     public void setBusiness(Business bus)
     {
@@ -118,11 +121,21 @@ public class Review {
         this.reviewTxt = review;
     }
 
+    public String getReviewHeader()
+    {
+        return reviewHeader;
+    }
+
+    public void setReviewHeader(String reviewHeader)
+    {
+        this.reviewHeader=reviewHeader;
+    }
+
     //Sam DeFrancisco's review for Potbelly 
     //rating...
     @Override
     public String toString() {
-        return user.getrealName() + "'s review for " + business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
+        return user.getRealName() + "'s review for " + business.getBusName() + "\nRating out of 5: " + rateVal + "\nReview: " + reviewTxt;
     }
     
 }

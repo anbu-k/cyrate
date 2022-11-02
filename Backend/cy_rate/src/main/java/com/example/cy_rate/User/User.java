@@ -13,13 +13,13 @@ import com.example.cy_rate.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 //@Hidden
 import io.swagger.v3.oas.annotations.Hidden;
+import javax.persistence.Column;
 
 @Entity
 public class User {
     // pk 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Hidden
     private int userId;
     private String userType;
     private String realName;
@@ -54,82 +54,82 @@ public class User {
 
     // getters & setters
     
-    public int getuserID()
+    public int getUserID()
     {
         return userId;
     }
 
-    public void setuserID(int uId)
+    public void setUserID(int uId)
     {
         this.userId = uId;
     }
 
-    public String getuserType()
+    public String getUserType()
     {
         return userType;
     }
 
-    public void setuserType(String uType)
+    public void setUserType(String uType)
     {
         this.userType = uType;
     }
 
-    public String getrealName()
+    public String getRealName()
     {
         return realName;
     }
 
-    public void setrealName(String rName)
+    public void setRealName(String rName)
     {
         this.realName = rName;
     }
 
-    public String getusername()
+    public String getUsername()
     {
         return username;
     }
 
-    public void setusername(String uname)
+    public void setUsername(String uname)
     {
         this.username = uname;
     }
 
-    public String getuserPass()
+    public String getUserPass()
     {
         return userPass;
     }
 
-    public void setuserPass(String uPass)
+    public void setUserPass(String uPass)
     {
         this.userPass = uPass;
     }
 
-    public String getemail()
+    public String getEmail()
     {
         return email;
     }
 
-    public void setemail(String email)
+    public void setEmail(String email)
     {
         this.email = email;
     }
 
-    public String getphoneNum()
+    public String getPhoneNum()
     {
         return phoneNum;
     }
 
-    public void setphoneNum(String phoneNum)
+    public void setPhoneNum(String phoneNum)
     {
         this.phoneNum = phoneNum;
     }
 
-    public String getdob()
+    public String getDob()
     {
         return dob;
     }
 
-    public void setdob(String dob)
+    public void setDob(String dob)
     {
         this.dob = dob;
     }

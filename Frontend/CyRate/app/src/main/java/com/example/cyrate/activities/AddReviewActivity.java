@@ -25,7 +25,7 @@ public class AddReviewActivity extends AppCompatActivity {
     ImageView backBtn, submitBtn, busPhoto;
     TextView busName;
     RatingBar ratingBar;
-    EditText reviewBody;
+    EditText reviewBody, reviewHeading;
 
     Bundle extras;
 
@@ -40,6 +40,7 @@ public class AddReviewActivity extends AppCompatActivity {
         busName = findViewById(R.id.busName_addReview);
         ratingBar = findViewById(R.id.ratingBar_addReview);
         reviewBody = findViewById(R.id.reviewBody_addReview);
+        reviewHeading = findViewById(R.id.reviewHeading_addReview);
 
         extras = getIntent().getExtras();
 
@@ -63,13 +64,14 @@ public class AddReviewActivity extends AppCompatActivity {
                 }
                 else{
                     String reviewTextBody = reviewBody.getText().toString();
+                    String reviewHeadingTxt = reviewHeading.getText().toString();
                     int ratingVal = (int) ratingBar.getRating();
                     int busId = extras.getInt("ID");
 
                     ReviewServiceLogic reviewServiceLogic = new ReviewServiceLogic();
 
                     try {
-                        reviewServiceLogic.addReview(busId, MainActivity.globalUser.getUserId(), reviewTextBody, ratingVal,
+                        reviewServiceLogic.addReview(busId, MainActivity.globalUser.getUserId(), reviewTextBody, reviewHeadingTxt, ratingVal,
                                 new reviewStringResponse() {
                                     @Override
                                     public void onSuccess(String s) {

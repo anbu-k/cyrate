@@ -1,16 +1,18 @@
 import requests
-import json
 import pandas as pd
 import datetime
 import time
 import sqlalchemy
-
+# other file in dir
+from menuUtil import find_menu
 
 db_u = 'cyrate'
 db_p = 'password'
 db_host = 'coms-309-020.class.las.iastate.edu'
 db_name = 'cy_rate'
 conn = sqlalchemy.create_engine(f"mysql+mysqlconnector://{db_u}:{db_p}@{db_host}/{db_name}")
+
+  
 
 # returns all results from business search location = "ames" from yelp_api
 # need to return hours from yelp 'Business Details'
@@ -27,7 +29,7 @@ def main():
 
     # for each business in json response
     for element in businesses:
-        time.sleep(.7) # sleep between each iteration to not freak out yelp
+        time.sleep(1) # sleep between each iteration to not freak out yelp
         print(f"Starting {element.get('name')}")
         print(f'\tGathering hours...')
         
@@ -56,13 +58,14 @@ def main():
             start = datetime.datetime.strptime(start, '%H%M').strftime('%I:%M %p')
             end = datetime.datetime.strptime(end, '%H%M').strftime('%I:%M %p')
             hours_str += f" {days_dic.get(day.get('day'))}: {start} - {end} |"
-        
+
         # Create Business Obj basically
         bus = {
         'bus_name': element.get('name'),
-        'bus_type': element.get('categories')[0].get('title'), 
+        'bus_type': element.get('categories')[0].get('title'),
+        'phone': element.get('phone'),
         'location': f"{element.get('location').get('address1')}, {element.get('location').get('city')} ({element.get('location').get('zip_code')})",
-        'menu_link': "",
+        'menu_link': find_menu(element.get('url'), element.get('name')),
         'owner_id': -1,
         'hours': hours_str,
         'photo_url': element.get('image_url'),
@@ -77,9 +80,9 @@ def main():
     # Create pandas dataframe using bus_uni
     df = pd.DataFrame(data=bus_uni)
     # rename index to match sql table
-    df.index.names = ['bus_id']
-    df.to_sql(con=conn, name='business', if_exists='replace')
-    print('Success Business table updated....')
+    #df.index = df.index.astype(int)
+    df.to_sql(con=conn, name='business', if_exists='replace', dtype={'bus_id':sqlalchemy.types.Integer, 'review_count': sqlalchemy.types.Integer, 'review_sum': sqlalchemy.types.Integer}, index_label='bus_id')
+    print('Success: Business table updated')
     return
 
 if __name__ == '__main__':

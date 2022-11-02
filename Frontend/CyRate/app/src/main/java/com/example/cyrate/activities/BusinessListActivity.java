@@ -21,6 +21,7 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.UserType;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +30,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.cyrate.nav_menu_utils;
 
 public class BusinessListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,7 +56,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         open_menu = (ImageView) findViewById(R.id.open_menu_icon);
 
         // Use this to hide any menu tabs depending on the user type
-        hideMenuItems();
+        nav_menu_utils.hideMenuItems(navView.getMenu());
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -116,7 +119,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         });
     }
 
-
     @Override
     // onClick for each card in the list
     public void onItemClick(int position) {
@@ -125,11 +127,13 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
         intent.putExtra("CATEGORY", businessListCardModel.get(position).getBusType());
         intent.putExtra("ADDRESS", businessListCardModel.get(position).getLocation());
-        intent.putExtra("RATING", "4.7"); // Hard coded for now
         intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
         intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
         intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
+        intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
+        intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
+
 
         startActivity(intent);
     }
@@ -155,50 +159,15 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Intent i;
-        switch(menuItem.getItemId()){
-            case R.id.nav_restaurants:
-                break;
-            case R.id.nav_addBusiness:
-                i = new Intent(BusinessListActivity.this, AddBusinessActivity.class);
-                startActivity(i);
-                break;
-            case R.id.nav_profile:
-                // code here
-                break;
-            case R.id.nav_edit_profile:
-                i = new Intent(BusinessListActivity.this, EditProfileActivity.class);
-                startActivity(i);
-                break;
-            case R.id.nav_logout:
-                i = new Intent(BusinessListActivity.this, LoginActivity.class);
-                startActivity(i);
+        if (menuItem.getItemId() != R.id.nav_restaurants){
+            nav_menu_utils.onNavItemSelected(menuItem, BusinessListActivity.this);
+        }
+        else{
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private void hideMenuItems(){
-        Menu navMenu = navView.getMenu();
-
-        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
-            // A guest user should not be able to edit the guest user profile
-            navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
-
-            //guest cannot add business
-            navMenu.findItem(R.id.nav_addBusiness).setVisible(false);
-
-            //guest cannot log out
-            navMenu.findItem(R.id.nav_logout).setVisible(false);
-
-            //guest cannot see their profile
-            navMenu.findItem(R.id.nav_profile).setVisible(false);
-
-            //guest CAN sign in
-
-        }
-    }
-
 }
 
 

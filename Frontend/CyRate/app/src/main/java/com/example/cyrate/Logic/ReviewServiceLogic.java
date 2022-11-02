@@ -1,5 +1,6 @@
 package com.example.cyrate.Logic;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -7,7 +8,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cyrate.AppController;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
@@ -23,11 +26,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReviewServiceLogic {
 
-    public void getReviews(int busId, getReviewsResponse r){
+    public void getReviews(int busId, getReviewsResponse r) {
         List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
         String url = Const.GET_REVIEWS_BY_BUS_ID + String.valueOf(busId);
 
@@ -35,55 +39,7 @@ public class ReviewServiceLogic {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("REVIEWS", response.toString());
-                for(int i = 0; i < response.length(); i++){
-                    try {
-                        JSONObject review = (JSONObject) response.get(i);
-                        Log.d("REVIEW JSON OBJ", review.toString());
-
-                        JSONObject reviewUserJSON = review.getJSONObject("user");
-                        ReviewUserModel reviewUserModel = new ReviewUserModel(
-                            reviewUserJSON.getInt("userID"),
-                            reviewUserJSON.getString("realName"),
-                            reviewUserJSON.getString("username"),
-                            reviewUserJSON.getString("photoUrl")
-                        );
-
-                        ReviewListCardModel reviewListCardModel = new ReviewListCardModel(
-                            review.getInt("rid"),
-                            review.getInt("rateVal"),
-                            review.getString("reviewTxt"),
-                            review.getJSONObject("business").getInt("busId"),
-                            reviewUserModel
-                        );
-
-                        reviewModelsList.add(reviewListCardModel);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                r.onSuccess(reviewModelsList);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                r.onError(error.toString());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(request);
-    }
-
-    public void getReviewsByUser(int uid, getReviewsResponse r){
-        List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
-        String url = Const.GET_REVIEWS_BY_USER_ID + String.valueOf(uid);
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d("REVIEWS", response.toString());
-                for(int i = 0; i < response.length(); i++){
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject review = (JSONObject) response.get(i);
                         Log.d("REVIEW JSON OBJ", review.toString());
@@ -100,6 +56,7 @@ public class ReviewServiceLogic {
                                 review.getInt("rid"),
                                 review.getInt("rateVal"),
                                 review.getString("reviewTxt"),
+                                review.getString("reviewHeader"),
                                 review.getJSONObject("business").getInt("busId"),
                                 reviewUserModel
                         );
@@ -121,85 +78,120 @@ public class ReviewServiceLogic {
         });
 
         AppController.getInstance().addToRequestQueue(request);
-
     }
 
-    public void addReview(int busId, int userId, String reviewTxt, int ratingVal, reviewStringResponse r) throws JSONException {
-        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview/";
 
-        Log.d("ADD REVIEW URL", url);
+    public void getReviewsByUser(int uid, getReviewsResponse r) {
+        List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
+        String url = Const.GET_REVIEWS_BY_USER_ID + String.valueOf(uid);
 
-        BusinessServiceLogic businessServiceLogic = new BusinessServiceLogic();
-
-        businessServiceLogic.getBusinessesById(busId, new getBusinessByIDResponse() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onSuccess(BusinessListCardModel business) {
-                JSONObject user = new JSONObject();
-                JSONObject bus = new JSONObject();
-                try {
-                    user.put("userType", MainActivity.globalUser.getUserType());
-                    user.put("realName", MainActivity.globalUser.getFullName());
-                    user.put("username", MainActivity.globalUser.getUsername());
-                    user.put("photoUrl", MainActivity.globalUser.getPhotoUrl());
-                    user.put("userPass", MainActivity.globalUser.getPassword());
-                    user.put("email", MainActivity.globalUser.getEmail());
-                    user.put("phoneNum", MainActivity.globalUser.getPhoneNum());
-                    user.put("dob", MainActivity.globalUser.getDob());
-                    user.put("userID", MainActivity.globalUser.getUserId());
+            public void onResponse(JSONArray response) {
+                Log.d("REVIEWS", response.toString());
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject review = (JSONObject) response.get(i);
+                        Log.d("REVIEW JSON OBJ", review.toString());
 
-                    bus.put("busName", business.getBusName());
-                    bus.put("busType", business.getBusType());
-                    bus.put("photoUrl", business.getPhotoUrl());
-                    bus.put("hours", business.getHours());
-                    bus.put("location", business.getLocation());
-                    bus.put("busName", business.getBusName());
-                    bus.put("ownerId", -1);
-                    bus.put("menuLink", "");
-                    bus.put("priceGauge", business.getPriceGauge());
-                    bus.put("reviewSum", business.getReviewSum());
-                    bus.put("reviewCount", business.getReviewCount());
+                        JSONObject reviewUserJSON = review.getJSONObject("user");
+                        ReviewUserModel reviewUserModel = new ReviewUserModel(
+                                reviewUserJSON.getInt("userID"),
+                                reviewUserJSON.getString("realName"),
+                                reviewUserJSON.getString("username"),
+                                reviewUserJSON.getString("photoUrl")
+                        );
 
-                    JSONObject newReview = new JSONObject();
-                    newReview.put("reviewTxt", reviewTxt);
-                    newReview.put("rateVal", ratingVal);
-                    newReview.put("user", user);
-                    newReview.put("business", bus);
+                        ReviewListCardModel reviewListCardModel = new ReviewListCardModel(
+                                review.getInt("rid"),
+                                review.getInt("rateVal"),
+                                review.getString("reviewTxt"),
+                                review.getString("reviewHeader"),
+                                review.getJSONObject("business").getInt("busId"),
+                                reviewUserModel
+                        );
 
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newReview,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    if (response != null) {
-                                        r.onSuccess(response.toString());
-                                    } else {
-                                        r.onError("Null Response object received");
-                                    }
-                                }
-                            },
+                        reviewModelsList.add(reviewListCardModel);
 
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("ADD REVIEW ERROR", error.toString());
-                                    r.onError(error.getMessage());
-                                }
-                            }
-                    );
-
-                    AppController.getInstance().addToRequestQueue(request);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
+                r.onSuccess(reviewModelsList);
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(String s) {
-                r.onError(s);
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
             }
         });
 
+        AppController.getInstance().addToRequestQueue(request);
+    }
 
+
+
+
+    public void addReview(int busId, int userId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
+        String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
+
+        Log.d("ADD REVIEW URL", url);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("reviewTxt", reviewTxt);
+        params.put("reviewHeader", reviewHeading);
+        params.put("rateVal", ratingVal);
+
+        Log.d("addReview - newReview", params.toString());
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        r.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ADD REVIEW ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void deleteReview(int reviewId, reviewStringResponse r) throws JSONException {
+        String url = Const.DELETE_REVIEW_BY_ID + String.valueOf(reviewId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Review Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
     }
 }
