@@ -29,38 +29,59 @@ import io.swagger.v3.oas.annotations.Hidden;
 @Table(name = "Favorites")
 public class Favorites {
      //int favId, int userId, int busId
-    @Hidden
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int favId;
+    @Column(name = "fid")
+    private int fid;
     
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User userId;
+    @JoinColumn(name = "uid", referencedColumnName = "userId")
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "busId")
-    private Business busId;
+    @JoinColumn(name = "bid" , referencedColumnName = "busId")
+    private Business business;
 
-    public Favorites(int favId){
-        this.favId= favId;
+    public Favorites(){
         
     }
 
-    public int getFavoritesID()
+    public int getFid()
     {
-        return favId;
+        return fid;
     }
 
-    public void setFavoritesID(int favId)
+    public void setFavoritesID(int fid)
     {
-        this.favId = favId;
+        this.fid = fid;
+    }
+
+    public Business getBusiness()
+    {
+        return business;
+    }
+
+    public void setBusiness(Business bus)
+    {
+        this.business = bus;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User u)
+    {
+        this.user = u;
     }
 
     public String toString()
     {
-        return favId + "\n";
+        return user.getRealName() + "\n" + business.getBusName();
     }
+
+
 
 
 
