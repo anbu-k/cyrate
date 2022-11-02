@@ -10,7 +10,6 @@ import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
-import com.example.cyrate.activities.ProfileActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 
 public class NavMenuUtils {
@@ -30,11 +29,11 @@ public class NavMenuUtils {
                 //guest cannot log out
                 navMenu.findItem(R.id.nav_logout).setVisible(false);
 
-                //guest cannot see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(false);
-
                 //guest CAN sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(true);
+
+                //guest cannot see home (bc they don't have personalized info)
+                navMenu.findItem(R.id.nav_home).setVisible(false);
 
             }
 
@@ -48,11 +47,11 @@ public class NavMenuUtils {
                 //normal user can log out
                 navMenu.findItem(R.id.nav_logout).setVisible(true);
 
-                //normal user can see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(true);
-
                 //normal user cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //normal user can see home
+                navMenu.findItem(R.id.nav_home).setVisible(true);
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
@@ -65,11 +64,11 @@ public class NavMenuUtils {
                 //business owner can log out
                 navMenu.findItem(R.id.nav_logout).setVisible(true);
 
-                //business owner can see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(true);
-
                 //business owner cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //business owner cannot see home (they can't have favorites, leave reviews)
+                navMenu.findItem(R.id.nav_home).setVisible(false);
             }
     }
 
@@ -82,11 +81,6 @@ public class NavMenuUtils {
                 break;
             case R.id.nav_addBusiness:
                 i = new Intent(context, AddBusinessActivity.class);
-                context.startActivity(i);
-                break;
-            case R.id.nav_profile:
-                // code here
-                i = new Intent(context, ProfileActivity.class);
                 context.startActivity(i);
                 break;
             case R.id.nav_edit_profile:
@@ -102,6 +96,7 @@ public class NavMenuUtils {
             case R.id.nav_home:
             default:
                 i = new Intent(context, WelcomeToCyRateActivity.class);
+                context.startActivity(i);
         }
 
 

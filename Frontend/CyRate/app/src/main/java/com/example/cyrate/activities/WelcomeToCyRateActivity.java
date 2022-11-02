@@ -84,7 +84,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Naviga
         // Navigation Drawer
         navView.bringToFront();
         navView.setNavigationItemSelectedListener(this);
-        navView.setCheckedItem(R.id.nav_restaurants);
+        navView.setCheckedItem(R.id.nav_home);
 
         open_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +101,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Naviga
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (menuItem.getItemId() != R.id.nav_restaurants){
+        if (menuItem.getItemId() != R.id.nav_home){
             NavMenuUtils.onNavItemSelected(menuItem, WelcomeToCyRateActivity.this);
         }
         else{
