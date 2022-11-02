@@ -93,7 +93,6 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
 
         previousActivity = extras.getString("PREVIOUS_ACTIVITY");
-        Log.d("prev activity", previousActivity);
 
         // Navigates back to review list
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -101,12 +100,10 @@ public class IndividualReviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent;
                 if (previousActivity.equals("PersonalReviewListActivity")){
-                    Log.d("prev activity", "navigating to myReviews");
 
                     intent = new Intent(IndividualReviewActivity.this, PersonalReviewListActivity.class);
                 }
                 else{
-                    Log.d("prev activity", "navigating to review list");
 
                     intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
                 }
