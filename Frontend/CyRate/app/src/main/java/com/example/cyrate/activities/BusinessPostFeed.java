@@ -5,8 +5,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class BusinessPostFeed extends AppCompatActivity {
     ArrayList<BusinessPostCardModel> businessPostList = new ArrayList<>();
     Bundle extras;
 
+    ImageView back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class BusinessPostFeed extends AppCompatActivity {
         setContentView(R.layout.activity_business_post_feed);
 
         extras = getIntent().getExtras();
+        back_btn = findViewById(R.id.busFeed_backBtn);
+
 
 
         RecyclerView recyclerView = findViewById(R.id.busFeed_recyclerView);
@@ -59,6 +64,15 @@ public class BusinessPostFeed extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BusinessPostFeed.this, IndividualBusinessActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setUpBusinessPostModels() throws JSONException {
