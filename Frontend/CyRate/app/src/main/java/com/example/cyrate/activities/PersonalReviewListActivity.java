@@ -30,27 +30,26 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
     ReviewListAdapter reviewListAdapter;
     Bundle extras;
     ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
-    int[] profilePics = {R.drawable.profilepic};
-    ImageView back_btn, addReview_btn;
+    ImageView back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review_list);
+        setContentView(R.layout.activity_personal_review_list);
 
+        Log.d("my reviews:", "set content");
         extras = getIntent().getExtras();
+        Log.d("my reviews:", "got extras");
 
         back_btn = (ImageView) findViewById(R.id.back_btn_icon);
-        addReview_btn = findViewById(R.id.addReviewIcon);
 
-        // Guest users should not be able to add a review
-        if (MainActivity.globalUser.getEmail().equals("guest-user-email")){
-            addReview_btn.setVisibility(View.GONE);
-        }
 
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
         TextView emptyView = findViewById(R.id.empty_view);
+
+        Log.d("my reviews:", "found elements");
+
 
         // Set this to non-visible initially
         emptyView.setVisibility(View.GONE);
@@ -64,6 +63,8 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         try {
+            Log.d("my reviews:", "trying to set up review models");
+
             setUpReviewModels(recyclerView, emptyView);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,21 +79,15 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
             }
         });
 
-        addReview_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PersonalReviewListActivity.this, AddReviewActivity.class);
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
     }
 
     private void setUpReviewModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
-        int busId = extras.getInt("ID");
+//        int busId = extras.getInt("ID");
         reviewServiceLogic.getReviewsByUser(MainActivity.globalUser.getUserId(), new getReviewsResponse() {
             @Override
             public void onSuccess(List<ReviewListCardModel> list) {
+                Log.d("my reviews:", "successfully got reviews");
+
                 for (int i = 0; i < list.size(); i++) {
                     reviewListCardModels.add(list.get(i));
                 }

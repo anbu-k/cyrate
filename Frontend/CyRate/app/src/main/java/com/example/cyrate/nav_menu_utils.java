@@ -10,6 +10,7 @@ import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.activities.PersonalReviewListActivity;
 
 public class nav_menu_utils {
     public static void hideMenuItems(Menu navMenu){
@@ -94,6 +95,9 @@ public class nav_menu_utils {
                 context.startActivity(i);
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
+                context.startActivity(i);
+            case R.id.nav_my_reviews:
+                i = new Intent(context, PersonalReviewListActivity.class);
                 context.startActivity(i);
         }
 
