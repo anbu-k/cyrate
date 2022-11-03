@@ -29,9 +29,9 @@ public class FavoritesServiceLogic {
 
     public void getFavoritesByUser(int uid, getBusinessesResponse r){
         String url = Const.GET_FAVORITES_BY_USER_URL + String.valueOf(uid);
+        ArrayList<BusinessListCardModel> favoriteBusinesses = new ArrayList<>();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
-            IntroActivity.globalUserFavorites = new ArrayList<>();
             for (int i = 0; i < response.length(); i++){
                 try{
                     Log.d("favs", "in try");
@@ -57,11 +57,11 @@ public class FavoritesServiceLogic {
                     newFavorite = new BusinessListCardModel(busId, busName, busType, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount);
 
                     Log.d("favs", busName);
-                    IntroActivity.globalUserFavorites.add(newFavorite);
+                    favoriteBusinesses.add(newFavorite);
                 } catch(JSONException e){
                     e.printStackTrace();
                 }
-            }
+            }r.onSuccess(favoriteBusinesses);
         }, error -> r.onError(error.toString())
         );
 

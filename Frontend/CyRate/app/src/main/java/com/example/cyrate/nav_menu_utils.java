@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.example.cyrate.activities.AddBusinessActivity;
 import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
+import com.example.cyrate.activities.FavoritesActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
@@ -107,6 +108,9 @@ public class nav_menu_utils {
                 context.startActivity(i);
             case R.id.nav_my_reviews:
                 i = new Intent(context, PersonalReviewListActivity.class);
+                context.startActivity(i);
+            case R.id.nav_favorites:
+                i = new Intent(context, FavoritesActivity.class);
                 context.startActivity(i);
         }
 

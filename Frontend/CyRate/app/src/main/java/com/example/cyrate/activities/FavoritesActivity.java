@@ -97,6 +97,10 @@ public class FavoritesActivity extends AppCompatActivity implements RecyclerView
         favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
+                // createa a new List<BusinessCardModel>
+                //
+                // for every favoriteCard in list
+                // add favoriteCard.business to businessCard List
                 Log.d("favs list", "in success");
                 for (int i = 0; i < list.size(); i++) {
                     businessListCardModel.add(list.get(i));
