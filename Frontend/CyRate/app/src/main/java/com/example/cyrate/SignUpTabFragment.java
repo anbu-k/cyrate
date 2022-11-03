@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.UserInterfaces.addUserResponse;
 import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
+import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
@@ -179,7 +180,13 @@ public class SignUpTabFragment extends Fragment {
                                                     //set global user
                                                     MainActivity.globalUser = userModel;
 
-                                                    Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
+                                                    Intent i;
+                                                    if (MainActivity.globalUser.getUserType() == UserType.BASIC_USER) {
+                                                        i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
+                                                    }
+                                                    else{
+                                                        i = new Intent(getActivity(), BusinessListActivity.class);
+                                                    }
                                                     startActivity(i);
                                                 }
 
