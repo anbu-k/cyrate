@@ -26,15 +26,17 @@
 
 
         <ImageView
-            android:id="@+id/back_btn_icon"
+            android:id="@+id/open_menu_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/drop_down_icon"
-            android:rotation="90"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/textView"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/open_menu_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
 
         <TextView
             android:id="@+id/textView"
