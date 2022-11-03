@@ -173,6 +173,9 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
             case R.id.nav_logout:
                 i = new Intent(BusinessListActivity.this, LoginActivity.class);
                 startActivity(i);
+            case R.id.nav_favorites:
+                i = new Intent(BusinessListActivity.this, FavoritesActivity.class);
+                startActivity(i);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
