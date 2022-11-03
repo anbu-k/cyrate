@@ -19,6 +19,7 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
+import com.example.cyrate.UserType;
 import com.example.cyrate.adapters.ReviewListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.models.ReviewRecyclerViewInterface;
@@ -58,6 +59,10 @@ public class ReviewListActivity extends AppCompatActivity implements ReviewRecyc
 
         // Guest users should not be able to add a review
         if (MainActivity.globalUser.getEmail().equals("guest-user-email")) {
+            addReview_btn.setVisibility(View.GONE);
+        }
+
+        if (MainActivity.globalUser.getUserType().equals(UserType.BUSINESS_OWNER)){
             addReview_btn.setVisibility(View.GONE);
         }
 

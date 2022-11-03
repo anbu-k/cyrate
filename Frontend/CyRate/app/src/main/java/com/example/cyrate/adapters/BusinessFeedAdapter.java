@@ -29,7 +29,7 @@ import com.example.cyrate.activities.IndividualReviewActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.ReviewListActivity;
 import com.example.cyrate.models.BusinessPostCardModel;
-import com.example.cyrate.models.RecyclerViewInterface;
+//import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import org.json.JSONException;
