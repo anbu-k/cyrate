@@ -262,7 +262,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
         Intent intent = new Intent(this, IndividualReviewActivity.class);
         // Put in new extras for review info + prev extras (business info)
 //        intent.putExtras(extras);
-        intent.putExtra("PREVIOUS_ACTIVITY", "ReviewListActivity");
+        intent.putExtra("PREVIOUS_ACTIVITY", "WelcomeToCyrateActivity");
         intent.putExtra("REVIEWER_NAME", reviewListCardModels.get(position).getReviewUser().getFullName());
         intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
         intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());

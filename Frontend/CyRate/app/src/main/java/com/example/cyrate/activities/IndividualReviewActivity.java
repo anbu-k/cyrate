@@ -103,6 +103,9 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
                     intent = new Intent(IndividualReviewActivity.this, PersonalReviewListActivity.class);
                 }
+                else if(previousActivity.equals("WelcomeToCyrateActivity")){
+                    intent = new Intent(IndividualReviewActivity.this, WelcomeToCyRateActivity.class);
+                }
                 else{
 
                     intent = new Intent(IndividualReviewActivity.this, ReviewListActivity.class);
