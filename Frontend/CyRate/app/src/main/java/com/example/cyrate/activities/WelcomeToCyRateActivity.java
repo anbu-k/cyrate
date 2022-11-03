@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
+import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
@@ -55,7 +56,8 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
     RecyclerView favoritesRecycler;
 
     BusinessListAdapter busListAdapter;
-    LinearLayoutManager layoutManager;
+    LinearLayoutManager favoritesLayoutManager;
+    LinearLayoutManager reviewsLayoutManager;
     ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
 
     ReviewServiceLogic reviewServiceLogic;
@@ -107,14 +109,14 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
 
         //favorites
         favoritesRecycler = findViewById(R.id.favorites_recycler);
-        layoutManager = new LinearLayoutManager(this);
+        favoritesLayoutManager = new LinearLayoutManager(this);
 
         businessServiceLogic = new BusinessServiceLogic();
         busListAdapter = new BusinessListAdapter(this,
                 businessListCardModel, this);
 
         favoritesRecycler.setAdapter(busListAdapter);
-        favoritesRecycler.setLayoutManager(layoutManager);
+        favoritesRecycler.setLayoutManager(favoritesLayoutManager);
 
         try {
             setFavorites();
@@ -124,11 +126,12 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
 
         //reviews
         reviewsRecycler = findViewById(R.id.reviews_recycler);
+        reviewsLayoutManager = new LinearLayoutManager(this);
         reviewServiceLogic = new ReviewServiceLogic();
         reviewListAdapter = new ReviewListAdapter(this, reviewListCardModels, this);
 
         reviewsRecycler.setAdapter(reviewListAdapter);
-        reviewsRecycler.setLayoutManager(layoutManager);
+        reviewsRecycler.setLayoutManager(reviewsLayoutManager);
 
         try{
             setReviews();
@@ -167,6 +170,21 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
 
     private void setReviews() throws JSONException{
         ///merge main to get new review service logic methods
+        reviewServiceLogic.getReviewsByUser(globalUser.getUserId(), new getReviewsResponse() {
+            @Override
+            public void onSuccess(List<ReviewListCardModel> list) {
+                for (int i = 0; i < list.size(); i++){
+                    reviewListCardModels.add(list.get(i));
+                }
+                reviewListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("set reviews", s);
+                Toast.makeText(WelcomeToCyRateActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void navigationDrawer() {
