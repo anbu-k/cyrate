@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 
 @Entity
-@Table(name = "Business Posts")
+@Table(name = "BusinessPosts")
 public class Post {
     // pk
     @Id
@@ -29,6 +29,9 @@ public class Post {
     @Column(name = "date")
     private String date;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
     @ManyToOne
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;
@@ -36,13 +39,15 @@ public class Post {
 public Post(){
     this.postTxt = "";
     this.date = "";
+    this.photoUrl = "";
 
 }
 
-public Post(String postTxt, String date, int likes, int dislikes)
+public Post(String postTxt, String date, String photo)
 {
     this.postTxt = postTxt;
     this.date = date;
+    this.photoUrl = photo;
     // this.likes = likes;
     // this.dislikes = dislikes;
 }
@@ -87,29 +92,21 @@ public void setPostTxt(String postTxt)
     this.postTxt = postTxt;
 }
 
-// public int getLikes()
-// {
-//     return likes;
-// }
+public String getPhotoUrl()
+{
+    return photoUrl;
+}
 
-// public void setLikes(int likes)
-// {
-//     this.likes = likes;
-// }
+public void setPhotoUrl(String photo)
+{
+    this.photoUrl = photo;
+}
 
-// public int getDislikes()
-// {
-//     return dislikes;
-// }
-
-// public void setDislikes(int dislikes)
-// {
-//     this.dislikes = dislikes;
-// }
-
-
-
-
+@Override
+public String toString()
+{
+    return postTxt + "\n" + date + "\n" + photoUrl + "\n";
+}
 }
 
 
