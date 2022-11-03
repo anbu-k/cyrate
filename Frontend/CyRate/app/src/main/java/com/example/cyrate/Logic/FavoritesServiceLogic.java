@@ -4,11 +4,14 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.cyrate.AppController;
+import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.activities.IntroActivity;
+import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
 
@@ -17,19 +20,43 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FavoritesServiceLogic {
 
-    public void addFavorite(int userId, int businessId) throws JSONException {
+    public void addFavorite(int userId, int businessId, businessStringResponse r) throws JSONException {
         String url = Const.ADD_FAVORITE_URL + String.valueOf(businessId) + "/user/" + String.valueOf(userId);
 
-//        JSONObject newFavoriteObject = new
+        JSONObject newFavoriteObject = new JSONObject();
+
+        newFavoriteObject.put("", "");
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newFavoriteObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    r.onSuccess(response.toString());
+                } else {
+                    r.onError("Null response object received");
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        r.onError(error.getMessage());
+                    }
+                }
+        );
+        AppController.getInstance().addToRequestQueue(request);
 
     }
 
     public void getFavoritesByUser(int uid, getBusinessesResponse r){
         String url = Const.GET_FAVORITES_BY_USER_URL + String.valueOf(uid);
         ArrayList<BusinessListCardModel> favoriteBusinesses = new ArrayList<>();
+        HashMap<Integer, Integer> newFidToBid = new HashMap<Integer, Integer>();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
             for (int i = 0; i < response.length(); i++){
@@ -58,10 +85,16 @@ public class FavoritesServiceLogic {
 
                     Log.d("favs", busName);
                     favoriteBusinesses.add(newFavorite);
+
+                    newFidToBid.put(row.getInt("fid"), business.getInt("busId"));
+
+
                 } catch(JSONException e){
                     e.printStackTrace();
                 }
-            }r.onSuccess(favoriteBusinesses);
+            }
+            MainActivity.fidToBid = newFidToBid;
+            r.onSuccess(favoriteBusinesses);
         }, error -> r.onError(error.toString())
         );
 

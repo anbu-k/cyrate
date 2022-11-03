@@ -27,7 +27,7 @@ import org.json.JSONException;
 public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
     Button findUs_btn, reviews_btn, menu_btn;
-    ImageView back_btn, busImage, delete_btn, edit_btn;
+    ImageView back_btn, busImage, delete_btn, edit_btn, favoriteBtn;
     TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
     int busId;
@@ -49,8 +49,6 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         menu_btn = findViewById(R.id.menu_btn);
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
         reviewCount = findViewById(R.id.reviews_text);
-
-
 
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
