@@ -68,6 +68,9 @@
         <activity
             android:name=".activities.WelcomeToCyRateActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.FavoritesActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
