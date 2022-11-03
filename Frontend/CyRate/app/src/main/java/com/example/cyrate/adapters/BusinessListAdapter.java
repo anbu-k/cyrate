@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.R;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.BusinessRecyclerViewInterface;
 import com.example.cyrate.models.BusinessListCardModel;
 
 
@@ -20,14 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.MyViewHolder> {
-    private final RecyclerViewInterface recyclerViewInterface;
+    private final BusinessRecyclerViewInterface recyclerViewInterface;
     Context ctx;
     ArrayList<BusinessListCardModel> businessCardList;
 
     public BusinessListAdapter(
             Context ctx,
             ArrayList<BusinessListCardModel> businessCardList,
-            RecyclerViewInterface recyclerViewInterface
+            BusinessRecyclerViewInterface recyclerViewInterface
             ){
         this.ctx = ctx;
         this.businessCardList = businessCardList;
@@ -73,7 +73,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         ImageView restImg;
         TextView restName, restCategory, restAddress, restRating, restHours;
 
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public MyViewHolder(@NonNull View itemView, BusinessRecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             restImg = itemView.findViewById(R.id.restaurant_img);

@@ -1,6 +1,5 @@
 package com.example.cyrate.models;
 
-public interface RecyclerViewInterface {
-    void onBusinessClick(int position);
+public interface ReviewRecyclerViewInterface {
     void onReviewClick(int position);
 }
