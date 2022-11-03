@@ -1,24 +1,34 @@
 package com.example.cyrate.Logic;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cyrate.AppController;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessByIDResponse;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessPostsByID;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
+import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.models.BusinessListCardModel;
+import com.example.cyrate.models.BusinessPostCardModel;
 import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class BusinessServiceLogic {
@@ -50,6 +60,7 @@ public class BusinessServiceLogic {
                             (int) business.get("busId"),
                             business.get("busName").toString(),
                             business.get("busType").toString(),
+                            business.getString("phone"),
                             business.get("photoUrl").toString(),
                             business.get("hours").toString(),
                             business.get("location").toString(),
@@ -80,27 +91,28 @@ public class BusinessServiceLogic {
         String url = Const.GET_BUSINESS_BY_ID_URL + String.valueOf(busId);
         final BusinessListCardModel[] businessListCardModel = new BusinessListCardModel[1];
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
-                try {
+            try {
 
-                    String priceGauge = response.get("priceGauge").toString().equals("null") ? "$" : response.get("priceGauge").toString();
+                String priceGauge = response.get("priceGauge").toString().equals("null") ? "$" : response.get("priceGauge").toString();
 
-                    businessListCardModel[0] = new BusinessListCardModel(
-                            (int) response.get("busId"),
-                            response.get("busName").toString(),
-                            response.get("busType").toString(),
-                            response.get("photoUrl").toString(),
-                            response.get("hours").toString(),
-                            response.get("location").toString(),
-                            (int) response.get("ownerId"),
-                            response.get("menuLink").toString(),
-                            priceGauge,
-                            (int) response.get("reviewSum"),
-                            (int) response.get("reviewCount")
-                    );
+                businessListCardModel[0] = new BusinessListCardModel(
+                        (int) response.get("busId"),
+                        response.get("busName").toString(),
+                        response.get("busType").toString(),
+                        response.getString("phone"),
+                        response.get("photoUrl").toString(),
+                        response.get("hours").toString(),
+                        response.get("location").toString(),
+                        (int) response.get("ownerId"),
+                        response.get("menuLink").toString(),
+                        priceGauge,
+                        (int) response.get("reviewSum"),
+                        (int) response.get("reviewCount")
+                );
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
             // Send the businessModelsList back to the BusinessListActivity
@@ -112,7 +124,6 @@ public class BusinessServiceLogic {
 
         AppController.getInstance().addToRequestQueue(request);
     }
-
 
 
     /**
@@ -248,7 +259,6 @@ public class BusinessServiceLogic {
         String url = Const.EDIT_BUSINESS_URL + String.valueOf(busId);
 
 
-
         this.getBusinessesById(busId, new getBusinessByIDResponse() {
             @Override
             public void onSuccess(BusinessListCardModel business) {
@@ -298,6 +308,128 @@ public class BusinessServiceLogic {
             }
         });
 
+    }
+
+    public void getBusinessPostsByID(int busID, getBusinessPostsByID r) throws JSONException {
+        List<BusinessPostCardModel> businessPostList = new ArrayList<>();
+        String url = Const.GET_BUSINESS_POSTS_BY_ID + String.valueOf(busID);
+        Log.d("TEST 1", "IN getBusinessPostsByID");
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                url, null, response -> {
+            Log.d("TEST 1", "IN ON RESPONSE");
+
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    // Get each business from the JSON array
+                    JSONObject post = (JSONObject) response.get(i);
+                    Log.d("JSON OBJ", post.toString());
+
+                    JSONObject busJSON = post.getJSONObject("business");
+                    BusinessListCardModel bus = new BusinessListCardModel(
+                            busJSON.getInt("busId"),
+                            busJSON.getString("busName"),
+                            busJSON.getString("busType"),
+                            busJSON.getString("phone"),
+                            busJSON.getString("photoUrl"),
+                            busJSON.getString("hours"),
+                            busJSON.getString("location"),
+                            busJSON.getInt("ownerId"),
+                            busJSON.getString("menuLink"),
+                            busJSON.getString("priceGauge"),
+                            busJSON.getInt("reviewSum"),
+                            busJSON.getInt("reviewCount")
+                    );
+
+                    BusinessPostCardModel busPostCardModel = new BusinessPostCardModel(
+                            post.getInt("pid"),
+                            post.getString("postTxt"),
+                            post.getString("date"),
+                            post.getString("photoUrl"),
+                            bus
+                    );
+                    businessPostList.add(busPostCardModel);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Send the businessModelsList back to the BusinessListActivity
+            // as a async callback
+            r.onSuccess(businessPostList);
+        }, error -> r.onError(error.toString())
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void addPost(int busId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
+        String url = Const.CREATE_POST + String.valueOf(busId);
+
+        Log.d("ADD POST URL", url);
+
+        // Get the current date
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+        String dateStr = formatter.format(date);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("postTxt", postTxt);
+        params.put("date", dateStr);
+        params.put("photoUrl", photoUrl);
+
+        Log.d("addPost - newPost", params.toString());
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        r.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ADD POST ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void deleteBusinessPost(int postId, businessStringResponse r) throws JSONException {
+        String url = Const.DELETE_POST + String.valueOf(postId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Post Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        }
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
     }
 
 }
