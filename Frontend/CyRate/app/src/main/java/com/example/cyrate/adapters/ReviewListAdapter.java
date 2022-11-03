@@ -78,7 +78,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
                         int pos = getAdapterPosition();
 
                         if(pos != RecyclerView.NO_POSITION){
-                            recyclerViewInterface.onItemClick(pos);
+                            recyclerViewInterface.onReviewClick(pos);
                         }
                     }
                 }

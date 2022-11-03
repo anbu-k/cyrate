@@ -91,7 +91,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                                 int pos = getAdapterPosition();
 
                                 if(pos != RecyclerView.NO_POSITION){
-                                    recyclerViewInterface.onItemClick(pos);
+                                    recyclerViewInterface.onBusinessClick(pos);
                                 }
                             }
                         }

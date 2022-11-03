@@ -170,7 +170,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onReviewClick(int position) {
         Intent intent = new Intent(ReviewListActivity.this, IndividualReviewActivity.class);
         // Put in new extras for review info + prev extras (business info)
         intent.putExtras(extras);
@@ -186,5 +186,9 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
 
 
         startActivity(intent);
+    }
+
+    public void onBusinessClick(int position){
+        return;
     }
 }

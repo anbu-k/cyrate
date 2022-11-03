@@ -160,7 +160,7 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onReviewClick(int position) {
         Intent intent = new Intent(PersonalReviewListActivity.this, IndividualReviewActivity.class);
 
 
@@ -172,5 +172,9 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
 
         startActivity(intent);
+    }
+
+    public void onBusinessClick(int position){
+        return;
     }
 }

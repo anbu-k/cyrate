@@ -241,7 +241,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onBusinessClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
@@ -255,6 +255,22 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
         intent.putExtra("PREVIOUS_ACTIVITY", "WelcomeToCyrateActivity");
 
+        startActivity(intent);
+    }
+
+    public void onReviewClick(int position){
+        Intent intent = new Intent(this, IndividualReviewActivity.class);
+        // Put in new extras for review info + prev extras (business info)
+//        intent.putExtras(extras);
+        intent.putExtra("PREVIOUS_ACTIVITY", "ReviewListActivity");
+        intent.putExtra("REVIEWER_NAME", reviewListCardModels.get(position).getReviewUser().getFullName());
+        intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
+        intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
+        intent.putExtra("REVIEWER_PROFILE_PIC", reviewListCardModels.get(position).getReviewUser().getPhotoUrl());
+        intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
+        intent.putExtra("REVIEW_HEADING", reviewListCardModels.get(position).getReviewHeader());
+        intent.putExtra("REVIEW_ID", reviewListCardModels.get(position).getReviewId());
+        intent.putExtra("REVIEWER_ID", reviewListCardModels.get(position).getReviewUser().getUserId());
 
 
         startActivity(intent);

@@ -118,7 +118,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onBusinessClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
@@ -134,6 +134,10 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
 
         startActivity(intent);
+    }
+
+    public void onReviewClick(int position){
+        return;
     }
 
     private void navigationDrawer() {
