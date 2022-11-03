@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.cy_rate.Business.Business;
+import com.example.cy_rate.Business.BusinessRepository;
+import com.example.cy_rate.User.User;
+import com.example.cy_rate.User.UserRepository;
+import com.example.cy_rate.Favorites.FavoritesRepository;
+
 
 
 @RestController
@@ -19,36 +25,80 @@ public class FavoritesController {
     @Autowired
     FavoritesRepository favRepo;
 
+    @Autowired
+    UserRepository userRepo;
+
+    @Autowired 
+    BusinessRepository businessRepo;
+
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
+    /**
+     * Returns all of the favorites in the favorites table
+     * @return
+     */
     @GetMapping(path = "/favorites/all")
     List<Favorites> getAllFavorites()
     {
         return favRepo.findAll();
     }
 
-    @GetMapping(path = "/favorites/byId/{id}")
-    Favorites getUserById(@PathVariable int id)
+    /**
+     * Able to return all of a specific users favorites
+     * by passing their user ID
+     */
+    @GetMapping(path = "/favorites/user/{uid}")
+    List<Favorites> getFavoritesByUser(@PathVariable int uid)
     {
-        return favRepo.findById(id);
+        User u = userRepo.findById(uid);
+        return favRepo.findByUser(u);
     }
 
-    @PostMapping(path = "/favorites/create")
-    String chooseFavorite(@RequestBody Favorites fav)
+    /**
+     * Returns the business that has been favorited
+     * by its specific business ID
+     * @param bid
+     * @return
+     */
+    @GetMapping(path = "/favorites/business/{bid}")
+    List<Favorites> getFavoritesByBusiness(@PathVariable int bid)
     {
-        if(fav == null)
-        {
-            return failure;
+        Business b = businessRepo.findById(bid);
+        return favRepo.findByBusiness(b);
+    }
+
+    /**
+     * Allows a user to pick a favorite business
+     * @param id
+     * @return
+     */
+    @PostMapping(path = "/favorites/{bid}/user/{uid}")
+    String chooseFavorite(@PathVariable int bid, @PathVariable int uid, @RequestBody Favorites favorite)
+    {
+        try {
+            Business b = businessRepo.findById(bid);
+            User u = userRepo.findById(uid);
+
+            favorite.setBusiness(b);
+            favorite.setUser(u);
+            favRepo.save(favorite);
+
+            return success;
+        } catch (Exception e) {
+            return e.toString();
         }
-        favRepo.save(fav);
-        return success;
     }
 
-    @DeleteMapping(path = "/favorites/delete/{id}")
-    String deleteFavorite(@PathVariable int id)
+    /**
+     * Allows you to remove a favorite
+     * @param pid
+     * @return success
+     */
+    @DeleteMapping(path = "/favorites/delete/{pid}")
+    String deleteFavorite(@PathVariable int pid)
     {
-        favRepo.deleteById(id);
+        favRepo.deleteById(pid);
         return success;
     }
 

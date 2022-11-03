@@ -3,6 +3,9 @@ package com.example.cyrate.Logic;
 
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -97,7 +100,7 @@ public class UserLogic {
     private UserModel convertToUserModel(JSONObject user) throws JSONException {
         UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
         newUserModel.setUsername(user.get("username").toString());
-        newUserModel.setUserType(UserType.BASIC_USER);
+        newUserModel.setUserType(convertUserType(user.get("userType").toString()));
         newUserModel.setFullName(user.get("realName").toString());
         newUserModel.setPhoneNum(user.get("phoneNum").toString());
         newUserModel.setDob(user.get("dob").toString());
@@ -105,6 +108,19 @@ public class UserLogic {
         newUserModel.setUserId((int) user.get("userID"));
 
         return newUserModel;
+    }
+
+    private UserType convertUserType(String jsonType){
+        switch (jsonType){
+            case "guest":
+                return UserType.GUEST;
+            case "owner":
+                return UserType.BUSINESS_OWNER;
+            case "admin":
+                return UserType.ADMIN;
+            default:
+                return UserType.BASIC_USER;
+        }
     }
 
     /**
@@ -175,6 +191,10 @@ public class UserLogic {
             @Override
             public void onErrorResponse(VolleyError error) {
                 r.onError("error response: " + error.toString());
+
+                Log.d("USER LOGIC ERROR", error.toString());
+                if (error instanceof NoConnectionError)
+                   Log.d("USER LOGIC ERROR", "Unable to connect to the server! Please ensure your internet is working!");
             }
         });
 

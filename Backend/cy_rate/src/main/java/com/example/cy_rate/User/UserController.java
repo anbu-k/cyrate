@@ -96,13 +96,13 @@ public class UserController {
         try{
             User updateUser = userRepo.findById(id);
 
-            updateUser.setusername(use.getusername());
-            updateUser.setuserType(use.getuserType());
-            updateUser.setrealName(use.getrealName());
-            updateUser.setemail(use.getemail());
-            updateUser.setuserPass(use.getuserPass());
-            updateUser.setphoneNum(use.getphoneNum());
-            updateUser.setdob(use.getdob());
+            updateUser.setUsername(use.getUsername());
+            updateUser.setUserType(use.getUserType());
+            updateUser.setRealName(use.getRealName());
+            updateUser.setEmail(use.getEmail());
+            updateUser.setUserPass(use.getUserPass());
+            updateUser.setPhoneNum(use.getPhoneNum());
+            updateUser.setDob(use.getDob());
             updateUser.setPhotoUrl(use.getPhotoUrl());
             userRepo.save(updateUser);
 
@@ -118,7 +118,7 @@ public class UserController {
     {
         User resetPassword = userRepo.findById(id);
         try{
-        resetPassword.setuserPass(use.getuserPass());
+        resetPassword.setUserPass(use.getUserPass());
         userRepo.save(resetPassword);
         }
         catch(Exception e)
