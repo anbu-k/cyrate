@@ -69,7 +69,7 @@
             android:name=".activities.WelcomeToCyRateActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".activities.PersonalReviewListActivity"
             android:exported="true" />
     </application>
 

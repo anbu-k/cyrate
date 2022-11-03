@@ -11,6 +11,7 @@ import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
+import com.example.cyrate.activities.PersonalReviewListActivity;
 
 public class NavMenuUtils {
     public static void hideMenuItems(Menu navMenu){
@@ -35,6 +36,9 @@ public class NavMenuUtils {
                 //guest cannot see home (bc they don't have personalized info)
                 navMenu.findItem(R.id.nav_home).setVisible(false);
 
+                //guest CANNOT see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
+
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BASIC_USER){
@@ -52,6 +56,9 @@ public class NavMenuUtils {
 
                 //normal user can see home
                 navMenu.findItem(R.id.nav_home).setVisible(true);
+
+                //normal user can see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(true);
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
@@ -69,6 +76,9 @@ public class NavMenuUtils {
 
                 //business owner cannot see home (they can't have favorites, leave reviews)
                 navMenu.findItem(R.id.nav_home).setVisible(false);
+
+                //business owner CANNOT see their own reviews
+                navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
             }
     }
 
@@ -96,6 +106,9 @@ public class NavMenuUtils {
             case R.id.nav_home:
             default:
                 i = new Intent(context, WelcomeToCyRateActivity.class);
+                context.startActivity(i);
+            case R.id.nav_my_reviews:
+                i = new Intent(context, PersonalReviewListActivity.class);
                 context.startActivity(i);
         }
 
