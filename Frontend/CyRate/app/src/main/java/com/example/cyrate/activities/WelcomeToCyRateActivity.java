@@ -9,19 +9,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
+import com.example.cyrate.adapters.BusinessListAdapter;
+import com.example.cyrate.models.BusinessListCardModel;
+import com.example.cyrate.models.RecyclerViewInterface;
 import com.google.android.material.navigation.NavigationView;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 
-public class WelcomeToCyRateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class WelcomeToCyRateActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
     TextView name, username, email, phone;
     Button editProfileButton;
     ImageView profilePic;
@@ -29,6 +46,17 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Naviga
     DrawerLayout drawerLayout;
     NavigationView navView;
     ImageView open_menu;
+
+//    LinearLayoutManager layoutManager;
+    BusinessServiceLogic businessServiceLogic;
+
+    RecyclerView favoritesRecycler;
+
+    BusinessListAdapter busListAdapter;
+    LinearLayoutManager layoutManager;
+    ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +98,52 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Naviga
         // Use this to hide any menu tabs depending on the user type
         NavMenuUtils.hideMenuItems(navView.getMenu());
 
+
+        //favorites
+        favoritesRecycler = findViewById(R.id.favorites_recycler);
+        layoutManager = new LinearLayoutManager(this);
+
+
+//        layoutManager = new LinearLayoutManager(this);
+        businessServiceLogic = new BusinessServiceLogic();
+        busListAdapter = new BusinessListAdapter(this,
+                businessListCardModel, this);
+
+        favoritesRecycler.setAdapter(busListAdapter);
+        favoritesRecycler.setLayoutManager(layoutManager);
+
+        try {
+            setFavorites();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         Log.d("welcome", "setting lsitener");
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(WelcomeToCyRateActivity.this, EditProfileActivity.class);
                 startActivity(i);
+            }
+        });
+    }
+
+    private void setFavorites() throws JSONException {
+        businessServiceLogic.getBusinesses(new getBusinessesResponse() {
+            @Override
+            public void onSuccess(List<BusinessListCardModel> list) {
+                for (int i = 0; i < list.size(); i++) {
+                    businessListCardModel.add(list.get(i));
+                }
+                Log.d("TEST 1", "IN HERE");
+                busListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("set favorites", s);
+                Toast.makeText(WelcomeToCyRateActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -109,5 +177,23 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Naviga
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, IndividualBusinessActivity.class);
+
+        intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
+        intent.putExtra("CATEGORY", businessListCardModel.get(position).getBusType());
+        intent.putExtra("ADDRESS", businessListCardModel.get(position).getLocation());
+        intent.putExtra("HOURS", businessListCardModel.get(position).getHours());
+        intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
+        intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
+        intent.putExtra("ID", businessListCardModel.get(position).getBusId());
+        intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
+        intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
+
+
+        startActivity(intent);
     }
 }
