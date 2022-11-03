@@ -174,6 +174,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         Intent intent = new Intent(ReviewListActivity.this, IndividualReviewActivity.class);
         // Put in new extras for review info + prev extras (business info)
         intent.putExtras(extras);
+        intent.putExtra("PREVIOUS_ACTIVITY", "ReviewListActivity");
         intent.putExtra("REVIEWER_NAME", reviewListCardModels.get(position).getReviewUser().getFullName());
         intent.putExtra("RATING_VAL", reviewListCardModels.get(position).getRateVal());
         intent.putExtra("REVIEW_BODY", reviewListCardModels.get(position).getReviewText());
