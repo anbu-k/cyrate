@@ -146,6 +146,8 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
                     recyclerView.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
                 }
+                TextView reviewCount = findViewById(R.id.reviewsCount);
+                reviewCount.setText(String.valueOf(list.size()));
             }
 
             @Override
