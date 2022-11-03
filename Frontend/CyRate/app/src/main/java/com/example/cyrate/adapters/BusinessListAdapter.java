@@ -51,14 +51,24 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         String[] hours = businessCardList.get(position).getHours().split("\\|");
         Log.d("HOURS LIST", hours[0]);
 
+        int totalReviews = businessCardList.get(position).getReviewCount();
+        int reviewSum = businessCardList.get(position).getReviewSum();
+
+        float rating = (float) reviewSum / totalReviews;
+
+        if(totalReviews == 0){
+            holder.restRating.setText("n/a");
+        }
+        else{
+            holder.restRating.setText(String.format("%.1f", rating));
+        }
+
         new ImageLoaderTask(businessCardList.get(position).getPhotoUrl(), holder.restImg).execute();
         holder.restName.setText(businessCardList.get(position).getBusName());
         holder.restAddress.setText(businessCardList.get(position).getLocation());
         holder.restCategory.setText(businessCardList.get(position).getBusType());
-        holder.restRating.setText("4.7"); // Hard code for now
         holder.restHours.setText(hours[0]); // Substring 5 since hours[0] is "Mon: <hours>" cut off the Mon: part
-//        holder.restImg.setImageResource(R.drawable.provisions_hero);
-//        holder.restImg.setImageResource(businessCardList.get(position).getImg());
+
 
     }
 
