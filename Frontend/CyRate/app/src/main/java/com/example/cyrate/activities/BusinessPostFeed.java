@@ -97,7 +97,7 @@ public class BusinessPostFeed extends AppCompatActivity {
         businessServiceLogic.getBusinessPostsByID(busId, new getBusinessPostsByID() {
             @Override
             public void onSuccess(List<BusinessPostCardModel> list) {
-                for (int i = 0; i < list.size(); i++) {
+                for (int i = list.size() - 1; i >= 0; i--) {
                     businessPostList.add(list.get(i));
                 }
                 Log.d("TEST 1", "IN HERE");
