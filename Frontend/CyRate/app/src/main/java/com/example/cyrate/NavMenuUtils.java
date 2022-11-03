@@ -100,16 +100,20 @@ public class NavMenuUtils {
             case R.id.nav_sign_in:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
+                break;
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
+                break;
+            case R.id.nav_my_reviews:
+                i = new Intent(context, PersonalReviewListActivity.class);
+                context.startActivity(i);
+                break;
             case R.id.nav_home:
             default:
                 i = new Intent(context, WelcomeToCyRateActivity.class);
                 context.startActivity(i);
-            case R.id.nav_my_reviews:
-                i = new Intent(context, PersonalReviewListActivity.class);
-                context.startActivity(i);
+                break;
         }
 
 
