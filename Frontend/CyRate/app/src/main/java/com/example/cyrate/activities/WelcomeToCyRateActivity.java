@@ -24,11 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
+import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.BusinessListAdapter;
+import com.example.cyrate.adapters.ReviewListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewListCardModel;
 import com.google.android.material.navigation.NavigationView;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 
@@ -47,7 +50,6 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
     NavigationView navView;
     ImageView open_menu;
 
-//    LinearLayoutManager layoutManager;
     BusinessServiceLogic businessServiceLogic;
 
     RecyclerView favoritesRecycler;
@@ -56,6 +58,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
     LinearLayoutManager layoutManager;
     ArrayList<BusinessListCardModel> businessListCardModel = new ArrayList<>();
 
+    ReviewServiceLogic reviewServiceLogic;
+    RecyclerView reviewsRecycler;
+    ReviewListAdapter reviewListAdapter;
+    ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
 
 
 
@@ -103,8 +109,6 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
         favoritesRecycler = findViewById(R.id.favorites_recycler);
         layoutManager = new LinearLayoutManager(this);
 
-
-//        layoutManager = new LinearLayoutManager(this);
         businessServiceLogic = new BusinessServiceLogic();
         busListAdapter = new BusinessListAdapter(this,
                 businessListCardModel, this);
@@ -118,6 +122,19 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
             e.printStackTrace();
         }
 
+        //reviews
+        reviewsRecycler = findViewById(R.id.reviews_recycler);
+        reviewServiceLogic = new ReviewServiceLogic();
+        reviewListAdapter = new ReviewListAdapter(this, reviewListCardModels, this);
+
+        reviewsRecycler.setAdapter(reviewListAdapter);
+        reviewsRecycler.setLayoutManager(layoutManager);
+
+        try{
+            setReviews();
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
 
         Log.d("welcome", "setting lsitener");
         editProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +163,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
                 Toast.makeText(WelcomeToCyRateActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void setReviews() throws JSONException{
+        ///merge main to get new review service logic methods
     }
 
     private void navigationDrawer() {
