@@ -35,7 +35,7 @@ public class FavoritesController {
     private String failure = "{\"message\":\"failure\"}";
 
     /**
-     * 
+     * Returns all of the favorites in the favorites table
      * @return
      */
     @GetMapping(path = "/favorites/all")
@@ -45,7 +45,8 @@ public class FavoritesController {
     }
 
     /**
-     * 
+     * Able to return all of a specific users favorites
+     * by passing their user ID
      */
     @GetMapping(path = "/favorites/user/{uid}")
     List<Favorites> getFavoritesByUser(@PathVariable int uid)
@@ -55,7 +56,8 @@ public class FavoritesController {
     }
 
     /**
-     * 
+     * Returns the business that has been favorited
+     * by its specific business ID
      * @param bid
      * @return
      */
@@ -67,7 +69,7 @@ public class FavoritesController {
     }
 
     /**
-     * 
+     * Allows a user to pick a favorite business
      * @param id
      * @return
      */
@@ -88,10 +90,15 @@ public class FavoritesController {
         }
     }
 
-    @DeleteMapping(path = "/favorites/delete/{id}")
-    String deleteFavorite(@PathVariable int id)
+    /**
+     * Allows you to remove a favorite
+     * @param pid
+     * @return success
+     */
+    @DeleteMapping(path = "/favorites/delete/{pid}")
+    String deleteFavorite(@PathVariable int pid)
     {
-        favRepo.deleteById(id);
+        favRepo.deleteById(pid);
         return success;
     }
 

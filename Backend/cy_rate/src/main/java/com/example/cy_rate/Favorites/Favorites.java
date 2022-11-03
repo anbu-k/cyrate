@@ -42,16 +42,18 @@ public class Favorites {
     @JoinColumn(name = "bid" , referencedColumnName = "busId")
     private Business business;
 
+    
     public Favorites(){
-        
+       
     }
+
 
     public int getFid()
     {
         return fid;
     }
 
-    public void setFavoritesID(int fid)
+    public void setFid(int fid)
     {
         this.fid = fid;
     }
