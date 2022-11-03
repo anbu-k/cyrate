@@ -9,14 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,7 +28,8 @@ import com.example.cyrate.R;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.adapters.ReviewListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.BusinessRecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 import com.google.android.material.navigation.NavigationView;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
@@ -42,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WelcomeToCyRateActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
+public class WelcomeToCyRateActivity extends AppCompatActivity implements ReviewRecyclerViewInterface, BusinessRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
     TextView name, username, email, phone;
     Button editProfileButton;
     ImageView profilePic;
@@ -258,6 +256,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
         startActivity(intent);
     }
 
+    @Override
     public void onReviewClick(int position){
         Intent intent = new Intent(this, IndividualReviewActivity.class);
         // Put in new extras for review info + prev extras (business info)

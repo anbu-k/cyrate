@@ -21,7 +21,7 @@ import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.ReviewListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import org.json.JSONException;
@@ -29,7 +29,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewListActivity extends AppCompatActivity implements RecyclerViewInterface {
+public class ReviewListActivity extends AppCompatActivity implements ReviewRecyclerViewInterface {
 
     ReviewServiceLogic reviewServiceLogic;
     BusinessServiceLogic businessServiceLogic;
@@ -188,7 +188,4 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         startActivity(intent);
     }
 
-    public void onBusinessClick(int position){
-        return;
-    }
 }

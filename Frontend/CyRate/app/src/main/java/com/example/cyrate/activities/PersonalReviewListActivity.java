@@ -21,7 +21,7 @@ import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.ReviewListAdapter;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +30,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalReviewListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
+public class PersonalReviewListActivity extends AppCompatActivity implements ReviewRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     ReviewServiceLogic reviewServiceLogic;
     ReviewListAdapter reviewListAdapter;

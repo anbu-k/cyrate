@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.BusinessRecyclerViewInterface;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.google.android.material.navigation.NavigationView;
@@ -30,7 +30,7 @@ import java.util.List;
 
 import com.example.cyrate.NavMenuUtils;
 
-public class BusinessListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
+public class BusinessListActivity extends AppCompatActivity implements BusinessRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
     BusinessListAdapter busListAdapter;
@@ -136,9 +136,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         startActivity(intent);
     }
 
-    public void onReviewClick(int position){
-        return;
-    }
 
     private void navigationDrawer() {
         // Navigation Drawer
