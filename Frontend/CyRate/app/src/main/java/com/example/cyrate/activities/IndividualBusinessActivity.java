@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,7 +26,7 @@ import org.json.JSONException;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
-    Button findUs_btn, reviews_btn;
+    Button findUs_btn, reviews_btn, menu_btn, posts_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn;
     TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
@@ -44,7 +45,9 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
         edit_btn = (ImageView) findViewById(R.id.edit_icon);
+        posts_btn = findViewById(R.id.busPosts_btn);
         findUs_btn = (Button) findViewById(R.id.find_us_btn);
+        menu_btn = findViewById(R.id.menu_btn);
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
         reviewCount = findViewById(R.id.reviews_text);
 
@@ -73,6 +76,30 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 navigateBack();
+            }
+        });
+
+        menu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(extras.getString("MENU_URL").isEmpty()){
+                    Toast.makeText(IndividualBusinessActivity.this,
+                            "No Menu Link!", Toast.LENGTH_LONG).show();
+                }else {
+                    Uri uri = Uri.parse(extras.getString("MENU_URL"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        posts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, BusinessPostFeed.class);
+
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 

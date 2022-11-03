@@ -1,8 +1,10 @@
 package com.example.cyrate.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -130,12 +132,10 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessR
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
         intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
-        intent.putExtra("PREVIOUS_ACTIVITY", "BusinessListActivity");
 
 
         startActivity(intent);
     }
-
 
     private void navigationDrawer() {
         // Navigation Drawer
