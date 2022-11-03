@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
+import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
 
@@ -32,6 +33,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     String busNameString;
     int busId;
     BusinessServiceLogic businessServiceLogic;
+    FavoritesServiceLogic favoritesServiceLogic;
 
     Bundle extras;
     @Override
@@ -49,6 +51,8 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         menu_btn = findViewById(R.id.menu_btn);
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
         reviewCount = findViewById(R.id.reviews_text);
+
+        favoriteBtn = findViewById(R.id.favorite_star);
 
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
@@ -68,6 +72,33 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         busId = extras.getInt("ID");
 
         businessServiceLogic = new BusinessServiceLogic();
+
+        favoritesServiceLogic = new FavoritesServiceLogic();
+
+        favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    favoritesServiceLogic.addFavorite(MainActivity.globalUser.getUserId(), busId, new businessStringResponse() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Toast.makeText(IndividualBusinessActivity.this, "Added to favorites!", Toast.LENGTH_LONG).show();
+                            Log.d("add fav", "in on success");
+                        }
+
+                        @Override
+                        public void onError(String s) {
+                            Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                            Log.d("add fav", "in on error");
+                            Log.d("add fav", s);
+
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

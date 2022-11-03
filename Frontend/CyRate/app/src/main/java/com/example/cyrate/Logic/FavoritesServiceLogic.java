@@ -32,11 +32,22 @@ public class FavoritesServiceLogic {
 
         newFavoriteObject.put("", "");
 
+        Log.d("in add fav", "HERE");
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newFavoriteObject, new Response.Listener<JSONObject>() {
+            public void onResponse(String response){
+                Log.d("fav service logic", "response.toString()");
+                if (response != null) {
+                    r.onSuccess("success");
+                } else {
+                    r.onError("Null response object received");
+                }
+            }
             @Override
             public void onResponse(JSONObject response) {
+                Log.d("fav service logic", "response.toString()");
                 if (response != null) {
-                    r.onSuccess(response.toString());
+                    r.onSuccess("success");
                 } else {
                     r.onError("Null response object received");
                 }
