@@ -165,7 +165,14 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     }
 
     private void navigateBack() {
-        Intent intent = new Intent(this, BusinessListActivity.class);
+        Intent intent;
+        String prevActivity = extras.getString("PREVIOUS_ACTIVITY");
+        if (prevActivity.equals("WelcomeToCyrateActivity")){
+            intent = new Intent(this, WelcomeToCyRateActivity.class);
+        }
+        else {
+            intent = new Intent(this, BusinessListActivity.class);
+        }
         startActivity(intent);
     }
 

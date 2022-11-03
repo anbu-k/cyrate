@@ -130,6 +130,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
         intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
+        intent.putExtra("PREVIOUS_ACTIVITY", "BusinessListActivity");
 
 
         startActivity(intent);

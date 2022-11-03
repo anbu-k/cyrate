@@ -192,6 +192,8 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
         intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
+        intent.putExtra("PREVIOUS_ACTIVITY", "WelcomeToCyrateActivity");
+
 
 
         startActivity(intent);
