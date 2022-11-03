@@ -65,6 +65,8 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
     ReviewListAdapter reviewListAdapter;
     ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
 
+    ImageView favoritesButton, myReviewsButton;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +146,26 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Recycl
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(WelcomeToCyRateActivity.this, EditProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+        favoritesButton = findViewById(R.id.favorites_button);
+        myReviewsButton = findViewById(R.id.reviews_button);
+
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //FUTURE: navigate to favorites list
+                Intent i = new Intent(WelcomeToCyRateActivity.this, BusinessListActivity.class);
+                startActivity(i);
+            }
+        });
+
+        myReviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WelcomeToCyRateActivity.this, PersonalReviewListActivity.class);
                 startActivity(i);
             }
         });
