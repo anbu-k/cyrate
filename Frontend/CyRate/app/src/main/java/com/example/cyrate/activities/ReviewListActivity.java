@@ -130,8 +130,6 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
         intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
 
 
-
-
         startActivity(intent);
     }
 }
