@@ -16,10 +16,13 @@ import com.example.cy_rate.Business.Business;
 import com.example.cy_rate.Business.BusinessRepository;
 import com.example.cy_rate.User.User;
 import com.example.cy_rate.User.UserRepository;
+
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 import com.example.cy_rate.Favorites.FavoritesRepository;
 
 
-
+//Favorites controller
 @RestController
 public class FavoritesController {
     @Autowired
@@ -53,6 +56,13 @@ public class FavoritesController {
     {
         User u = userRepo.findById(uid);
         return favRepo.findByUser(u);
+    }
+
+    @GetMapping(path = "/favorites/fav/{fid}")
+    List<Favorites> getFavoritesByFid(@PathVariable int fid)
+    {
+        Favorites f = favRepo.findById(fid);
+        return favRepo.findByFid(f);
     }
 
     /**
