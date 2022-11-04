@@ -194,4 +194,50 @@ public class ReviewServiceLogic {
 
         AppController.getInstance().addToRequestQueue(request);
     }
+
+
+
+    public void editReview(int reviewId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
+        String url = Const.EDIT_REVIEW_BY_ID + String.valueOf(reviewId);
+
+        Log.d("EDIT REVIEW URL", url);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("reviewTxt", reviewTxt);
+        params.put("reviewHeader", reviewHeading);
+        params.put("rateVal", ratingVal);
+
+        Log.d("addReview - newReview", params.toString());
+
+
+        StringRequest request = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        r.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("EDIT REVIEW ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+
 }

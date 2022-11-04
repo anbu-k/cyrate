@@ -107,7 +107,7 @@
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
                 android:src="@drawable/thumbs_up"
-                app:layout_constraintHorizontal_bias=".3"
+                app:layout_constraintHorizontal_bias=".2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>
@@ -117,7 +117,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
-                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintHorizontal_bias=".4"
                 android:src="@drawable/comment_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,8 +128,19 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:paddingBottom="10dp"
-                app:layout_constraintHorizontal_bias=".7"
+                app:layout_constraintHorizontal_bias=".6"
                 android:src="@drawable/delete_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>
+
+            <ImageView
+                android:id="@+id/busPost_editIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintHorizontal_bias=".8"
+                android:src="@drawable/edit_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/busPost_photo"/>

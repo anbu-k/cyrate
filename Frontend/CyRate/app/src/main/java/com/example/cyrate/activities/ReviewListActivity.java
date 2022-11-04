@@ -189,7 +189,6 @@ public class ReviewListActivity extends AppCompatActivity implements ReviewRecyc
         intent.putExtra("REVIEW_ID", reviewListCardModels.get(position).getReviewId());
         intent.putExtra("REVIEWER_ID", reviewListCardModels.get(position).getReviewUser().getUserId());
 
-
         startActivity(intent);
     }
 

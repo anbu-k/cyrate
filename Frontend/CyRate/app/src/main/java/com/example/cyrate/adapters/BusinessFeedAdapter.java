@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cyrate.EditBusinessPostActivity;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.BusinessServiceLogic;
@@ -80,7 +81,7 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
     // Class necessary and is similar for having an onCreate method. Allows us to get all our views
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView busProfilePic, busPostPhoto, deleteIcon;
+        ImageView busProfilePic, busPostPhoto, deleteIcon, editIcon;
         TextView busName, busPostDate, busPostText;
 
         public MyViewHolder(@NonNull View itemView, Context ctx, Bundle extras, ArrayList<BusinessPostCardModel> list) {
@@ -93,6 +94,7 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
             busPostText = itemView.findViewById(R.id.busPost_bodyText);
 
             deleteIcon = itemView.findViewById(R.id.busPost_deleteIcon);
+            editIcon = itemView.findViewById(R.id.busPost_editIcon);
 
 
             // Remove the delete icon if the current User is not the original reviewer or not an Admin
@@ -115,6 +117,19 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
                 deleteIcon.setVisibility(View.VISIBLE);
             }
+
+            editIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, EditBusinessPostActivity.class);
+                    intent.putExtras(extras);
+                    intent.putExtra("POST_TEXT", list.get(getAdapterPosition()).getPostTxt());
+                    intent.putExtra("POST_PHOTO", list.get(getAdapterPosition()).getPhotoUrl());
+                    intent.putExtra("POST_ID", list.get(getAdapterPosition()).getPostId());
+
+                    ctx.startActivity(intent);
+                }
+            });
 
             deleteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override

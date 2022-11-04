@@ -10,6 +10,9 @@ public class Const {
     public static final String GET_BUSINESS_POSTS_BY_ID = "http://coms-309-020.class.las.iastate.edu:8080/posts/";
     public static final String CREATE_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/create/";
     public static final String DELETE_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/delete/";
+    public static final String EDIT_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/update/";
+
+
 
 
 
@@ -21,6 +24,8 @@ public class Const {
 
     public static final String GET_REVIEWS_BY_BUS_ID = "http://coms-309-020.class.las.iastate.edu:8080/reviews/business/";
     public static final String DELETE_REVIEW_BY_ID = "http://coms-309-020.class.las.iastate.edu:8080/review/delete/";
+    public static final String EDIT_REVIEW_BY_ID = "http://coms-309-020.class.las.iastate.edu:8080/reveiw/update/";
+
 
     public static final String GET_REVIEWS_BY_USER_ID = "http://coms-309-020.class.las.iastate.edu:8080/reviews/user/";
 
