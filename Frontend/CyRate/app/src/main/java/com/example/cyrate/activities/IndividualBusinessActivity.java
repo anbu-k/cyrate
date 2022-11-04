@@ -27,7 +27,7 @@ import org.json.JSONException;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
-    Button findUs_btn, reviews_btn, menu_btn;
+    Button findUs_btn, reviews_btn, menu_btn, posts_btn;
     ImageView back_btn, busImage, delete_btn, edit_btn, favoriteBtn;
     TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
@@ -47,6 +47,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         delete_btn = (ImageView) findViewById(R.id.delete_icon);
         edit_btn = (ImageView) findViewById(R.id.edit_icon);
+        posts_btn = findViewById(R.id.busPosts_btn);
         findUs_btn = (Button) findViewById(R.id.find_us_btn);
         menu_btn = findViewById(R.id.menu_btn);
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
@@ -118,6 +119,16 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                 }
+            }
+        });
+
+        posts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualBusinessActivity.this, BusinessPostFeed.class);
+
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 
@@ -210,13 +221,26 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     }
 
     private void navigateBack() {
-        Intent intent = new Intent(this, BusinessListActivity.class);
+        Intent intent;
+        String prevActivity = extras.getString("PREVIOUS_ACTIVITY");
+        if (prevActivity == null){
+            intent = new Intent(this, BusinessListActivity.class);
+        }
+        else if (prevActivity.equals("WelcomeToCyrateActivity")){
+            intent = new Intent(this, WelcomeToCyRateActivity.class);
+        }
+        else {
+            intent = new Intent(this, BusinessListActivity.class);
+        }
         startActivity(intent);
     }
 
     private void hideButtons(){
         if (MainActivity.globalUser.getUserType() == UserType.GUEST){
             edit_btn.setVisibility(View.GONE);
+            delete_btn.setVisibility(View.GONE);
+        }
+        if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
             delete_btn.setVisibility(View.GONE);
         }
         else if(MainActivity.globalUser.getUserType() == UserType.BASIC_USER){

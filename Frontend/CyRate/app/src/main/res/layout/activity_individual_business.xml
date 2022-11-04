@@ -153,7 +153,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/menu_btn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:letterSpacing=".4"
         android:background="@drawable/button_background"
         android:text="MENU"
@@ -169,7 +169,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/reviews_btn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:letterSpacing=".4"
         android:background="@drawable/button_background"
         android:text="REVIEWS"
@@ -177,15 +177,31 @@
         android:textSize="35dp"
         android:elevation="10dp"
 
-        app:layout_constraintBottom_toTopOf="@id/find_us_btn"
+        app:layout_constraintBottom_toTopOf="@id/busPosts_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_btn" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/busPosts_btn"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:letterSpacing=".4"
+        android:background="@drawable/button_background"
+        android:text="POSTS"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:elevation="10dp"
+
+        app:layout_constraintBottom_toTopOf="@id/find_us_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviews_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/find_us_btn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:letterSpacing=".4"
         android:background="@drawable/button_background"
         android:text="FIND US"
@@ -196,7 +212,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviews_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/busPosts_btn" />
+
+
+    <ImageView
+        android:id="@+id/favorite_star"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/restaurant_name"
+        app:srcCompat="@drawable/star_outline"
+        android:tooltipText="Add to Favorites"/>
 
 
     <ImageView

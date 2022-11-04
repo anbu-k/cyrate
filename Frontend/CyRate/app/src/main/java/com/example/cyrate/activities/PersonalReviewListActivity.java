@@ -1,12 +1,16 @@
 package com.example.cyrate.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,23 +18,28 @@ import android.widget.Toast;
 
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
+import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.ReviewListAdapter;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalReviewListActivity extends AppCompatActivity implements RecyclerViewInterface {
+public class PersonalReviewListActivity extends AppCompatActivity implements ReviewRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     ReviewServiceLogic reviewServiceLogic;
     ReviewListAdapter reviewListAdapter;
     Bundle extras;
     ArrayList<ReviewListCardModel> reviewListCardModels = new ArrayList<>();
-    ImageView back_btn;
+
+    DrawerLayout drawerLayout;
+    NavigationView navView;
+    ImageView navMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +48,15 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
 
         extras = getIntent().getExtras();
 
-        back_btn = (ImageView) findViewById(R.id.back_btn_icon);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.nav_view);
+        navMenu = (ImageView) findViewById(R.id.open_menu_icon);
 
+        NavMenuUtils.hideMenuItems(navView.getMenu());
+
+        navigationDrawer();
+
+        drawerLayout.setScrimColor(getResources().getColor(R.color.red));
 
 
         RecyclerView recyclerView = findViewById(R.id.reviewList_recyclerView);
@@ -66,15 +82,48 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
             e.printStackTrace();
         }
 
-        back_btn.setOnClickListener(new View.OnClickListener() {
+    }
+
+    // When menu is open and back button is pressed, we just close the menu instead of going
+    // back a page
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+    private void navigationDrawer() {
+        // Navigation Drawer
+        navView.bringToFront();
+        navView.setNavigationItemSelectedListener(this);
+        navView.setCheckedItem(R.id.nav_my_reviews);
+
+        navMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PersonalReviewListActivity.this, BusinessListActivity.class);
-                intent.putExtras(extras);
-                startActivity(intent);
+                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                else{
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
             }
         });
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if (menuItem.getItemId() != R.id.nav_my_reviews){
+            NavMenuUtils.onNavItemSelected(menuItem, PersonalReviewListActivity.this);
+        }
+        else{
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private void setUpReviewModels(RecyclerView recyclerView, TextView emptyView) throws JSONException {
@@ -97,6 +146,8 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
                     recyclerView.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
                 }
+                TextView reviewCount = findViewById(R.id.reviewsCount);
+                reviewCount.setText(String.valueOf(list.size()));
             }
 
             @Override
@@ -109,7 +160,7 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onReviewClick(int position) {
         Intent intent = new Intent(PersonalReviewListActivity.this, IndividualReviewActivity.class);
 
 
@@ -121,5 +172,9 @@ public class PersonalReviewListActivity extends AppCompatActivity implements Rec
         intent.putExtra("REVIEWER_USERNAME", reviewListCardModels.get(position).getReviewUser().getUsername());
 
         startActivity(intent);
+    }
+
+    public void onBusinessClick(int position){
+        return;
     }
 }

@@ -17,6 +17,7 @@ import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
+import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.BusinessListCardModel;
@@ -125,6 +126,14 @@ public class LoginTabFragment extends Fragment {
                 });
 
                 Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
+
+                Intent i;
+                if (MainActivity.globalUser.getUserType() == UserType.BASIC_USER) {
+                    i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
+                }
+                else{
+                    i = new Intent(getActivity(), BusinessListActivity.class);
+                }
                 startActivity(i);
             }
 

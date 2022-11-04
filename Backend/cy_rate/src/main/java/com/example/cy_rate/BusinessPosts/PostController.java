@@ -94,7 +94,7 @@ public class PostController {
      * @param p
      * @return
      */
-    @PutMapping(path = "/posts/update/{bid}")
+    @PutMapping(path = "/posts/update/{pid}")
     String editPost(@PathVariable int pid, @RequestBody Post eP)
     {
         Post p = postRepo.findById(pid);

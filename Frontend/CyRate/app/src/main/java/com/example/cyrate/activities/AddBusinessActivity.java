@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
-import com.example.cyrate.nav_menu_utils;
+import com.example.cyrate.NavMenuUtils;
 
 public class AddBusinessActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,7 +61,7 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
         navigationDrawer();
         drawerLayout.setScrimColor(getResources().getColor(R.color.red));
 
-        nav_menu_utils.hideMenuItems(navView.getMenu());
+        NavMenuUtils.hideMenuItems(navView.getMenu());
 
         // Submit Logic
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +147,7 @@ public class AddBusinessActivity extends AppCompatActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() != R.id.nav_addBusiness){
-            nav_menu_utils.onNavItemSelected(menuItem, AddBusinessActivity.this);
+            NavMenuUtils.onNavItemSelected(menuItem, AddBusinessActivity.this);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -12,5 +12,6 @@ public interface FavoritesRepository extends JpaRepository<Favorites, Integer>{
     void deleteById(int id);
     List<Favorites> findByUser(User f);
     List<Favorites> findByBusiness(Business b);
+    List<Favorites> findByFid(Favorites f);
 
 }
