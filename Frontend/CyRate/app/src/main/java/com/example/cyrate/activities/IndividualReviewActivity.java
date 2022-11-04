@@ -16,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cyrate.EditReviewActivity;
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
@@ -27,7 +28,7 @@ import org.json.JSONException;
 
 public class IndividualReviewActivity extends AppCompatActivity {
 
-    ImageView back_btn, reviewerProfilePic, deleteIcon, thumbsUpIcon, commentIcon;
+    ImageView back_btn, reviewerProfilePic, deleteIcon, thumbsUpIcon, commentIcon, editReviewIcon;
     TextView reviewerName, reviewBody, reviewHeading;
     RatingBar ratingBar;
     Bundle extras;
@@ -42,6 +43,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_individual_review);
 
         back_btn = (ImageView) findViewById(R.id.back_button_image);
+        editReviewIcon = findViewById(R.id.editReview_icon);
         reviewerProfilePic = findViewById(R.id.profilePic);
         deleteIcon = findViewById(R.id.deleteReviewIcon);
         thumbsUpIcon = findViewById(R.id.thumbsUpIcon);
@@ -89,6 +91,15 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
             deleteIcon.setVisibility(View.VISIBLE);
         }
+
+        editReviewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualReviewActivity.this, EditReviewActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
 
 
 

@@ -432,5 +432,52 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    public void editPost(int postId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
+        String url = Const.EDIT_POST + String.valueOf(postId);
+
+        Log.d("EDIT POST URL", url);
+
+        // Get the current date
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+        String dateStr = formatter.format(date);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("postTxt", postTxt);
+        params.put("date", dateStr);
+        params.put("photoUrl", photoUrl);
+
+        Log.d("addPost - newPost", params.toString());
+
+
+        StringRequest request = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        r.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ADD POST ERROR", error.toString());
+                        r.onError(error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
 }
 
