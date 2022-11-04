@@ -19,9 +19,10 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
+import com.example.cyrate.UserType;
 import com.example.cyrate.adapters.ReviewListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import org.json.JSONException;
@@ -29,7 +30,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewListActivity extends AppCompatActivity implements RecyclerViewInterface {
+public class ReviewListActivity extends AppCompatActivity implements ReviewRecyclerViewInterface {
 
     ReviewServiceLogic reviewServiceLogic;
     BusinessServiceLogic businessServiceLogic;
@@ -58,6 +59,10 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
 
         // Guest users should not be able to add a review
         if (MainActivity.globalUser.getEmail().equals("guest-user-email")) {
+            addReview_btn.setVisibility(View.GONE);
+        }
+
+        if (MainActivity.globalUser.getUserType().equals(UserType.BUSINESS_OWNER)){
             addReview_btn.setVisibility(View.GONE);
         }
 
@@ -170,7 +175,7 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onReviewClick(int position) {
         Intent intent = new Intent(ReviewListActivity.this, IndividualReviewActivity.class);
         // Put in new extras for review info + prev extras (business info)
         intent.putExtras(extras);
@@ -187,4 +192,5 @@ public class ReviewListActivity extends AppCompatActivity implements RecyclerVie
 
         startActivity(intent);
     }
+
 }

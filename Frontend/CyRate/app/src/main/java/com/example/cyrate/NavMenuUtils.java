@@ -10,9 +10,10 @@ import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
 
-public class nav_menu_utils {
+public class NavMenuUtils {
     public static void hideMenuItems(Menu navMenu){
         //set visibility of all menu items every time in case users log out and log back in?
             // A guest user should not be able to edit the guest user profile
@@ -29,11 +30,11 @@ public class nav_menu_utils {
                 //guest cannot log out
                 navMenu.findItem(R.id.nav_logout).setVisible(false);
 
-                //guest cannot see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(false);
-
                 //guest CAN sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(true);
+
+                //guest cannot see home (bc they don't have personalized info)
+                navMenu.findItem(R.id.nav_home).setVisible(false);
 
                 //guest CANNOT see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
@@ -50,11 +51,11 @@ public class nav_menu_utils {
                 //normal user can log out
                 navMenu.findItem(R.id.nav_logout).setVisible(true);
 
-                //normal user can see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(true);
-
                 //normal user cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //normal user can see home
+                navMenu.findItem(R.id.nav_home).setVisible(true);
 
                 //normal user can see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(true);
@@ -70,11 +71,11 @@ public class nav_menu_utils {
                 //business owner can log out
                 navMenu.findItem(R.id.nav_logout).setVisible(true);
 
-                //business owner can see their profile
-                navMenu.findItem(R.id.nav_profile).setVisible(true);
-
                 //business owner cannot sign in
                 navMenu.findItem(R.id.nav_sign_in).setVisible(false);
+
+                //business owner cannot see home (they can't have favorites, leave reviews)
+                navMenu.findItem(R.id.nav_home).setVisible(false);
 
                 //business owner CANNOT see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
@@ -92,9 +93,6 @@ public class nav_menu_utils {
                 i = new Intent(context, AddBusinessActivity.class);
                 context.startActivity(i);
                 break;
-            case R.id.nav_profile:
-                // code here
-                break;
             case R.id.nav_edit_profile:
                 i = new Intent(context, EditProfileActivity.class);
                 context.startActivity(i);
@@ -102,12 +100,20 @@ public class nav_menu_utils {
             case R.id.nav_sign_in:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
+                break;
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
+                break;
             case R.id.nav_my_reviews:
                 i = new Intent(context, PersonalReviewListActivity.class);
                 context.startActivity(i);
+                break;
+            case R.id.nav_home:
+            default:
+                i = new Intent(context, WelcomeToCyRateActivity.class);
+                context.startActivity(i);
+                break;
         }
 
 

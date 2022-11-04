@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.R;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 
 import java.util.ArrayList;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
-    private final RecyclerViewInterface recyclerViewInterface;
+    private final ReviewRecyclerViewInterface recyclerViewInterface;
 
     Context ctx;
     ArrayList<ReviewListCardModel> reviewListCardModels;
@@ -26,7 +26,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     public ReviewListAdapter(
             Context ctx,
             ArrayList<ReviewListCardModel> reviewListCardModels,
-            RecyclerViewInterface recyclerViewInterface
+            ReviewRecyclerViewInterface recyclerViewInterface
     ){
         this.ctx = ctx;
         this.reviewListCardModels = reviewListCardModels;
@@ -63,7 +63,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         ImageView profilePic;
         TextView reviewerName, reviewText, rateVal;
 
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public MyViewHolder(@NonNull View itemView, ReviewRecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             profilePic = itemView.findViewById(R.id.profilePic);
@@ -78,7 +78,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
                         int pos = getAdapterPosition();
 
                         if(pos != RecyclerView.NO_POSITION){
-                            recyclerViewInterface.onItemClick(pos);
+                            recyclerViewInterface.onReviewClick(pos);
                         }
                     }
                 }

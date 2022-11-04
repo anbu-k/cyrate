@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.R;
-import com.example.cyrate.models.RecyclerViewInterface;
-import com.example.cyrate.UserType;
+import com.example.cyrate.models.BusinessRecyclerViewInterface;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.google.android.material.navigation.NavigationView;
@@ -31,9 +30,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.cyrate.nav_menu_utils;
+import com.example.cyrate.NavMenuUtils;
 
-public class BusinessListActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
+public class BusinessListActivity extends AppCompatActivity implements BusinessRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     BusinessServiceLogic businessServiceLogic;
     BusinessListAdapter busListAdapter;
@@ -56,7 +55,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         open_menu = (ImageView) findViewById(R.id.open_menu_icon);
 
         // Use this to hide any menu tabs depending on the user type
-        nav_menu_utils.hideMenuItems(navView.getMenu());
+        NavMenuUtils.hideMenuItems(navView.getMenu());
 
         RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -121,7 +120,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onBusinessClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
@@ -133,7 +132,6 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
         intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
-        intent.putExtra("MENU_URL", businessListCardModel.get(position).getMenuLink());
 
 
         startActivity(intent);
@@ -161,7 +159,7 @@ public class BusinessListActivity extends AppCompatActivity implements RecyclerV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() != R.id.nav_restaurants){
-            nav_menu_utils.onNavItemSelected(menuItem, BusinessListActivity.this);
+            NavMenuUtils.onNavItemSelected(menuItem, BusinessListActivity.this);
         }
         else{
             drawerLayout.closeDrawer(GravityCompat.START);
