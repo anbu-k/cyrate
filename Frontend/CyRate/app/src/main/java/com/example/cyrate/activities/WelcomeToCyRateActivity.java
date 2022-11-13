@@ -169,6 +169,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         });
     }
 
+    /**
+     * gets the favorites for the current user
+     * @throws JSONException
+     */
     private void setFavorites() throws JSONException {
         businessServiceLogic.getBusinesses(new getBusinessesResponse() {
             @Override
@@ -188,6 +192,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         });
     }
 
+    /**
+     * gets the reviews written by the current user
+     * @throws JSONException
+     */
     private void setReviews() throws JSONException{
         ///merge main to get new review service logic methods
         reviewServiceLogic.getReviewsByUser(globalUser.getUserId(), new getReviewsResponse() {
@@ -226,6 +234,11 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         });
     }
 
+    /**
+     * navigates to desired page and closes nav drawer
+     * @param menuItem
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() != R.id.nav_home){
@@ -238,6 +251,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         return true;
     }
 
+    /**
+     * navigate to business page
+     * @param position
+     */
     @Override
     public void onBusinessClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
@@ -256,6 +273,10 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         startActivity(intent);
     }
 
+    /**
+     * navigates to individual review page
+     * @param position
+     */
     @Override
     public void onReviewClick(int position){
         Intent intent = new Intent(this, IndividualReviewActivity.class);
