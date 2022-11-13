@@ -34,25 +34,18 @@ public class FavoritesServiceLogic {
 
         Log.d("in add fav", "HERE");
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newFavoriteObject, new Response.Listener<JSONObject>() {
-            public void onResponse(String response){
-                Log.d("fav service logic", "response.toString()");
-                if (response != null) {
-                    r.onSuccess("success");
-                } else {
-                    r.onError("Null response object received");
-                }
-            }
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("fav service logic", "response.toString()");
-                if (response != null) {
-                    r.onSuccess("success");
-                } else {
-                    r.onError("Null response object received");
-                }
-            }
-        },
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newFavoriteObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("fav service logic", "response.toString()");
+                        if (response != null) {
+                            r.onSuccess(response.toString());
+                        } else {
+                            r.onError("Null response object received");
+                        }
+                    }
+                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -64,14 +57,14 @@ public class FavoritesServiceLogic {
 
     }
 
-    public void getFavoritesByUser(int uid, getBusinessesResponse r){
+    public void getFavoritesByUser(int uid, getBusinessesResponse r) {
         String url = Const.GET_FAVORITES_BY_USER_URL + String.valueOf(uid);
         ArrayList<BusinessListCardModel> favoriteBusinesses = new ArrayList<>();
         HashMap<Integer, Integer> newFidToBid = new HashMap<Integer, Integer>();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
-            for (int i = 0; i < response.length(); i++){
-                try{
+            for (int i = 0; i < response.length(); i++) {
+                try {
                     Log.d("favs", "in try");
                     //get each business
                     BusinessListCardModel newFavorite;
@@ -83,6 +76,7 @@ public class FavoritesServiceLogic {
                     int busId = business.getInt("busId");
                     String busName = business.getString("busName");
                     String busType = business.getString("busType");
+                    String phoneNum = business.getString("phoneNum");
                     String photoUrl = business.getString("photoUrl");
                     String hours = business.getString("hours");
                     String location = business.getString("location");
@@ -92,7 +86,7 @@ public class FavoritesServiceLogic {
                     int reviewSum = business.getInt("reviewSum");
                     int reviewCount = business.getInt("reviewCount");
 
-                    newFavorite = new BusinessListCardModel(busId, busName, busType, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount);
+                    newFavorite = new BusinessListCardModel(busId, busName, busType, phoneNum, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount);
 
                     Log.d("favs", busName);
                     favoriteBusinesses.add(newFavorite);
@@ -100,7 +94,7 @@ public class FavoritesServiceLogic {
                     newFidToBid.put(row.getInt("fid"), business.getInt("busId"));
 
 
-                } catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

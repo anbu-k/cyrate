@@ -125,8 +125,6 @@ public class LoginTabFragment extends Fragment {
                     }
                 });
 
-                Intent i = new Intent(getActivity(), WelcomeToCyRateActivity.class);
-
                 Intent i;
                 if (MainActivity.globalUser.getUserType() == UserType.BASIC_USER) {
                     i = new Intent(getActivity(), WelcomeToCyRateActivity.class);

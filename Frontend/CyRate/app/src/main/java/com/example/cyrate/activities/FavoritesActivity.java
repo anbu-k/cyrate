@@ -23,7 +23,8 @@ import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
-import com.example.cyrate.models.RecyclerViewInterface;
+import com.example.cyrate.models.BusinessRecyclerViewInterface;
+import com.example.cyrate.models.ReviewRecyclerViewInterface;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -31,7 +32,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritesActivity extends AppCompatActivity implements RecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
+public class FavoritesActivity extends AppCompatActivity implements BusinessRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     FavoritesServiceLogic favoritesServiceLogic;
     BusinessListAdapter busListAdapter;
@@ -123,7 +124,7 @@ public class FavoritesActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     // onClick for each card in the list
-    public void onItemClick(int position) {
+    public void onBusinessClick(int position) {
         Intent intent = new Intent(this, IndividualBusinessActivity.class);
 
         intent.putExtra("NAME", businessListCardModel.get(position).getBusName());
@@ -196,10 +197,8 @@ public class FavoritesActivity extends AppCompatActivity implements RecyclerView
             //guest cannot log out
             navMenu.findItem(R.id.nav_logout).setVisible(false);
 
-            //guest cannot see their profile
-            navMenu.findItem(R.id.nav_profile).setVisible(false);
-
             //guest CAN sign in
+            navMenu.findItem(R.id.nav_sign_in).setVisible(false);
 
         }
     }
