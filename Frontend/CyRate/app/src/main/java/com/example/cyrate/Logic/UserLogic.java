@@ -34,6 +34,10 @@ import java.util.List;
 
 public class UserLogic {
 
+    /**
+     * make a request to the server to get all users.
+     * @param r
+     */
     public static void getAllUsers(getAllUsersResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         List<UserModel> userModelList = new ArrayList<>();
@@ -97,6 +101,12 @@ public class UserLogic {
 
     }
 
+    /**
+     * converts a JSON user object, converts to and returns a UserModel
+     * @param user
+     * @return
+     * @throws JSONException
+     */
     private UserModel convertToUserModel(JSONObject user) throws JSONException {
         UserModel newUserModel = new UserModel(user.get("email").toString(), user.get("userPass").toString());
         newUserModel.setUsername(user.get("username").toString());
@@ -110,6 +120,11 @@ public class UserLogic {
         return newUserModel;
     }
 
+    /**
+     * returns the corresponding UserType enum to go with the string used in DB
+     * @param jsonType user type string from DB
+     * @return
+     */
     private UserType convertUserType(String jsonType){
         switch (jsonType){
             case "guest":
@@ -170,6 +185,10 @@ public class UserLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * gets a list of all user emails and passwords, adds to a hashmap
+     * @param r
+     */
     public void getAllEmailPassword(getEmailPasswordResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         HashMap<String, String> emailPasswordMap = new HashMap<>();
@@ -202,6 +221,10 @@ public class UserLogic {
 
     }
 
+    /**
+     * gets all usernames from DB
+     * @param r getUsernamesResponse object
+     */
     public void getAllUsernames(getUsernamesResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         HashSet<String> usernameMap = new HashSet<>();
@@ -230,6 +253,10 @@ public class UserLogic {
 
     }
 
+    /**
+     * gets all user phone numbers from DB
+     * @param r getUsernamesResponse object
+     */
     public void getAllPhoneNumbers(getUsernamesResponse r) {
         String url = Const.GET_ALL_USERS_URL;
         HashSet<String> phoneNumberSet = new HashSet<>();
@@ -258,6 +285,19 @@ public class UserLogic {
 
     }
 
+    /**
+     * edit's user with user-id id with all info passed in
+     * @param id user's user-id
+     * @param username user username
+     * @param email user's email
+     * @param password user's password
+     * @param name user's name
+     * @param dob user date of birth
+     * @param photo user's profile pic url
+     * @param phoneNum user's phone numer
+     * @param r editProfileResponse object
+     * @throws JSONException
+     */
     public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, editProfileResponse r) throws JSONException {
         String url = Const.EDIT_USER_URL + String.valueOf(id);
 
