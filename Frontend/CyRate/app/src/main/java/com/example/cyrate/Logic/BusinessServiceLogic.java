@@ -87,6 +87,14 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to GET an individual business
+     * by a businessId.
+     *
+     * @param busId
+     * @param r
+     * @throws JSONException
+     */
     public void getBusinessesById(int busId, getBusinessByIDResponse r) throws JSONException {
         String url = Const.GET_BUSINESS_BY_ID_URL + String.valueOf(busId);
         final BusinessListCardModel[] businessListCardModel = new BusinessListCardModel[1];
@@ -127,7 +135,7 @@ public class BusinessServiceLogic {
 
 
     /**
-     * Adds a business to the DB
+     * Adds a business to the DB with the given parameters.
      *
      * @param busName
      * @param busType
@@ -181,6 +189,13 @@ public class BusinessServiceLogic {
 
     }
 
+    /**
+     * Makes a request to the server to DELETE a business given a businessId
+     *
+     * @param r
+     * @param businessId
+     * @throws JSONException
+     */
     public void deleteBusiness(businessStringResponse r, int businessId) throws JSONException {
         String url = Const.DELETE_BUSINESS_URL + String.valueOf(businessId);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
@@ -201,6 +216,20 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to PUT / update the fields of a business
+     * with the given parameters.
+     *
+     * @param businessId
+     * @param busName
+     * @param busType
+     * @param busHours
+     * @param busLocation
+     * @param priceGauge
+     * @param photoUrl
+     * @param r
+     * @throws JSONException
+     */
     public void editBusiness(int businessId, String busName, String busType,
                              String busHours, String busLocation, String priceGauge, String photoUrl, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_BUSINESS_URL + String.valueOf(businessId);
@@ -255,6 +284,16 @@ public class BusinessServiceLogic {
         });
     }
 
+    /**
+     * Makes a request to the server and updates a Business' Rating and Total Review count
+     * by first fetching the business, and then performing the update.
+     *
+     * @param busId
+     * @param ratingUpdate
+     * @param reviewCountUpdate
+     * @param r
+     * @throws JSONException
+     */
     public void editRatingAndReviewCount(int busId, int ratingUpdate, int reviewCountUpdate, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_BUSINESS_URL + String.valueOf(busId);
 
@@ -310,6 +349,14 @@ public class BusinessServiceLogic {
 
     }
 
+    /**
+     * Makes a request to the server to GET all the Posts made by a Business given
+     * a businessId.
+     *
+     * @param busID
+     * @param r
+     * @throws JSONException
+     */
     public void getBusinessPostsByID(int busID, getBusinessPostsByID r) throws JSONException {
         List<BusinessPostCardModel> businessPostList = new ArrayList<>();
         String url = Const.GET_BUSINESS_POSTS_BY_ID + String.valueOf(busID);
@@ -365,6 +412,16 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to POST a new Business Post given a businessId and
+     * the required Post information.
+     *
+     * @param busId
+     * @param postTxt
+     * @param photoUrl
+     * @param r
+     * @throws JSONException
+     */
     public void addPost(int busId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
         String url = Const.CREATE_POST + String.valueOf(busId);
 
@@ -412,6 +469,13 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to delete a specific Business Post given a PostID.
+     *
+     * @param postId
+     * @param r
+     * @throws JSONException
+     */
     public void deleteBusinessPost(int postId, businessStringResponse r) throws JSONException {
         String url = Const.DELETE_POST + String.valueOf(postId);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
@@ -432,6 +496,16 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to edit a specific Business Post given a PostID,
+     * and the updated fields.
+     *
+     * @param postId
+     * @param postTxt
+     * @param photoUrl
+     * @param r
+     * @throws JSONException
+     */
     public void editPost(int postId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_POST + String.valueOf(postId);
 

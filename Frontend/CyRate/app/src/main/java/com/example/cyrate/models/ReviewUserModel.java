@@ -6,6 +6,15 @@ public class ReviewUserModel {
     private String username;
     private String photoUrl;
 
+    /**
+     * Model class to hold only the required User info needed for Reviews.
+     * Prevents unnecessary data from being passed.
+     *
+     * @param userId
+     * @param fullName
+     * @param username
+     * @param photoUrl
+     */
     public ReviewUserModel(int userId, String fullName, String username, String photoUrl) {
         this.userId = userId;
         this.fullName = fullName;
