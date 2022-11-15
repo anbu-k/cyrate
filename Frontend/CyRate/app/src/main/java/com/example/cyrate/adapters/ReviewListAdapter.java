@@ -17,12 +17,22 @@ import com.example.cyrate.models.ReviewListCardModel;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter to populate the RecyclerView for a list of Reviews, either for
+ * a specific business or a user's personal reviews.
+ */
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
     private final ReviewRecyclerViewInterface recyclerViewInterface;
 
     Context ctx;
     ArrayList<ReviewListCardModel> reviewListCardModels;
 
+    /**
+     *
+     * @param ctx
+     * @param reviewListCardModels
+     * @param recyclerViewInterface
+     */
     public ReviewListAdapter(
             Context ctx,
             ArrayList<ReviewListCardModel> reviewListCardModels,

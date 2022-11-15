@@ -39,12 +39,22 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter used to populate the RecyclerView for the list of Posts by a
+ * specific business
+ */
 public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapter.MyViewHolder> {
 
     Context ctx;
     ArrayList<BusinessPostCardModel> businessPostList;
     Bundle extras;
 
+    /**
+     *
+     * @param ctx
+     * @param businessPostList
+     * @param extras
+     */
     public BusinessFeedAdapter(
             Context ctx,
             ArrayList<BusinessPostCardModel> businessPostList,
