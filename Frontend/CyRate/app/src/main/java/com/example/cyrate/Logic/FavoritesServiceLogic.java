@@ -76,7 +76,7 @@ public class FavoritesServiceLogic {
                     int busId = business.getInt("busId");
                     String busName = business.getString("busName");
                     String busType = business.getString("busType");
-                    String phoneNum = business.getString("phoneNum");
+                    String phoneNum = business.getString("phone");
                     String photoUrl = business.getString("photoUrl");
                     String hours = business.getString("hours");
                     String location = business.getString("location");

@@ -164,6 +164,7 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
         switch(menuItem.getItemId()){
             case R.id.nav_restaurants:
                 i = new Intent(FavoritesActivity.this, BusinessListActivity.class);
+                startActivity(i);
                 break;
             case R.id.nav_addBusiness:
                 i = new Intent(FavoritesActivity.this, AddBusinessActivity.class);
@@ -177,8 +178,7 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
                 i = new Intent(FavoritesActivity.this, LoginActivity.class);
                 startActivity(i);
             case R.id.nav_favorites:
-                i = new Intent(FavoritesActivity.this, FavoritesActivity.class);
-                startActivity(i);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
