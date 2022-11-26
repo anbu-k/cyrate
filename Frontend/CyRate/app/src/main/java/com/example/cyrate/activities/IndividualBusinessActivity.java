@@ -85,6 +85,10 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                         public void onSuccess(String s) {
                             Toast.makeText(IndividualBusinessActivity.this, "Added to favorites!", Toast.LENGTH_LONG).show();
                             Log.d("add fav", "in on success");
+
+                            //change color of star
+                            //we need some way to make the star yellow if it's already in the user's favorites
+//                            favoriteBtn.setImageDrawable(R.drawable.star_filled);
                         }
 
                         @Override
