@@ -31,6 +31,7 @@ public class Const {
 
     public static final String ADD_FAVORITE_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/";
     public static final String GET_FAVORITES_BY_USER_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/user/";
+    public static final String DELETE_FAVORITE_BY_ID_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/delete/";
 
 
 

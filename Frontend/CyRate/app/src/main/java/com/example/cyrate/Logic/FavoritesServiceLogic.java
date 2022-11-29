@@ -105,4 +105,21 @@ public class FavoritesServiceLogic {
 
         AppController.getInstance().addToRequestQueue(arrayRequest);
     }
+
+    public void deleteFavorite(businessStringResponse r, int businessId) throws JSONException {
+        String url = Const.DELETE_FAVORITE_BY_ID_URL + String.valueOf(businessId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("Removed from Favorites");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError(error.toString());
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
 }

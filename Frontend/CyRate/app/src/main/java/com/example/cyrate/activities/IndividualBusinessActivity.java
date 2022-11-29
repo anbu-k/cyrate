@@ -145,6 +145,13 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                else{
+                    //remove from favorites
+
+                    //turn the star back
+
+                    //set to false
+                }
             }
         });
 
