@@ -101,6 +101,15 @@ public class IndividualReviewActivity extends AppCompatActivity {
             }
         });
 
+        commentIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualReviewActivity.this, CommentThreadActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
 
 
         previousActivity = extras.getString("PREVIOUS_ACTIVITY");

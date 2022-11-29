@@ -47,6 +47,11 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
         holder.commentText.setText(commentListCardModels.get(position).getCommentBody());
         holder.date.setText(String.valueOf(commentListCardModels.get(position).getDate()));
 
+        // If this is the last comment in the thread, remove the gray thread bar
+        if(position == commentListCardModels.size() - 1){
+            holder.threadBar.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
@@ -59,6 +64,7 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
 
         ImageView profilePic;
         TextView commenterName, commentText, date;
+        View threadBar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +73,7 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
             commenterName = itemView.findViewById(R.id.commentThread_name);
             commentText = itemView.findViewById(R.id.commentThread_bodyText);
             date = itemView.findViewById(R.id.commentThread_date);
+            threadBar = itemView.findViewById(R.id.threadBar);
 
 
         }

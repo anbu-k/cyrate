@@ -27,7 +27,7 @@ public class CommentThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_thread);
 
-        recyclerView.findViewById(R.id.commentThread_recyclerView);
+        recyclerView = findViewById(R.id.commentThread_recyclerView);
 
         setupCommentModels();
 
