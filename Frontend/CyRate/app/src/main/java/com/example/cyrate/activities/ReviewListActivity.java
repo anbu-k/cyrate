@@ -58,7 +58,7 @@ public class ReviewListActivity extends AppCompatActivity implements ReviewRecyc
         noReviewTxt = findViewById(R.id.noReviewsText);
 
         // Guest users should not be able to add a review
-        if (MainActivity.globalUser.getEmail().equals("guest-user-email")) {
+        if (MainActivity.globalUser.getUserType() == UserType.GUEST) {
             addReview_btn.setVisibility(View.GONE);
         }
 
