@@ -16,13 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.models.BusinessListCardModel;
 
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IndividualBusinessActivity extends AppCompatActivity {
@@ -34,6 +39,8 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     int busId;
     BusinessServiceLogic businessServiceLogic;
     FavoritesServiceLogic favoritesServiceLogic;
+
+    boolean isFavorite;
 
     Bundle extras;
     @Override
@@ -76,31 +83,67 @@ public class IndividualBusinessActivity extends AppCompatActivity {
 
         favoritesServiceLogic = new FavoritesServiceLogic();
 
+        ArrayList<Integer> favBusinesses = new ArrayList<>();
+        //collect all favorites in a list
+        favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
+            @Override
+            public void onSuccess(List<BusinessListCardModel> list) {
+                Log.d("favorites", String.valueOf(busId));
+                for (int i = 0; i < list.size(); i++){
+                    favBusinesses.add(Integer.valueOf(list.get(i).getBusId()));
+                    Log.d("favs list", String.valueOf(Integer.valueOf(list.get(i).getBusId())));
+                }
+
+                //if this business is a fav make the star yellow
+                if (favBusinesses.contains(busId)){
+                    isFavorite = true;
+                    favoriteBtn.setImageResource(R.drawable.star_filled);
+                }
+                else {
+                    isFavorite = false;
+                }
+                Log.d("isFavs", String.valueOf(isFavorite));
+
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("IndBusAct", s);
+            }
+        });
+
+        if (isFavorite){
+            favoriteBtn.setImageResource(R.drawable.star_filled);
+        }
+
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    favoritesServiceLogic.addFavorite(MainActivity.globalUser.getUserId(), busId, new businessStringResponse() {
-                        @Override
-                        public void onSuccess(String s) {
-                            Toast.makeText(IndividualBusinessActivity.this, "Added to favorites!", Toast.LENGTH_LONG).show();
-                            Log.d("add fav", "in on success");
+                if (!isFavorite) {
+                    try {
+                        favoritesServiceLogic.addFavorite(MainActivity.globalUser.getUserId(), busId, new businessStringResponse() {
+                            @Override
+                            public void onSuccess(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this, "Added to favorites!", Toast.LENGTH_LONG).show();
+                                Log.d("add fav", "in on success");
 
-                            //change color of star
-                            //we need some way to make the star yellow if it's already in the user's favorites
-//                            favoriteBtn.setImageDrawable(R.drawable.star_filled);
-                        }
+                                //change color of star
+                                favoriteBtn.setImageResource(R.drawable.star_filled);
 
-                        @Override
-                        public void onError(String s) {
-                            Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
-                            Log.d("add fav", "in on error");
-                            Log.d("add fav", s);
+                                isFavorite = true;
+                            }
 
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                            @Override
+                            public void onError(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                                Log.d("add fav", "in on error");
+                                Log.d("add fav", s);
+
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
