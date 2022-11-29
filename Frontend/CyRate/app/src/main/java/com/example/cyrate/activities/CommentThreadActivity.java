@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -42,6 +43,8 @@ public class CommentThreadActivity extends AppCompatActivity {
     ImageView back_btn;
     Bundle extras;
 
+    Handler handler;
+
     WebSocketClient websocket;
     String SERVER_PATH = "wss://ws.postman-echo.com/raw/";
 
@@ -54,6 +57,8 @@ public class CommentThreadActivity extends AppCompatActivity {
         sendBtn = findViewById(R.id.commentThread_sendBtn);
         comment_et = findViewById(R.id.commentThread_editText);
         back_btn = findViewById(R.id.commentThread_backBtn);
+
+        handler = new Handler();
 
 
         try {
@@ -82,10 +87,9 @@ public class CommentThreadActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(comment_et.getText().toString().isEmpty()){
+                if (comment_et.getText().toString().isEmpty()) {
                     Toast.makeText(CommentThreadActivity.this, "Write out your comment!", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
                     JSONObject obj = new JSONObject();
 
                     try {
@@ -96,6 +100,8 @@ public class CommentThreadActivity extends AppCompatActivity {
 
                         websocket.send(obj.toString());
                         commentThreadAdapter.addItem(obj);
+                        recyclerView.smoothScrollToPosition(commentThreadAdapter.getItemCount() - 1);
+
                         // Empty the Edit Text
                         comment_et.setText("");
                     } catch (JSONException e) {
@@ -128,6 +134,19 @@ public class CommentThreadActivity extends AppCompatActivity {
                     try {
                         JSONObject obj = new JSONObject(message);
                         commentThreadAdapter.addItem(obj);
+                        recyclerView.smoothScrollToPosition(commentThreadAdapter.getItemCount() - 1);
+
+//
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                View view = recyclerView.getLayoutManager().findViewByPosition(commentThreadAdapter.getItemCount() - 1);
+                                if (view != null) {
+                                    view.findViewById(R.id.threadBar).setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }, 350);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -148,8 +167,8 @@ public class CommentThreadActivity extends AppCompatActivity {
         websocket.connect();
     }
 
-    private void setupCommentModels(){
-        for(int i = 0; i < 8; i++){
+    private void setupCommentModels() {
+        for (int i = 0; i < 8; i++) {
             CommentThreadCardModel model = new CommentThreadCardModel(
                     "John Doe",
                     "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
