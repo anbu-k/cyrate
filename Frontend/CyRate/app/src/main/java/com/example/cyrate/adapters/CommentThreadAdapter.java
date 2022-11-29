@@ -14,6 +14,9 @@ import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.R;
 import com.example.cyrate.models.CommentThreadCardModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdapter.MyViewHolder>{
@@ -76,6 +79,22 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
             threadBar = itemView.findViewById(R.id.threadBar);
 
 
+        }
+    }
+
+    public void addItem(JSONObject obj){
+        try {
+            CommentThreadCardModel commentModel = new CommentThreadCardModel(
+                    obj.getString("commenterName"),
+                    obj.getString("photoUrl"),
+                    obj.getString("commentBody"),
+                    obj.getString("date")
+            );
+
+            commentListCardModels.add(commentModel);
+            notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

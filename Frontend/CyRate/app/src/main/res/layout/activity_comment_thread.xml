@@ -45,10 +45,37 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintHeight_percent=".89"
+        app:layout_constraintHeight_percent=".77"
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    
+    <EditText
+        android:id="@+id/commentThread_editText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textSize="16dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Comment..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/commentThread_sendBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/commentThread_sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/commentThread_editText"
+        android:textColor="@color/red"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
