@@ -36,7 +36,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     ImageView back_btn, busImage, delete_btn, edit_btn, favoriteBtn;
     TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
-    int busId;
+    int busId, fid;
     BusinessServiceLogic businessServiceLogic;
     FavoritesServiceLogic favoritesServiceLogic;
 
@@ -83,27 +83,21 @@ public class IndividualBusinessActivity extends AppCompatActivity {
 
         favoritesServiceLogic = new FavoritesServiceLogic();
 
-        ArrayList<Integer> favBusinesses = new ArrayList<>();
-        //collect all favorites in a list
         favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
-                Log.d("favorites", String.valueOf(busId));
+                //see if this business is in the current user's favorites. if it is, set boolean to true and make the star yellow
+                isFavorite = false;
+                fid = -1;
                 for (int i = 0; i < list.size(); i++){
-                    favBusinesses.add(Integer.valueOf(list.get(i).getBusId()));
-                    Log.d("favs list", String.valueOf(Integer.valueOf(list.get(i).getBusId())));
+                    if (Integer.valueOf(list.get(i).getBusId()) == busId){
+                        isFavorite = true;
+                        fid = Integer.valueOf(list.get(i).getFid());
+                        Log.d("fid", String.valueOf(fid));
+                        favoriteBtn.setImageResource(R.drawable.star_filled);
+                        break;
+                    }
                 }
-
-                //if this business is a fav make the star yellow
-                if (favBusinesses.contains(busId)){
-                    isFavorite = true;
-                    favoriteBtn.setImageResource(R.drawable.star_filled);
-                }
-                else {
-                    isFavorite = false;
-                }
-                Log.d("isFavs", String.valueOf(isFavorite));
-
             }
 
             @Override
@@ -111,10 +105,6 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                 Log.d("IndBusAct", s);
             }
         });
-
-        if (isFavorite){
-            favoriteBtn.setImageResource(R.drawable.star_filled);
-        }
 
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +119,6 @@ public class IndividualBusinessActivity extends AppCompatActivity {
 
                                 //change color of star
                                 favoriteBtn.setImageResource(R.drawable.star_filled);
-
                                 isFavorite = true;
                             }
 
@@ -147,10 +136,28 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                 }
                 else{
                     //remove from favorites
+                    try {
+                        favoritesServiceLogic.deleteFavorite(new businessStringResponse() {
+                            @Override
+                            public void onSuccess(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this,
+                                        "Successfully Deleted " + busNameString, Toast.LENGTH_LONG).show();
 
-                    //turn the star back
+                                //turn the star back
+                                favoriteBtn.setImageResource(R.drawable.star_outline);
+                                //set to false
+                                isFavorite = false;
+                            }
 
-                    //set to false
+                            @Override
+                            public void onError(String s) {
+                                Log.d("Delete Favorite Error", s);
+                                Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                            }
+                        }, fid);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

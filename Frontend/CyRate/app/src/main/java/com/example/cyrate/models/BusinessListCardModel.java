@@ -17,9 +17,12 @@ public class BusinessListCardModel {
     private int reviewSum;
     private int reviewCount;
 
+    //-------favorites stuff--------//
+    private int fid;
+
     public BusinessListCardModel(int busId, String busName, String busType, String phoneNumber, String photoUrl,
                                  String hours, String location, int ownerId, String menuLink,
-                                 String priceGauge, int reviewSum, int reviewCount) {
+                                 String priceGauge, int reviewSum, int reviewCount, int fid) {
         this.busId = busId;
         this.busName = busName;
         this.busType = busType;
@@ -36,6 +39,10 @@ public class BusinessListCardModel {
 
     public int getBusId() {
         return busId;
+    }
+
+    public int getFid(){
+        return fid;
     }
 
     public void setBusId(int busId) {

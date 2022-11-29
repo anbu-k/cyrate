@@ -66,6 +66,7 @@ public class FavoritesServiceLogic {
             for (int i = 0; i < response.length(); i++) {
                 try {
                     Log.d("favs", "in try");
+                    Log.d("favs obj", response.get(i).toString());
                     //get each business
                     BusinessListCardModel newFavorite;
                     JSONObject row = (JSONObject) response.get(i);
@@ -73,6 +74,8 @@ public class FavoritesServiceLogic {
                     Log.d("favs", business.toString());
                     Log.d("favs", "busId: " + business.getInt("busId") + "   /   " + business.getString("busId"));
 
+                    int fid = row.getInt("fid");
+                    Log.d("fid", String.valueOf(fid));
                     int busId = business.getInt("busId");
                     String busName = business.getString("busName");
                     String busType = business.getString("busType");
@@ -86,7 +89,7 @@ public class FavoritesServiceLogic {
                     int reviewSum = business.getInt("reviewSum");
                     int reviewCount = business.getInt("reviewCount");
 
-                    newFavorite = new BusinessListCardModel(busId, busName, busType, phoneNum, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount);
+                    newFavorite = new BusinessListCardModel(busId, busName, busType, phoneNum, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount, fid);
 
                     Log.d("favs", busName);
                     favoriteBusinesses.add(newFavorite);
