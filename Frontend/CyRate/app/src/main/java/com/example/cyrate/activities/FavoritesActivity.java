@@ -186,6 +186,7 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
                 startActivity(i);
             case R.id.nav_home:
                 i = new Intent(FavoritesActivity.this, WelcomeToCyRateActivity.class);
+                startActivity(i);
 
             case R.id.nav_favorites:
                 break;
