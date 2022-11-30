@@ -161,17 +161,22 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Intent i;
+
         switch(menuItem.getItemId()){
             case R.id.nav_restaurants:
                 i = new Intent(FavoritesActivity.this, BusinessListActivity.class);
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
+
                 startActivity(i);
                 break;
             case R.id.nav_addBusiness:
                 i = new Intent(FavoritesActivity.this, AddBusinessActivity.class);
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
                 startActivity(i);
                 break;
             case R.id.nav_edit_profile:
                 i = new Intent(FavoritesActivity.this, EditProfileActivity.class);
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
                 startActivity(i);
                 break;
             case R.id.nav_logout:

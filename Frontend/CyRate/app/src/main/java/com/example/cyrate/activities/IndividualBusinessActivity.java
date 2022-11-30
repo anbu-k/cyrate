@@ -292,6 +292,9 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         else if (prevActivity.equals("WelcomeToCyrateActivity")){
             intent = new Intent(this, WelcomeToCyRateActivity.class);
         }
+        else if (prevActivity.equals("FavoritesActivity")){
+            intent = new Intent(this, FavoritesActivity.class);
+        }
         else {
             intent = new Intent(this, BusinessListActivity.class);
         }
