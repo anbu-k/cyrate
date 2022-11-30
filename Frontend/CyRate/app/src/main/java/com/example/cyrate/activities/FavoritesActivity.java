@@ -135,6 +135,8 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
         intent.putExtra("IMAGE", businessListCardModel.get(position).getPhotoUrl());
         intent.putExtra("PRICE_GAUGE", businessListCardModel.get(position).getPriceGauge());
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
+        intent.putExtra("PREVIOUS_ACTIVITY", "FavoritesActivity");
+
 
         startActivity(intent);
     }
@@ -165,18 +167,18 @@ public class FavoritesActivity extends AppCompatActivity implements BusinessRecy
         switch(menuItem.getItemId()){
             case R.id.nav_restaurants:
                 i = new Intent(FavoritesActivity.this, BusinessListActivity.class);
-                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesActivity");
 
                 startActivity(i);
                 break;
             case R.id.nav_addBusiness:
                 i = new Intent(FavoritesActivity.this, AddBusinessActivity.class);
-                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesActivity");
                 startActivity(i);
                 break;
             case R.id.nav_edit_profile:
                 i = new Intent(FavoritesActivity.this, EditProfileActivity.class);
-                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesListActivity");
+                i.putExtra("PREVIOUS_ACTIVITY", "FavoritesActivity");
                 startActivity(i);
                 break;
             case R.id.nav_logout:

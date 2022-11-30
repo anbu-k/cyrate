@@ -286,6 +286,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     private void navigateBack() {
         Intent intent;
         String prevActivity = extras.getString("PREVIOUS_ACTIVITY");
+        Log.d("prev activity", prevActivity);
         if (prevActivity == null){
             intent = new Intent(this, BusinessListActivity.class);
         }
