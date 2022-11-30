@@ -93,11 +93,13 @@ public class IndividualBusinessActivity extends AppCompatActivity {
                     if (Integer.valueOf(list.get(i).getBusId()) == busId){
                         isFavorite = true;
                         fid = Integer.valueOf(list.get(i).getFid());
+                        Log.d("****************", "busId: " + String.valueOf(busId) + "  fav busId: " + list.get(i).getBusId());
                         Log.d("fid", String.valueOf(fid));
                         favoriteBtn.setImageResource(R.drawable.star_filled);
                         break;
                     }
                 }
+                Log.d("fid2", String.valueOf(fid));
             }
 
             @Override

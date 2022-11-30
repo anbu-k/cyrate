@@ -35,6 +35,7 @@ public class BusinessListCardModel {
         this.priceGauge = priceGauge;
         this.reviewSum = reviewSum;
         this.reviewCount = reviewCount;
+        this.fid = fid;
     }
 
     public int getBusId() {
