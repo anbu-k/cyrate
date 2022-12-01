@@ -156,7 +156,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
             @Override
             public void onClick(View v) {
                 //FUTURE: navigate to favorites list
-                Intent i = new Intent(WelcomeToCyRateActivity.this, BusinessListActivity.class);
+                Intent i = new Intent(WelcomeToCyRateActivity.this, FavoritesActivity.class);
                 startActivity(i);
             }
         });
