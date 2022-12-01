@@ -21,18 +21,27 @@ import org.springframework.stereotype.Controller;
 
 import com.example.cy_rate.Business.Business;
 import com.example.cy_rate.Business.BusinessRepository;
+import com.example.cy_rate.Review.ReviewRepository;
 import com.example.cy_rate.User.User;
 import com.example.cy_rate.User.UserRepository;
+import com.example.cy_rate.BusinessPosts.Post;
+import com.example.cy_rate.BusinessPosts.PostRepository;
+import com.example.cy_rate.Review.Review;
 
 @Controller
-@ServerEndpoint(value = "/comments/{uid}/{bid}")
-public class CommentSocket {
+@ServerEndpoint(value = "/comments/{type}/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
+public class CommentSocket {                           //"/comments/businessPost/post id/uid that is connecting/commenting"
     @Autowired
     private BusinessRepository busRepo;
     
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private ReviewRepository reviewRepo;
+
+    @Autowired 
+    private PostRepository postRepo;
 
     // Think you have to use method b/c of static
     private static CommentRepository commentRepo;
@@ -49,17 +58,22 @@ public class CommentSocket {
     private final Logger logger = LoggerFactory.getLogger(CommentSocket.class);
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("uid") int uid, @PathParam("bid") int bid)
+    public void onOpen(Session session, @PathParam("id") int id, @PathParam("uid") int uid, @PathParam("type") String type)
     throws IOException {
         logger.info("Entered into open ?");
-        
         User usr = userRepo.findById(uid);
-        Business bus = busRepo.findById(bid);
+ 
+        /**
+         * "Review" (1)
+         *      "comment" (1)
+         *      "comment" (2)
+         * 
+         */
+        //Business bus = review.getBusiness();
 
         sessionUsernameMap.put(session, usr.getUsername());
         usernameSessionMap.put(usr.getUsername(), session);
 
-   
         sendMessageToParticularUser(usr.getUsername(), getAllComments());
 
         String message = "User:" + usr.getUsername() + "connected to live comments";
@@ -69,25 +83,25 @@ public class CommentSocket {
     }
 
     @OnMessage
-	public void onMessage(Session session, String message) throws IOException {
+	public void onMessage(Session session, String message, @PathParam("type") String type, @PathParam("id") int id) throws IOException {
 
 		// Handle new messages
 		logger.info("Entered into Message: Got Message:" + message);
+
+        if(type.equals("review"))
+        {
+            Review review = reviewRepo.findById(id);
+        }
+        else
+        {
+            Post post = postRepo.findById(id);
+        }
         
 		String username = sessionUsernameMap.get(session);
+        
 
-    // Direct message to a user using the format "@username <message>"
-		if (message.startsWith("@")) {
-			String destUsername = message.split(" ")[0].substring(1); 
+		//broadcast(username + ": " + message);
 
-      // send the message to the sender and receiver
-			//sendMessageToParticularUser(destUsername, "[DM] " + username + ": " + message);
-			//sendMessageToParticularUser(username, "[DM] " + username + ": " + message);
-
-		} 
-    else { // broadcast
-			//broadcast(username + ": " + message);
-		}
 
 		// Saving chat history to repository
 		// commentRepo.save();

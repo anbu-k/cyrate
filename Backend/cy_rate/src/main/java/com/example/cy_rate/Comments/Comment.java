@@ -53,7 +53,7 @@ public class Comment {
         this.photoUrl = "";
         this.commentBody = "";
         this.date = "";
-        this.commenterName = user.getRealName();
+        this.commenterName = "";
     }
 
     public Comment(String photoUrl, String commentBody, String date)
@@ -61,7 +61,6 @@ public class Comment {
         this.photoUrl = photoUrl;
         this.commentBody = commentBody;
         this.date = date;
-        this.commenterName = user.getRealName();
     }
 
     //------------ Getter Setters ------------------ //
