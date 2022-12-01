@@ -17,8 +17,6 @@ import android.widget.Toast;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.CommentThreadAdapter;
 import com.example.cyrate.models.CommentThreadCardModel;
-import com.example.cyrate.models.ReviewListCardModel;
-import com.google.firebase.database.tubesock.WebSocket;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
