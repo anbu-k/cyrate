@@ -9,11 +9,20 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class used to download an image given a URL through an HTTP
+ * request. The downloaded bitmap image populates the given ImageView.
+ */
 public class ImageLoaderTask extends AsyncTask<Void, Void, Bitmap> {
 
     private String url;
     private ImageView imageView;
 
+    /**
+     *
+     * @param url
+     * @param imageView
+     */
     public ImageLoaderTask(String url, ImageView imageView) {
         this.url = url;
         this.imageView = imageView;

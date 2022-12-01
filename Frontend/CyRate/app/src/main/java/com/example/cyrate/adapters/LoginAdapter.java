@@ -10,6 +10,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.cyrate.LoginTabFragment;
 import com.example.cyrate.SignUpTabFragment;
 
+/**
+ * Adapter used to handle the Tab Navigation between
+ * the Login Fragment and the Sign Up Fragment inside
+ * the Login Activity.
+ */
 public class LoginAdapter extends FragmentPagerAdapter {
     final Context ctx;
     int totalTabs;

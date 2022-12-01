@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter to populate the RecyclerView for a list of Businesses.
+ */
 public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.MyViewHolder> {
     private final BusinessRecyclerViewInterface recyclerViewInterface;
     Context ctx;

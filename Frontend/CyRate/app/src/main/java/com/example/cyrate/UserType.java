@@ -1,6 +1,10 @@
 package com.example.cyrate;
 
 
+/**
+ * Enums used to determine the classification of
+ * a User type
+ */
 public enum UserType {
     GUEST,              //guest
     BASIC_USER,         //normal

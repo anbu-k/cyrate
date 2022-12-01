@@ -39,12 +39,22 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter used to populate the RecyclerView for the list of Posts by a
+ * specific business
+ */
 public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapter.MyViewHolder> {
 
     Context ctx;
     ArrayList<BusinessPostCardModel> businessPostList;
     Bundle extras;
 
+    /**
+     *
+     * @param ctx
+     * @param businessPostList
+     * @param extras
+     */
     public BusinessFeedAdapter(
             Context ctx,
             ArrayList<BusinessPostCardModel> businessPostList,
@@ -99,6 +109,8 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
             // Remove the delete icon if the current User is not the original reviewer or not an Admin
             deleteIcon.setVisibility(View.GONE);
+            editIcon.setVisibility(View.GONE);
+
 
             // Update the thumbsUpIcon and CommentIcon position since we removed the deleteIcon
             ConstraintLayout cl = (ConstraintLayout) itemView.findViewById(R.id.busCard_constraintLayout);
@@ -111,11 +123,12 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
             if (MainActivity.globalUser.getUserType() == UserType.ADMIN) {
 
-                cs.setHorizontalBias(R.id.busPost_thumbsUp, (float) 0.3);
-                cs.setHorizontalBias(R.id.busPost_comment, (float) 0.5);
+                cs.setHorizontalBias(R.id.busPost_thumbsUp, (float) 0.2);
+                cs.setHorizontalBias(R.id.busPost_comment, (float) 0.4);
                 cs.applyTo(cl);
 
                 deleteIcon.setVisibility(View.VISIBLE);
+                editIcon.setVisibility(View.VISIBLE);
             }
 
             editIcon.setOnClickListener(new View.OnClickListener() {

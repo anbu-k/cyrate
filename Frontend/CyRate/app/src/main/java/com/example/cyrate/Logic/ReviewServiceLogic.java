@@ -31,6 +31,13 @@ import java.util.List;
 
 public class ReviewServiceLogic {
 
+    /**
+     * Makes a request to the server to GET a list of all reviews for a
+     * specific business.
+     *
+     * @param busId
+     * @param r
+     */
     public void getReviews(int busId, getReviewsResponse r) {
         List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
         String url = Const.GET_REVIEWS_BY_BUS_ID + String.valueOf(busId);
@@ -80,7 +87,11 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-
+    /**
+     * Makes a request to the server to GET all the reviews made by a specific User.
+     * @param uid
+     * @param r
+     */
     public void getReviewsByUser(int uid, getReviewsResponse r) {
         List<ReviewListCardModel> reviewModelsList = new ArrayList<>();
         String url = Const.GET_REVIEWS_BY_USER_ID + String.valueOf(uid);
@@ -130,9 +141,17 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-
-
-
+    /**
+     * Makes a request to the server to POST a new review by a User to a specific Business.
+     *
+     * @param busId
+     * @param userId
+     * @param reviewTxt
+     * @param reviewHeading
+     * @param ratingVal
+     * @param r
+     * @throws JSONException
+     */
     public void addReview(int busId, int userId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
         String url = "http://coms-309-020.class.las.iastate.edu:8080/review/" + String.valueOf(busId) + "/user/" + String.valueOf(userId) + "/createReview";
 
@@ -175,6 +194,13 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * Makes a request to the server to DELETE a specific review.
+     *
+     * @param reviewId
+     * @param r
+     * @throws JSONException
+     */
     public void deleteReview(int reviewId, reviewStringResponse r) throws JSONException {
         String url = Const.DELETE_REVIEW_BY_ID + String.valueOf(reviewId);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
@@ -195,8 +221,16 @@ public class ReviewServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
-
-
+    /**
+     * Makes a request to the server to update a specific Review given the updated fields.
+     *
+     * @param reviewId
+     * @param reviewTxt
+     * @param reviewHeading
+     * @param ratingVal
+     * @param r
+     * @throws JSONException
+     */
     public void editReview(int reviewId, String reviewTxt, String reviewHeading, int ratingVal, reviewStringResponse r) throws JSONException {
         String url = Const.EDIT_REVIEW_BY_ID + String.valueOf(reviewId);
 

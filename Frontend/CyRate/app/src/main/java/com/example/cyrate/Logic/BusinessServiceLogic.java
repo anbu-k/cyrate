@@ -92,7 +92,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to get a business by id
+     * Makes a request to the server to GET an individual business
+     * by a businessId.
+     *
      * @param busId
      * @param r
      * @throws JSONException
@@ -141,7 +143,7 @@ public class BusinessServiceLogic {
 
 
     /**
-     * Adds a business to the DB
+     * Adds a business to the DB with the given parameters.
      *
      * @param busName
      * @param busType
@@ -196,7 +198,8 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to delete a business with id businessId
+     * Makes a request to the server to DELETE a business given a businessId
+     *
      * @param r
      * @param businessId
      * @throws JSONException
@@ -222,7 +225,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to edit the business with id businessId with the data passed in
+     * Makes a request to the server to PUT / update the fields of a business
+     * with the given parameters.
+     *
      * @param businessId
      * @param busName
      * @param busType
@@ -288,8 +293,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to edit the rating and review count of the business
-     * with id busId with the rating ratingUpdate and review count reviewCountUpdate
+     * Makes a request to the server and updates a Business' Rating and Total Review count
+     * by first fetching the business, and then performing the update.
+     *
      * @param busId
      * @param ratingUpdate
      * @param reviewCountUpdate
@@ -352,7 +358,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to get the business posts for the business with id busID
+     * Makes a request to the server to GET all the Posts made by a Business given
+     * a businessId.
+     *
      * @param busID
      * @param r
      * @throws JSONException
@@ -417,7 +425,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to add a business post with the info passed in
+     * Makes a request to the server to POST a new Business Post given a businessId and
+     * the required Post information.
+     *
      * @param busId
      * @param postTxt
      * @param photoUrl
@@ -472,7 +482,8 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request ot the server to delete the business post wiht post is postId
+     * Makes a request to the server to delete a specific Business Post given a PostID.
+     *
      * @param postId
      * @param r
      * @throws JSONException
@@ -498,7 +509,9 @@ public class BusinessServiceLogic {
     }
 
     /**
-     * makes a request to the server to edit the business post with post is postId
+     * Makes a request to the server to edit a specific Business Post given a PostID,
+     * and the updated fields.
+     *
      * @param postId
      * @param postTxt
      * @param photoUrl

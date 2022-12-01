@@ -20,6 +20,22 @@ public class BusinessListCardModel {
     //-------favorites stuff--------//
     private int fid;
 
+    /**
+     *
+     * @param busId
+     * @param busName
+     * @param busType
+     * @param phoneNumber
+     * @param photoUrl
+     * @param hours
+     * @param location
+     * @param ownerId
+     * @param menuLink
+     * @param priceGauge
+     * @param reviewSum
+     * @param reviewCount
+     * @param fid
+     */
     public BusinessListCardModel(int busId, String busName, String busType, String phoneNumber, String photoUrl,
                                  String hours, String location, int ownerId, String menuLink,
                                  String priceGauge, int reviewSum, int reviewCount, int fid) {
@@ -38,66 +54,130 @@ public class BusinessListCardModel {
         this.fid = fid;
     }
 
+    /**
+     *
+     * @return Business ID
+     */
     public int getBusId() {
         return busId;
     }
 
+    /**
+     *
+     * @return Favorite ID
+     */
     public int getFid(){
         return fid;
     }
 
+    /**
+     *
+     * @param busId
+     */
     public void setBusId(int busId) {
         this.busId = busId;
     }
 
+    /**
+     *
+     * @return Business Name
+     */
     public String getBusName() {
         return busName;
     }
 
+    /**
+     *
+     * @param busName
+     */
     public void setBusName(String busName) {
         this.busName = busName;
     }
 
+    /**
+     *
+     * @return Business Type
+     */
     public String getBusType() {
         return busType;
     }
 
+    /**
+     *
+     * @param busType
+     */
     public void setBusType(String busType) {
         this.busType = busType;
     }
 
+    /**
+     *
+     * @return Business Phone Number
+     */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     *
+     * @param phoneNumber
+     */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     *
+     * @return Business Profile Picture Url
+     */
     public String getPhotoUrl() {
         return photoUrl;
     }
 
+    /**
+     *
+     * @param photoUrl
+     */
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
+    /**
+     *
+     * @return Business Hours
+     */
     public String getHours() {
         return hours;
     }
 
+    /**
+     *
+     * @param hours
+     */
     public void setHours(String hours) {
         this.hours = hours;
     }
 
+    /**
+     *
+     * @return Business Location
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     *
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     *
+     * @return Business Owner (User) ID
+     */
     public int getOwnerId() {
         return ownerId;
     }

@@ -15,6 +15,10 @@ import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
 
 public class NavMenuUtils {
+    /**
+     * Utility for hiding menu items based on user authentication class level
+     * @param navMenu
+     */
     public static void hideMenuItems(Menu navMenu){
         //set visibility of all menu items every time in case users log out and log back in?
             // A guest user should not be able to edit the guest user profile

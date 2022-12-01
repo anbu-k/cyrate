@@ -35,7 +35,7 @@ import java.util.List;
 public class UserLogic {
 
     /**
-     * make a request to the server to get all users.
+     * Makes a request to the server to GET a list of all Users.
      * @param r
      */
     public static void getAllUsers(getAllUsersResponse r) {
@@ -139,8 +139,16 @@ public class UserLogic {
     }
 
     /**
-     * Makes a request to the server to post a new user
-     * given some basic user info.
+     * Makes a request to the server to POST a new created User.
+     *
+     * @param r
+     * @param userType
+     * @param email
+     * @param password
+     * @param username
+     * @param phoneNum
+     * @param dateOfBirth
+     * @throws JSONException
      */
     public void addUser(addUserResponse r, String userType, String email, String password,
                         String username, String phoneNum, String dateOfBirth) throws JSONException {
@@ -186,7 +194,8 @@ public class UserLogic {
     }
 
     /**
-     * gets a list of all user emails and passwords, adds to a hashmap
+     * Makes a request to the server to GET a HashMap of Email : Password keyValue
+     * pairs used for login authentication.
      * @param r
      */
     public void getAllEmailPassword(getEmailPasswordResponse r) {
@@ -222,8 +231,8 @@ public class UserLogic {
     }
 
     /**
-     * gets all usernames from DB
-     * @param r getUsernamesResponse object
+     * Makes a request to the server to GET a HashSet of all Usernames.
+     * @param r
      */
     public void getAllUsernames(getUsernamesResponse r) {
         String url = Const.GET_ALL_USERS_URL;
@@ -254,8 +263,8 @@ public class UserLogic {
     }
 
     /**
-     * gets all user phone numbers from DB
-     * @param r getUsernamesResponse object
+     * Makes a request to the server to get a HashSet of all Phone Numbers.
+     * @param r
      */
     public void getAllPhoneNumbers(getUsernamesResponse r) {
         String url = Const.GET_ALL_USERS_URL;
@@ -286,16 +295,17 @@ public class UserLogic {
     }
 
     /**
-     * edit's user with user-id id with all info passed in
-     * @param id user's user-id
-     * @param username user username
-     * @param email user's email
-     * @param password user's password
-     * @param name user's name
-     * @param dob user date of birth
-     * @param photo user's profile pic url
-     * @param phoneNum user's phone numer
-     * @param r editProfileResponse object
+     * Makes a request to the server to update a specific user's fields given the updates.
+     *
+     * @param id
+     * @param username
+     * @param email
+     * @param password
+     * @param name
+     * @param dob
+     * @param photo
+     * @param phoneNum
+     * @param r
      * @throws JSONException
      */
     public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, editProfileResponse r) throws JSONException {
