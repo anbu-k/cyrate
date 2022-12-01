@@ -68,6 +68,33 @@ public class CommentSocket {
         //sessionUsernameMap.put(session);
     }
 
+    @OnMessage
+	public void onMessage(Session session, String message) throws IOException {
+
+		// Handle new messages
+		logger.info("Entered into Message: Got Message:" + message);
+        
+		String username = sessionUsernameMap.get(session);
+
+    // Direct message to a user using the format "@username <message>"
+		if (message.startsWith("@")) {
+			String destUsername = message.split(" ")[0].substring(1); 
+
+      // send the message to the sender and receiver
+			//sendMessageToParticularUser(destUsername, "[DM] " + username + ": " + message);
+			//sendMessageToParticularUser(username, "[DM] " + username + ": " + message);
+
+		} 
+    else { // broadcast
+			//broadcast(username + ": " + message);
+		}
+
+		// Saving chat history to repository
+		// commentRepo.save();
+	}
+
+
+
     private void sendMessageToParticularUser(String username, List<Comment> comments) {
 		try {
             for(Comment comment : comments){
