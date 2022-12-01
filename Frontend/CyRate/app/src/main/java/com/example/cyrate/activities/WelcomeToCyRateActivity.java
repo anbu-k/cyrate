@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyrate.ImageLoaderTask;
 import com.example.cyrate.Logic.BusinessServiceLogic;
+import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.Logic.ReviewInterfaces.getReviewsResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.NavMenuUtils;
@@ -49,7 +50,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
     NavigationView navView;
     ImageView open_menu;
 
-    BusinessServiceLogic businessServiceLogic;
+    FavoritesServiceLogic favoritesServiceLogic;
 
     RecyclerView favoritesRecycler;
 
@@ -111,7 +112,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
         favoritesRecycler = findViewById(R.id.favorites_recycler);
         favoritesLayoutManager = new LinearLayoutManager(this);
 
-        businessServiceLogic = new BusinessServiceLogic();
+        favoritesServiceLogic = new FavoritesServiceLogic();
         busListAdapter = new BusinessListAdapter(this,
                 businessListCardModel, this);
 
@@ -174,7 +175,7 @@ public class WelcomeToCyRateActivity extends AppCompatActivity implements Review
      * @throws JSONException
      */
     private void setFavorites() throws JSONException {
-        businessServiceLogic.getBusinesses(new getBusinessesResponse() {
+        favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
                 for (int i = 0; i < list.size(); i++) {

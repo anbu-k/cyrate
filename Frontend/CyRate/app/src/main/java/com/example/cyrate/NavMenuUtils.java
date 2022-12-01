@@ -99,9 +99,6 @@ public class NavMenuUtils {
                 context.startActivity(i);
                 break;
             case R.id.nav_sign_in:
-                i = new Intent(context, LoginActivity.class);
-                context.startActivity(i);
-                break;
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
