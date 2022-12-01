@@ -1,18 +1,12 @@
 package com.example.cy_rate.Comments;
 import com.example.cy_rate.Business.Business;
-import com.example.cy_rate.Business.BusinessRepository;
 import com.example.cy_rate.User.User;
-import com.example.cy_rate.User.UserRepository;
 import io.swagger.v3.oas.annotations.Hidden;
 
 // JPA stuff
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 import javax.persistence.GeneratedValue;
@@ -21,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Comments")
@@ -33,27 +26,42 @@ public class Comment {
     @Column(name="cid")
     private int cid;
 
+    private String commenterName;
+
     @Column
-    private String photoURL;
+    private String photoUrl;
 
     @Column
     private String commentBody;
 
     @Column
-    private String datePosted;
+    private String date;
+
+    @Hidden
+    @ManyToOne
+    @JoinColumn(name = "bid", referencedColumnName = "busId")
+    private Business business;
+
+    @Hidden
+    @ManyToOne 
+    @JoinColumn(name = "uid", referencedColumnName = "userId")
+    private User user;
+
 
 
     public Comment() {
-        this.photoURL = "";
+        this.photoUrl = "";
         this.commentBody = "";
-        this.datePosted = "";
+        this.date = "";
+        this.commenterName = user.getRealName();
     }
 
-    public Comment(String photoURL, String commentBody, String datePosted)
+    public Comment(String photoUrl, String commentBody, String date)
     {
-        this.photoURL = photoURL;
+        this.photoUrl = photoUrl;
         this.commentBody = commentBody;
-        this.datePosted = datePosted;
+        this.date = date;
+        this.commenterName = user.getRealName();
     }
 
     //------------ Getter Setters ------------------ //
@@ -68,23 +76,54 @@ public class Comment {
         this.cid = cid;
     }
 
-    public String getPhotoURL()
+    public String getphotoUrl()
     {
-        return photoURL;
+        return photoUrl;
     }
 
-    public void setPhotoURL(String photoURL)
+    public void setphotoUrl(String photoUrl)
     {
-        this.photoURL = photoURL;
+        this.photoUrl = photoUrl;
     }
 
-    public String getDatePosted()
+    public String getdate()
     {
-        return datePosted;
+        return date;
     }
 
-    public void setDatePosted(String datePosted)
+    public void setdate(String date)
     {
-        this.datePosted = datePosted;
+        this.date = date;
     }
+
+    public Business getBusiness()
+    {
+        return business;
+    }
+
+    public void setBusiness(Business bus)
+    {
+        this.business = bus;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
+    public String getCommenterName()
+    {
+        return commenterName;
+    }
+
+    public void setCommenterName(String commenterName)
+    {
+        this.commenterName = commenterName;
+    }
+
 }
