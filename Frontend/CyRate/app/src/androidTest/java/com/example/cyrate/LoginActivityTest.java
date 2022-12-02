@@ -29,10 +29,13 @@ import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.LoginActivity;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,24 +49,35 @@ public class LoginActivityTest {
     @Rule   // needed to launch the activity
     public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<>(LoginActivity.class);
 
+    @Before
+    public void setUp() {
+        Intents.init();
+    }
+
+    @After
+    public void tearDown(){
+        Intents.release();
+    }
+
     @Test
     public void guestButtonNavigatesToRestaurantActivity(){
+        activityRule.launchActivity(new Intent());
 
         // Wait for buttons to animate in
         onView(isRoot()).perform(waitFor(2000));
 
         onView(withId(R.id.btn_use_as_guest)).perform(click());
         onView(isRoot()).perform(waitFor(200));
-        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+
+        // Verify we navigate to the next activity
+        intended(hasComponent(BusinessListActivity.class.getName()));
     }
 
     @Test
     public void loginClickWithEmptyFields(){
         final String expectedToastString = "Email is incorrect";
 
-        Intents.init();
         activityRule.launchActivity(new Intent());
-
 
         // Wait for buttons to animate in
         onView(isRoot()).perform(waitFor(2000));
@@ -75,8 +89,6 @@ public class LoginActivityTest {
 
         intended(hasComponent(LoginActivity.class.getName()));
 
-        // Tear down stuff, only needed for this test
-        Intents.release();
     }
 
     // Allows us to set a delay in case we need to wait for a view to animate or appear on screen
