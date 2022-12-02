@@ -28,28 +28,48 @@ import com.example.cy_rate.BusinessPosts.Post;
 import com.example.cy_rate.BusinessPosts.PostRepository;
 import com.example.cy_rate.Review.Review;
 
+import com.google.gson.Gson;
+
+
 @Controller
-@ServerEndpoint(value = "/comments/{type}/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
+@ServerEndpoint(value = "/comments/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
 public class CommentSocket {                           //"/comments/businessPost/post id/uid that is connecting/commenting"
-    @Autowired
-    private BusinessRepository busRepo;
+    private static BusinessRepository busRepo;
     
-    @Autowired
-    private UserRepository userRepo;
+    private static UserRepository userRepo;
 
-    @Autowired
-    private ReviewRepository reviewRepo;
+    private static ReviewRepository reviewRepo;
 
-    @Autowired 
-    private PostRepository postRepo;
+    private static PostRepository postRepo;
+
+    private User usr;
+    private Business business;
 
     // Think you have to use method b/c of static
     private static CommentRepository commentRepo;
 
     @Autowired
+    public void setUserRepository(UserRepository repo)
+    {
+        userRepo = repo;
+    }
+
+    @Autowired
+    public void setReviewRepository(ReviewRepository repo)
+    {
+        reviewRepo = repo;
+    }
+
+    @Autowired
     public void setCommentRepository(CommentRepository repo)
     {
         commentRepo = repo;
+    }
+
+    @Autowired
+    public void setPostRepository(PostRepository repo)
+    {
+        postRepo = repo;
     }
 
     private static Map< Session, String > sessionUsernameMap = new Hashtable<>();
@@ -61,7 +81,7 @@ public class CommentSocket {                           //"/comments/businessPost
     public void onOpen(Session session, @PathParam("id") int id, @PathParam("uid") int uid, @PathParam("type") String type)
     throws IOException {
         logger.info("Entered into open ?");
-        User usr = userRepo.findById(uid);
+        usr = userRepo.findById(uid);
  
         /**
          * "Review" (1)
@@ -83,47 +103,61 @@ public class CommentSocket {                           //"/comments/businessPost
     }
 
     @OnMessage
-	public void onMessage(Session session, String message, @PathParam("type") String type, @PathParam("id") int id) throws IOException {
-
+	public void onMessage(Session session, String message, @PathParam("id") int id) throws IOException {
+        // handle type
 		// Handle new messages
 		logger.info("Entered into Message: Got Message:" + message);
-
-        if(type.equals("review"))
+        
+        // message is the request body sent to the websocket
+        // parse the string into a json object
+        // check type and set review/busPost accordingly
+        Gson gson = new Gson();
+        Comment comment = gson.fromJson(message, Comment.class);
+        if(comment.getCommentType().equals("review"))
         {
             Review review = reviewRepo.findById(id);
+            if(review == null)
+            {
+             //send review not found message   
+            }
+            comment.setReview(review);
         }
-        else
+        else if(comment.getCommentType().equals("busPost"))
         {
             Post post = postRepo.findById(id);
+            if(post == null)
+            {
+            //send post not found message
+            }
+            comment.setPost(post);
         }
         
 		String username = sessionUsernameMap.get(session);
-        
-
 		//broadcast(username + ": " + message);
 
-
 		// Saving chat history to repository
-		// commentRepo.save();
+        comment.setUser(usr); //set user as well
+		commentRepo.save(comment);
 	}
 
 
 
     private void sendMessageToParticularUser(String username, List<Comment> comments) {
 		try {
+            Gson gson = new Gson();
             for(Comment comment : comments){
-                usernameSessionMap.get(username).getBasicRemote().sendObject(comment);
+                usernameSessionMap.get(username).getBasicRemote().sendText(gson.toJson(comment));
             }
 		} 
         catch (IOException e) {
 			logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
 		}
-        catch(EncodeException s)
-        {
-            logger.info("Exception: " + s.getMessage().toString());
-			s.printStackTrace();
-        }
+        // catch(EncodeException s)
+        // {
+        //     logger.info("Exception: " + s.getMessage().toString());
+		// 	s.printStackTrace();
+        // }
 	}
 
     private List<Comment> getAllComments()

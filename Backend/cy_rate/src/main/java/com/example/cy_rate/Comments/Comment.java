@@ -1,5 +1,7 @@
 package com.example.cy_rate.Comments;
 import com.example.cy_rate.Business.Business;
+import com.example.cy_rate.BusinessPosts.Post;
+import com.example.cy_rate.Review.Review;
 import com.example.cy_rate.User.User;
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 @Entity
 @Table(name = "Comments")
@@ -29,6 +32,9 @@ public class Comment {
     private String commenterName;
 
     @Column
+    private String commentType;
+
+    @Column
     private String photoUrl;
 
     @Column
@@ -37,10 +43,20 @@ public class Comment {
     @Column
     private String date;
 
+    // @Hidden
+    // @ManyToOne
+    // @JoinColumn(name = "bid", referencedColumnName = "busId")
+    // private Business business;
+
     @Hidden
     @ManyToOne
-    @JoinColumn(name = "bid", referencedColumnName = "busId")
-    private Business business;
+    @JoinColumn(name = "pid", referencedColumnName = "pid")
+    private Post post;
+
+    @Hidden
+    @ManyToOne
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
+    private Review review;
 
     @Hidden
     @ManyToOne 
@@ -56,11 +72,12 @@ public class Comment {
         this.commenterName = "";
     }
 
-    public Comment(String photoUrl, String commentBody, String date)
+    public Comment(String photoUrl, String commentBody, String date, String commentType)
     {
         this.photoUrl = photoUrl;
         this.commentBody = commentBody;
         this.date = date;
+        this.commentType = commentType;
     }
 
     //------------ Getter Setters ------------------ //
@@ -95,15 +112,26 @@ public class Comment {
         this.date = date;
     }
 
-    public Business getBusiness()
+    // public Business getBusiness()
+    // {
+    //     return business;
+    // }
+
+    // public void setBusiness(Business bus)
+    // {
+    //     this.business = bus;
+    // }
+    
+    public Post getPost()
     {
-        return business;
+        return post;
     }
 
-    public void setBusiness(Business bus)
+    public void setPost(Post post)
     {
-        this.business = bus;
+        this.post = post;
     }
+
 
     public User getUser()
     {
@@ -124,5 +152,26 @@ public class Comment {
     {
         this.commenterName = commenterName;
     }
+
+    public String getCommentType()
+    {
+        return commentType;
+    }
+
+    public void setCommentType(String commentType)
+    {
+        this.commentType = commentType;
+    }
+
+    public Review getReview()
+    {
+        return review;
+    }
+
+    public void setReview(Review review)
+    {
+        this.review = review;
+    }
+
 
 }
