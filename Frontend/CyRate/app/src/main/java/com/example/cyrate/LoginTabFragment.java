@@ -21,6 +21,8 @@ import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.UserModel;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 
+import java.util.HashMap;
+
 public class LoginTabFragment extends Fragment {
 
     EditText email, password;
@@ -66,7 +68,10 @@ public class LoginTabFragment extends Fragment {
                 //get email and password
                 userEmail = email.getText().toString();
                 userPassword = password.getText().toString();
-                //get user by email
+
+                if(IntroActivity.emailPasswordMap == null){
+                    IntroActivity.emailPasswordMap = new HashMap<>();
+                }
 
                 String expectedPassword = IntroActivity.emailPasswordMap.get(userEmail);
 
