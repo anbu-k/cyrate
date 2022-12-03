@@ -95,7 +95,7 @@ public class CommentSocket {                           //"/comments/businessPost
         
         // see if post/review exists
         // if doesn't exist close the session
-        // remove session from maps
+        // remove session from maps so we don't broadcast to a disconnected user
         if(!checkPostExists(type, id)){
             session.close();
             sessionUsernameMap.remove(session);
@@ -134,8 +134,8 @@ public class CommentSocket {                           //"/comments/businessPost
         
 		// Saving chat history to repository
         comment.setUser(usr); //set user as well
+        commentRepo.save(comment);
         broadcast(comment);
-		commentRepo.save(comment);
 	}
 
 
