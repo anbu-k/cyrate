@@ -33,6 +33,11 @@ import com.google.gson.Gson;
 
 import ch.qos.logback.core.joran.conditional.ElseAction;
 
+/**
+ * Sample Tester
+ * ws://localhost:8080/comments/businessPost/5/7
+ * {"commenterName": "Anbu Krishnan", "commentType": "businessPost", "photoUrl": "google.images.com", "commentBody": "comment 8:15", "date":"12/2/2022"}
+ */
 
 @Controller
 @ServerEndpoint(value = "/comments/{type}/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
@@ -85,24 +90,24 @@ public class CommentSocket {                           //"/comments/businessPost
     throws IOException {
         logger.info("Entered into open ?");
         usr = userRepo.findById(uid);
- 
-        /**
-         * "Review" (1)
-         *      "comment" (1)
-         *      "comment" (2)
-         * 
-         */
-        //Business bus = review.getBusiness();
-
         sessionUsernameMap.put(session, usr.getUsername());
         usernameSessionMap.put(usr.getUsername(), session);
+        
+        // see if post/review exists
+        // if doesn't exist close the session
+        // remove session from maps
+        if(!checkPostExists(type, id)){
+            session.close();
+            sessionUsernameMap.remove(session);
+            usernameSessionMap.remove(usr.getUsername());
+        }
+ 
+        
 
         sendMessageToParticularUser(usr.getUsername(), getAllComments(type, id));
 
-        String message = "User:" + usr.getUsername() + "connected to live comments";
-        //broadcast(message);
-
-        //sessionUsernameMap.put(session);
+        //String message = "User:" + usr.getUsername() + "connected to live comments";
+        //broadcast();
     }
 
     @OnMessage
@@ -119,27 +124,17 @@ public class CommentSocket {                           //"/comments/businessPost
         if(comment.getCommentType().equals("review"))
         {
             Review review = reviewRepo.findById(id);
-            if(review == null)
-            {
-             //send review not found message   
-            }
             comment.setReview(review);
         }
-        else if(comment.getCommentType().equals("busPost"))
+        else if(comment.getCommentType().equals("businessPost"))
         {
             Post post = postRepo.findById(id);
-            if(post == null)
-            {
-            //send post not found message
-            }
             comment.setPost(post);
         }
         
-		String username = sessionUsernameMap.get(session);
-		//broadcast(username + ": " + message);
-
 		// Saving chat history to repository
         comment.setUser(usr); //set user as well
+        broadcast(comment);
 		commentRepo.save(comment);
 	}
 
@@ -156,11 +151,6 @@ public class CommentSocket {                           //"/comments/businessPost
 			logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
 		}
-        // catch(EncodeException s)
-        // {
-        //     logger.info("Exception: " + s.getMessage().toString());
-		// 	s.printStackTrace();
-        // }
 	}
 
     private List<Comment> getAllComments(String type, int id)
@@ -183,19 +173,49 @@ public class CommentSocket {                           //"/comments/businessPost
 
     private void broadcast(Comment comment)
     {
+
         sessionUsernameMap.forEach((session, username) -> {
             try {
-                session.getBasicRemote().sendObject(comment);
+                Gson gson = new Gson();
+                if(!usr.getUsername().equals(username)){
+                    usernameSessionMap.get(username).getBasicRemote().sendText(gson.toJson(comment));
+                }
             }
             catch (IOException e) {
                 logger.info("Exception: " + e.getMessage().toString());
                 e.printStackTrace();
             }
-            catch(EncodeException s)
-            {
-                logger.info("Exception: " + s.getMessage().toString());
-                s.printStackTrace();
-            }
         });
+    }
+
+    private boolean checkPostExists(String type, int id)
+    {
+        try{
+            if(type.equals("review"))
+            {
+                Review review = reviewRepo.findById(id);
+                if(review == null)
+                {
+                    usernameSessionMap.get(usr.getUsername()).getBasicRemote().sendText("Reiew with ID: " + id + " not found");
+                    return false;
+                }
+            }
+            else if(type.equals("businessPost"))
+            {
+                Post post = postRepo.findById(id);
+                if(post == null)
+                {
+                    usernameSessionMap.get(usr.getUsername()).getBasicRemote().sendText("Business Post with ID: " + id + " not found");
+                    return false;
+                }
+            }
+            //post exists
+            return true;
+        }
+        catch (IOException e) {
+            logger.info("Exception: " + e.getMessage().toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 }
