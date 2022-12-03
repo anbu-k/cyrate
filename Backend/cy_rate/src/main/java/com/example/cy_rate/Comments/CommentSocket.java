@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
-import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -20,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.example.cy_rate.Business.Business;
-import com.example.cy_rate.Business.BusinessRepository;
 import com.example.cy_rate.Review.ReviewRepository;
 import com.example.cy_rate.User.User;
 import com.example.cy_rate.User.UserRepository;
@@ -31,18 +28,20 @@ import com.example.cy_rate.Review.Review;
 
 import com.google.gson.Gson;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 /**
- * Sample Tester
+ * Sample Tester for postman
  * ws://localhost:8080/comments/businessPost/5/7
  * {"commenterName": "Anbu Krishnan", "commentType": "businessPost", "photoUrl": "google.images.com", "commentBody": "comment 8:15", "date":"12/2/2022"}
  */
 
+ /**
+  * Websocket controller for Comment type, Handles connection, close, messages, & errors
+  * Also stores recieved messages using a CommentRepository
+  */
 @Controller
 @ServerEndpoint(value = "/comments/{type}/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
 public class CommentSocket {                           //"/comments/businessPost/post id/uid that is connecting/commenting"
-    private static BusinessRepository busRepo;
     
     private static UserRepository userRepo;
 
@@ -50,12 +49,11 @@ public class CommentSocket {                           //"/comments/businessPost
 
     private static PostRepository postRepo;
 
-    private User usr;
-    private Business business;
-
-    // Think you have to use method b/c of static
     private static CommentRepository commentRepo;
 
+    private User usr; //global user that is connected to websocket
+
+    // auto wire all repositories used
     @Autowired
     public void setUserRepository(UserRepository repo)
     {
@@ -80,15 +78,29 @@ public class CommentSocket {                           //"/comments/businessPost
         postRepo = repo;
     }
 
+    // Maps for storing connected users by their sesison and username
     private static Map< Session, String > sessionUsernameMap = new Hashtable<>();
     private static Map< String, Session > usernameSessionMap = new Hashtable<>();
 
     private final Logger logger = LoggerFactory.getLogger(CommentSocket.class);
 
+    /**
+     * Handles connection to websocket, Adds user and session to maps
+     * Verifies post/review exists, removes user and session from maps and disconnects if doesn't
+     * 
+     * Then calls sendMessageToParticularUser to return them the chat history pertaining the 
+     * post they are connected to
+     * 
+     * @param session Websocket session
+     * @param id Post/Review id
+     * @param uid User id that is connected to websocket
+     * @param type "review"/"businessPost" type of comment
+     * @throws IOException
+     */
     @OnOpen
     public void onOpen(Session session, @PathParam("id") int id, @PathParam("uid") int uid, @PathParam("type") String type)
     throws IOException {
-        logger.info("Entered into open ?");
+        logger.info("Entered into open");
         usr = userRepo.findById(uid);
         sessionUsernameMap.put(session, usr.getUsername());
         usernameSessionMap.put(usr.getUsername(), session);
@@ -101,20 +113,26 @@ public class CommentSocket {                           //"/comments/businessPost
             sessionUsernameMap.remove(session);
             usernameSessionMap.remove(usr.getUsername());
         }
- 
-        
-
+        // return chat history to newly connected user
         sendMessageToParticularUser(usr.getUsername(), getAllComments(type, id));
-
-        //String message = "User:" + usr.getUsername() + "connected to live comments";
-        //broadcast();
     }
 
+    /**
+     * Handles incoming message from websocket
+     * 
+     * Parses message using Gson
+     * Creates Comment and sets the review/post it is connected to
+     * Saves to commentRepo then broadcast() to all other connected users
+     * 
+     * @param session
+     * @param message
+     * @param id
+     * @throws IOException
+     */
     @OnMessage
 	public void onMessage(Session session, String message, @PathParam("id") int id) throws IOException {
-        // handle type
-		// Handle new messages
-		logger.info("Entered into Message: Got Message:" + message);
+		
+        logger.info("Entered into Message: Got Message:" + message);
         
         // message is the request body sent to the websocket
         // parse the string into a json object
@@ -138,8 +156,90 @@ public class CommentSocket {                           //"/comments/businessPost
         broadcast(comment);
 	}
 
+    /**
+     * Handles closing connection
+     * Removes user and session from global maps
+     * broadcast() discconect to other users
+     * 
+     * @param session websocket session
+     * @throws IOException
+     */
+	@OnClose
+	public void onClose(Session session) throws IOException {
+		logger.info("Entered into Close");
 
+    // remove the user connection information
+		String username = sessionUsernameMap.get(session);
+		sessionUsernameMap.remove(session);
+		usernameSessionMap.remove(username);
 
+    // broadcase that the user disconnected
+		String message = username + " disconnected";
+		broadcast(message);
+	}
+
+    /**
+     * Handles error in websocket
+     * @param session
+     * @param throwable
+     */
+    @OnError
+	public void onError(Session session, Throwable throwable) {
+		logger.info("Entered into Error");
+		throwable.printStackTrace();
+	}
+
+    /**
+     * Parses Comment Object using gson and sends json object to each connected client
+     * Excluding the one that sent it
+     * 
+     * @param comment Comment object to be parsed
+     */
+    private void broadcast(Comment comment)
+    {
+
+        sessionUsernameMap.forEach((session, username) -> {
+            try {
+                Gson gson = new Gson();
+                // if its the user that sent the comment don't send message
+                // to them
+                if(!usr.getUsername().equals(username)){
+                    usernameSessionMap.get(username).getBasicRemote().sendText(gson.toJson(comment));
+                }
+            }
+            catch (IOException e) {
+                logger.info("Exception: " + e.getMessage().toString());
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Sends String message to all connected users, excluding user of this instance
+     * @param text msg to be sent
+     */
+    private void broadcast(String text)
+    {
+        sessionUsernameMap.forEach((session, username) -> {
+            try {
+                if(!usr.getUsername().equals(username)){
+                    usernameSessionMap.get(username).getBasicRemote().sendText(text);
+                }
+            }
+            catch (IOException e) {
+                logger.info("Exception: " + e.getMessage().toString());
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Iterates through list of comments and sends each as a parsed json object using Gson
+     * to a particular user given by username
+     * 
+     * @param username user msg is to be sent to
+     * @param comments list of comment objects
+     */
     private void sendMessageToParticularUser(String username, List<Comment> comments) {
 		try {
             Gson gson = new Gson();
@@ -153,6 +253,13 @@ public class CommentSocket {                           //"/comments/businessPost
 		}
 	}
 
+    /**
+     * Gets all comments pertaining to a certain post/review
+     * 
+     * @param type "businessPost"/"review"
+     * @param id id of post/review
+     * @return comments from post
+     */
     private List<Comment> getAllComments(String type, int id)
     {
         if(type.equals("review"))
@@ -171,23 +278,14 @@ public class CommentSocket {                           //"/comments/businessPost
         }
     }
 
-    private void broadcast(Comment comment)
-    {
-
-        sessionUsernameMap.forEach((session, username) -> {
-            try {
-                Gson gson = new Gson();
-                if(!usr.getUsername().equals(username)){
-                    usernameSessionMap.get(username).getBasicRemote().sendText(gson.toJson(comment));
-                }
-            }
-            catch (IOException e) {
-                logger.info("Exception: " + e.getMessage().toString());
-                e.printStackTrace();
-            }
-        });
-    }
-
+    
+    /**
+     * Checks repos for post/review given by type and id
+     * 
+     * @param type "review"/"businessPost"
+     * @param id id of post/review
+     * @return True if exists, false if not exists
+     */
     private boolean checkPostExists(String type, int id)
     {
         try{
