@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
@@ -30,9 +31,11 @@ import com.example.cy_rate.Review.Review;
 
 import com.google.gson.Gson;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 
 @Controller
-@ServerEndpoint(value = "/comments/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
+@ServerEndpoint(value = "/comments/{type}/{id}/{uid}") //"/comments/review/rid of review/uid that is connecting/commenting"
 public class CommentSocket {                           //"/comments/businessPost/post id/uid that is connecting/commenting"
     private static BusinessRepository busRepo;
     
@@ -94,7 +97,7 @@ public class CommentSocket {                           //"/comments/businessPost
         sessionUsernameMap.put(session, usr.getUsername());
         usernameSessionMap.put(usr.getUsername(), session);
 
-        sendMessageToParticularUser(usr.getUsername(), getAllComments());
+        sendMessageToParticularUser(usr.getUsername(), getAllComments(type, id));
 
         String message = "User:" + usr.getUsername() + "connected to live comments";
         //broadcast(message);
@@ -160,9 +163,22 @@ public class CommentSocket {                           //"/comments/businessPost
         // }
 	}
 
-    private List<Comment> getAllComments()
+    private List<Comment> getAllComments(String type, int id)
     {
-        return commentRepo.findAll();
+        if(type.equals("review"))
+        {
+            Review review = reviewRepo.findById(id);
+            return commentRepo.findByReview(review);
+        }
+        else if(type.equals("businessPost"))
+        {
+            Post post = postRepo.findById(id);
+            return commentRepo.findByPost(post);
+        }
+        else
+        {
+            return new ArrayList<Comment>();
+        }
     }
 
     private void broadcast(Comment comment)
