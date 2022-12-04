@@ -68,9 +68,6 @@ public class PostController {
 
             System.out.println("Blob Value" + Arrays.toString(post.getBlobPhoto()));
 
-//            final String blobString = Arrays.toString(post.getBlobPhoto());
-//            post.setBlobPhoto(Base64.decodeBase64(blobString));
-
             postRepo.save(post);
             return success;
         }
