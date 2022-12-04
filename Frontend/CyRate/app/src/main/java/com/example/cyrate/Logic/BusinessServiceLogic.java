@@ -362,7 +362,7 @@ public class BusinessServiceLogic {
      */
     public void getBusinessPostsByID(int busID, getBusinessPostsByID r) throws JSONException {
         List<BusinessPostCardModel> businessPostList = new ArrayList<>();
-        String url = "http://10.0.2.2:8080/posts/" + String.valueOf(busID);
+        String url = Const.GET_BUSINESS_POSTS_BY_ID + String.valueOf(busID);
         Log.d("TEST 1", "IN getBusinessPostsByID");
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
@@ -426,7 +426,7 @@ public class BusinessServiceLogic {
      * @throws JSONException
      */
     public void addPost(int busId, String postTxt, String blobPhoto, businessStringResponse r) throws JSONException {
-        String url = "http://10.0.2.2:8080/posts/create/" + String.valueOf(busId);
+        String url = Const.CREATE_POST + String.valueOf(busId);
 
         Log.d("ADD POST URL", url);
 
