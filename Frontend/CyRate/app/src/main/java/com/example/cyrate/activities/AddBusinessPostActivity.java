@@ -34,7 +34,7 @@ public class AddBusinessPostActivity extends AppCompatActivity {
     Bundle extras;
 
     TextView busName;
-    ImageView busImage, backBtn;
+    ImageView busImage, backBtn, photoVerify;
     Button submitBtn, addPhoto;
     EditText postTxt_et;
 
@@ -53,9 +53,13 @@ public class AddBusinessPostActivity extends AppCompatActivity {
         submitBtn = findViewById(R.id.addPost_submit);
         postTxt_et = findViewById(R.id.addPost_postTxt);
         addPhoto = findViewById(R.id.addPost_photoUrl);
+        photoVerify = findViewById(R.id.addPost_photoCheck);
 
         new ImageLoaderTask(extras.getString("IMAGE"), busImage).execute();
         busName.setText(extras.getString("NAME"));
+
+        // Green check to determine if a User as added a Photo for UX purposes
+        photoVerify.setVisibility(View.INVISIBLE);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +142,12 @@ public class AddBusinessPostActivity extends AppCompatActivity {
             Uri path = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                if(bitmap != null){
+                    photoVerify.setVisibility(View.VISIBLE);
+                }
+                else{
+                    photoVerify.setVisibility(View.INVISIBLE);
+                }
                 Log.d("Bitmap", bitmap.toString());
             } catch (IOException e) {
                 e.printStackTrace();
