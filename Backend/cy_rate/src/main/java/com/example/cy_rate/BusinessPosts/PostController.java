@@ -66,8 +66,6 @@ public class PostController {
             Business b = businessRepo.findById(bid);
             post.setBusiness(b);
 
-            System.out.println("Blob Value" + Arrays.toString(post.getBlobPhoto()));
-
             postRepo.save(post);
             return success;
         }
