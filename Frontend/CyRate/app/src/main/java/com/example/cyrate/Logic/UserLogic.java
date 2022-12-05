@@ -20,6 +20,7 @@ import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
 import com.example.cyrate.Logic.UserInterfaces.getUsernamesResponse;
 import com.example.cyrate.UserType;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.models.UserListCardModel;
 import com.example.cyrate.models.UserModel;
 import com.example.cyrate.net_utils.Const;
 
@@ -40,7 +41,7 @@ public class UserLogic {
      */
     public static void getAllUsers(getAllUsersResponse r) {
         String url = Const.GET_ALL_USERS_URL;
-        List<UserModel> userModelList = new ArrayList<>();
+        List<UserListCardModel> userModelList = new ArrayList<>();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -48,7 +49,21 @@ public class UserLogic {
                 try {
                     //create a list of users
                     JSONObject user = (JSONObject) response.get(0);
-                    UserModel newUser = new UserModel(user.get("email").toString(), user.get("userPass").toString());
+
+                    String email = user.get("email").toString();
+                    int id = user.getInt("userID");
+                    String typeString = user.get("userType").toString();
+                    String password = user.get("userPass").toString();
+                    String fullName = user.get("realName").toString();
+                    String username = user.get("username").toString();
+                    String phone = user.get("phoneNum").toString();
+                    String dob = user.get("dob").toString();
+                    String photoUrl = user.get("photoUrl").toString();
+
+                    UserType userType = UserType.fromString(typeString);
+
+
+                    UserListCardModel newUser = new UserListCardModel(id, userType, email, password, fullName, username, phone, dob, photoUrl);
                     userModelList.add(newUser);
                     r.onSuccess(userModelList);
                 } catch (JSONException e) {

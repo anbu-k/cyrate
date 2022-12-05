@@ -15,6 +15,7 @@ public class UserListCardModel {
 
     public UserListCardModel(int userId, UserType userType, String email, String password, String fullName,
                              String username, String phoneNum, String dob, String photoUrl){
+        this.userId = userId;
         this.userType = UserType.BASIC_USER;
         this.email = email;
         this.password = password;
