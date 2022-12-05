@@ -27,7 +27,10 @@ import com.example.cyrate.models.BusinessListCardModel;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class IndividualBusinessActivity extends AppCompatActivity {
@@ -86,14 +89,16 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
             @Override
             public void onSuccess(List<BusinessListCardModel> list) {
-                //see if this business is in the current user's favorites. if it is, set boolean to true and make the star yellow
                 isFavorite = false;
                 fid = -1;
-                for (int i = 0; i < list.size(); i++){
-                    if (Integer.valueOf(list.get(i).getBusId()) == busId){
+
+                //check for the current business in the list of the user's favorites.
+                //if it is a favorite, treat it as such
+                for (BusinessListCardModel favorite : list){
+                    if (Integer.valueOf(favorite.getBusId()) == busId){
                         isFavorite = true;
-                        fid = Integer.valueOf(list.get(i).getFid());
-                        Log.d("****************", "busId: " + String.valueOf(busId) + "  fav busId: " + list.get(i).getBusId());
+                        fid = Integer.valueOf(favorite.getFid());
+                        Log.d("****************", "busId: " + String.valueOf(busId) + "  fav busId: " + favorite.getBusId());
                         Log.d("fid", String.valueOf(fid));
                         favoriteBtn.setImageResource(R.drawable.star_filled);
                         break;

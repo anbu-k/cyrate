@@ -56,9 +56,6 @@ public class BusinessServiceLogic {
                     // Some priceGauges are null, lets do a check first
                     String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
 
-                    //since we don't need (or have, in this case) favorites info on the business card, use -1
-                    int fid = -1;
-
                     BusinessListCardModel businessListCardModel = new BusinessListCardModel(
                             (int) business.get("busId"),
                             business.get("busName").toString(),
@@ -71,8 +68,7 @@ public class BusinessServiceLogic {
                             business.get("menuLink").toString(),
                             priceGauge,
                             (int) business.get("reviewSum"),
-                            (int) business.get("reviewCount"),
-                            fid
+                            (int) business.get("reviewCount")
                     );
                     businessModelsList.add(businessListCardModel);
 
@@ -107,9 +103,6 @@ public class BusinessServiceLogic {
 
                 String priceGauge = response.get("priceGauge").toString().equals("null") ? "$" : response.get("priceGauge").toString();
 
-                //since we don't need (or have, in this case) favorites info on the business card, use -1
-                int fid = -1;
-
                 businessListCardModel[0] = new BusinessListCardModel(
                         (int) response.get("busId"),
                         response.get("busName").toString(),
@@ -122,8 +115,7 @@ public class BusinessServiceLogic {
                         response.get("menuLink").toString(),
                         priceGauge,
                         (int) response.get("reviewSum"),
-                        (int) response.get("reviewCount"),
-                        fid
+                        (int) response.get("reviewCount")
                 );
 
             } catch (JSONException e) {
@@ -380,9 +372,6 @@ public class BusinessServiceLogic {
                     JSONObject post = (JSONObject) response.get(i);
                     Log.d("JSON OBJ", post.toString());
 
-                    //since we don't need (or have, in this case) favorites info on the business card, use -1
-                    int fid = -1;
-
                     JSONObject busJSON = post.getJSONObject("business");
                     BusinessListCardModel bus = new BusinessListCardModel(
                             busJSON.getInt("busId"),
@@ -396,8 +385,7 @@ public class BusinessServiceLogic {
                             busJSON.getString("menuLink"),
                             busJSON.getString("priceGauge"),
                             busJSON.getInt("reviewSum"),
-                            busJSON.getInt("reviewCount"),
-                            fid
+                            busJSON.getInt("reviewCount")
                     );
 
                     BusinessPostCardModel busPostCardModel = new BusinessPostCardModel(

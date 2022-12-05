@@ -30,8 +30,6 @@ public class FavoritesServiceLogic {
 
         JSONObject newFavoriteObject = new JSONObject();
 
-        newFavoriteObject.put("", "");
-
         Log.d("in add fav", "HERE");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, newFavoriteObject,
@@ -89,7 +87,8 @@ public class FavoritesServiceLogic {
                     int reviewSum = business.getInt("reviewSum");
                     int reviewCount = business.getInt("reviewCount");
 
-                    newFavorite = new BusinessListCardModel(busId, busName, busType, phoneNum, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount, fid);
+                    newFavorite = new BusinessListCardModel(busId, busName, busType, phoneNum, photoUrl, hours, location, ownerId, menuLink, priceGauge, reviewSum, reviewCount);
+                    newFavorite.setFid(fid);
 
                     Log.d("favs", busName);
                     favoriteBusinesses.add(newFavorite);

@@ -34,11 +34,10 @@ public class BusinessListCardModel {
      * @param priceGauge
      * @param reviewSum
      * @param reviewCount
-     * @param fid
      */
     public BusinessListCardModel(int busId, String busName, String busType, String phoneNumber, String photoUrl,
                                  String hours, String location, int ownerId, String menuLink,
-                                 String priceGauge, int reviewSum, int reviewCount, int fid) {
+                                 String priceGauge, int reviewSum, int reviewCount) {
         this.busId = busId;
         this.busName = busName;
         this.busType = busType;
@@ -51,7 +50,7 @@ public class BusinessListCardModel {
         this.priceGauge = priceGauge;
         this.reviewSum = reviewSum;
         this.reviewCount = reviewCount;
-        this.fid = fid;
+        this.fid = -1;
     }
 
     /**
@@ -68,6 +67,14 @@ public class BusinessListCardModel {
      */
     public int getFid(){
         return fid;
+    }
+
+    /**
+     * set favorites id for this business card to fid
+     * @param fid
+     */
+    public void setFid(int fid){
+        this.fid = fid;
     }
 
     /**
