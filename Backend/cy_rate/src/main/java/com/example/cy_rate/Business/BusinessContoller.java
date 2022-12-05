@@ -35,6 +35,8 @@ public class BusinessContoller {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
+    public static final String TRUE_VALUE = "t";
+
 //-------------- GET MAPPING ----------------//
     
     /**
@@ -57,6 +59,24 @@ public class BusinessContoller {
     Business getBusinessById(@PathVariable int id)
     {
         return businessRepo.findById(id);
+    }
+
+    @GetMapping(path = "/business/restaurants")
+    List<Business> getAllRestaurants()
+    {
+        return businessRepo.findAllByIsRestaurant(TRUE_VALUE);
+    }
+
+    @GetMapping(path = "/business/coffee")
+    List<Business> getAllCoffee()
+    {
+        return businessRepo.findAllByIsCoffee(TRUE_VALUE);
+    }
+
+    @GetMapping(path = "/business/bars")
+    List<Business> getAllBars()
+    {
+        return businessRepo.findAllByIsBar(TRUE_VALUE);
     }
 
     
@@ -130,7 +150,7 @@ public class BusinessContoller {
         updateBusiness.setLocation(bus.getLocation());
         updateBusiness.setMenuLink(bus.getMenuLink());
         updateBusiness.setOwnerId(bus.getOwnerId());
-        updateBusiness.setPhotoUrl(bus.getPhotoUrl()); // BUG HERE
+        updateBusiness.setPhotoUrl(bus.getPhotoUrl());
         updateBusiness.setPriceGauge(bus.getPriceGauge());
         updateBusiness.setReviewCount(bus.getReviewCount());
         updateBusiness.setReviewSum(bus.getReviewSum());
