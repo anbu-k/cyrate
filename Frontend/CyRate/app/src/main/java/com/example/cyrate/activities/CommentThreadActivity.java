@@ -39,7 +39,7 @@ public class CommentThreadActivity extends AppCompatActivity {
     CommentThreadAdapter commentThreadAdapter;
     ArrayList<CommentThreadCardModel> commentListCardModels = new ArrayList<>();
 
-    TextView sendBtn;
+    TextView sendBtn, emptyView;
     EditText comment_et;
     ImageView back_btn;
     Bundle extras;
@@ -62,6 +62,9 @@ public class CommentThreadActivity extends AppCompatActivity {
         sendBtn = findViewById(R.id.commentThread_sendBtn);
         comment_et = findViewById(R.id.commentThread_editText);
         back_btn = findViewById(R.id.commentThread_backBtn);
+        emptyView = findViewById(R.id.comment_emptyView);
+
+        emptyView.setVisibility(View.INVISIBLE);
 
         handler = new Handler();
 
@@ -76,11 +79,14 @@ public class CommentThreadActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.commentThread_recyclerView);
 
-        setupCommentModels();
 
         commentThreadAdapter = new CommentThreadAdapter(this, commentListCardModels);
         recyclerView.setAdapter(commentThreadAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if(commentListCardModels.isEmpty()){
+            emptyView.setVisibility(View.VISIBLE);
+        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +124,8 @@ public class CommentThreadActivity extends AppCompatActivity {
 
                         // Empty the Edit Text
                         comment_et.setText("");
+
+                        removeThreadBar(150);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -146,23 +154,17 @@ public class CommentThreadActivity extends AppCompatActivity {
             public void onMessage(String message) {
                 runOnUiThread(() -> {
                     try {
+
                         JSONObject obj = new JSONObject(message);
+                        if(obj != null){
+                            emptyView.setVisibility(View.INVISIBLE);
+                        }
                         Log.d("Comment Thread ON MSG", obj.toString());
 
                         commentThreadAdapter.addItem(obj);
                         recyclerView.smoothScrollToPosition(commentThreadAdapter.getItemCount() - 1);
 
-//
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                View view = recyclerView.getLayoutManager().findViewByPosition(commentThreadAdapter.getItemCount() - 1);
-                                if (view != null) {
-                                    view.findViewById(R.id.threadBar).setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }, 350);
-
+                        removeThreadBar(350);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -183,16 +185,19 @@ public class CommentThreadActivity extends AppCompatActivity {
         websocket.connect();
     }
 
-    private void setupCommentModels() {
-        for (int i = 0; i < 8; i++) {
-            CommentThreadCardModel model = new CommentThreadCardModel(
-                    "John Doe",
-                    "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
-                    commentBody,
-                    "3 days ago"
-            );
-            commentListCardModels.add(model);
-        }
+
+
+    // This is a hacky way to remove the vertical thread bar from the last item in the thread
+    private void removeThreadBar(int milliseconds){
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                View view = recyclerView.getLayoutManager().findViewByPosition(commentThreadAdapter.getItemCount() - 1);
+                if (view != null) {
+                    view.findViewById(R.id.threadBar).setVisibility(View.INVISIBLE);
+                }
+            }
+        }, milliseconds);
     }
 
     public static final String commentBody = "Hey, this is a great post. Thanks for sharing! Do you have any other recommendations that you could share?";

@@ -77,5 +77,19 @@
         app:layout_constraintTop_toTopOf="@id/commentThread_editText"
         android:textColor="@color/red"/>
 
+    <TextView
+        android:id="@+id/comment_emptyView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="No Comments Yet!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:fontFamily="@font/sf_pro_medium"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

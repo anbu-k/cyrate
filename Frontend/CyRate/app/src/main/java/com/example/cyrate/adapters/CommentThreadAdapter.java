@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdapter.ViewHolder> {
 
@@ -43,11 +44,22 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.threadBar.setVisibility(View.VISIBLE);
+
+        String displayName = commentListCardModels.get(position).getName();
+
+        if(displayName == null || displayName.isEmpty()){
+            displayName = "Anonymous User";
+        }
 
         new ImageLoaderTask(commentListCardModels.get(position).getPhotoUrl(), holder.profilePic).execute();
-        holder.commenterName.setText(commentListCardModels.get(position).getName());
+        holder.commenterName.setText(displayName);
         holder.commentText.setText(commentListCardModels.get(position).getCommentBody());
         holder.date.setText(String.valueOf(commentListCardModels.get(position).getDate()));
+
+        if(position == getItemCount() - 1){
+            holder.threadBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -70,7 +82,7 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
             commentText = itemView.findViewById(R.id.commentThread_bodyText);
             date = itemView.findViewById(R.id.commentThread_date);
 
-            itemView.findViewById(R.id.threadBar).setVisibility(View.VISIBLE);
+            threadBar = itemView.findViewById(R.id.threadBar);
 
         }
     }
