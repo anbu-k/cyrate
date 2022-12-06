@@ -16,23 +16,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.BusinessInterfaces.getBusinessesResponse;
 import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
+import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
+import java.util.List;
 
 public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
     Button findUs_btn, reviews_btn, menu_btn, posts_btn;
-    ImageView back_btn, busImage, delete_btn, edit_btn;
+    ImageView back_btn, busImage, delete_btn, edit_btn, favoriteBtn;
     TextView busName, rating, priceGauge, reviewCount;
     String busNameString;
-    int busId;
+    int busId, fid;
     BusinessServiceLogic businessServiceLogic;
+    FavoritesServiceLogic favoritesServiceLogic;
+
+    boolean isFavorite;
 
     Bundle extras;
     @Override
@@ -52,7 +59,7 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         reviews_btn = (Button) findViewById(R.id.reviews_btn);
         reviewCount = findViewById(R.id.reviews_text);
 
-
+        favoriteBtn = findViewById(R.id.favorite_star);
 
         busImage = (ImageView) findViewById(R.id.restaurant_image);
         busName = (TextView) findViewById(R.id.restaurant_name);
@@ -72,6 +79,91 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         busId = extras.getInt("ID");
 
         businessServiceLogic = new BusinessServiceLogic();
+
+        favoritesServiceLogic = new FavoritesServiceLogic();
+
+        favoritesServiceLogic.getFavoritesByUser(MainActivity.globalUser.getUserId(), new getBusinessesResponse() {
+            @Override
+            public void onSuccess(List<BusinessListCardModel> list) {
+                isFavorite = false;
+                fid = -1;
+
+                //check for the current business in the list of the user's favorites.
+                //if it is a favorite, treat it as such
+                for (BusinessListCardModel favorite : list){
+                    if (Integer.valueOf(favorite.getBusId()) == busId){
+                        isFavorite = true;
+                        fid = Integer.valueOf(favorite.getFid());
+                        Log.d("****************", "busId: " + String.valueOf(busId) + "  fav busId: " + favorite.getBusId());
+                        Log.d("fid", String.valueOf(fid));
+                        favoriteBtn.setImageResource(R.drawable.star_filled);
+                        break;
+                    }
+                }
+                Log.d("fid2", String.valueOf(fid));
+            }
+
+            @Override
+            public void onError(String s) {
+                Log.d("IndBusAct", s);
+            }
+        });
+
+        favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isFavorite) {
+                    try {
+                        favoritesServiceLogic.addFavorite(MainActivity.globalUser.getUserId(), busId, new businessStringResponse() {
+                            @Override
+                            public void onSuccess(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this, "Added to favorites!", Toast.LENGTH_LONG).show();
+                                Log.d("add fav", "in on success");
+
+                                //change color of star
+                                favoriteBtn.setImageResource(R.drawable.star_filled);
+                                isFavorite = true;
+                            }
+
+                            @Override
+                            public void onError(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                                Log.d("add fav", "in on error");
+                                Log.d("add fav", s);
+
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //remove from favorites
+                    try {
+                        favoritesServiceLogic.deleteFavorite(new businessStringResponse() {
+                            @Override
+                            public void onSuccess(String s) {
+                                Toast.makeText(IndividualBusinessActivity.this,
+                                        "Successfully Deleted " + busNameString, Toast.LENGTH_LONG).show();
+
+                                //turn the star back
+                                favoriteBtn.setImageResource(R.drawable.star_outline);
+                                //set to false
+                                isFavorite = false;
+                            }
+
+                            @Override
+                            public void onError(String s) {
+                                Log.d("Delete Favorite Error", s);
+                                Toast.makeText(IndividualBusinessActivity.this, s, Toast.LENGTH_LONG).show();
+                            }
+                        }, fid);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,13 +290,16 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         if (prevActivity.equals(Const.WELCOME_TO_CYRATE_ACTIVITY)){
             intent = new Intent(this, WelcomeToCyRateActivity.class);
         }
+        else if (prevActivity.equals(Const.FAVS_ACT)){
+            intent = new Intent(this, FavoritesActivity.class);
+        }
         else if(prevActivity.equals(Const.COFFEE_ACT)) {
             intent = new Intent(this, CoffeeListActivity.class);
         }
         else if(prevActivity.equals(Const.BARS_ACT)){
             intent = new Intent(this, BarsListActivity.class);
         }
-        else if(prevActivity.equals(Const.RESTARUANTS_ACT)){
+        else if(prevActivity.equals(Const.RESTAURANTS_ACT)){
             intent = new Intent(this, RestaurantListActivity.class);
         }
         else {

@@ -32,12 +32,19 @@ public class Const {
 
     public static final String GET_REVIEWS_BY_USER_ID = "http://coms-309-020.class.las.iastate.edu:8080/reviews/user/";
 
+    public static final String ADD_FAVORITE_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/";
+    public static final String GET_FAVORITES_BY_USER_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/user/";
+    public static final String DELETE_FAVORITE_BY_ID_URL = "http://coms-309-020.class.las.iastate.edu:8080/favorites/delete/";
+
 
     public static final String WELCOME_TO_CYRATE_ACTIVITY = "WelcomeToCyrateActivity";
     public static final String COFFEE_ACT = "CoffeeListActivity";
     public static final String ALL_BUSINESSES_ACT = "AllBusinessesListActivity";
     public static final String BARS_ACT = "BarsListActivity";
-    public static final String RESTARUANTS_ACT = "RestaurantsActivity";
+    public static final String RESTAURANTS_ACT = "RestaurantsActivity";
+    public static final String FAVS_ACT = "FavoritesActivity";
+
+
 
 
 

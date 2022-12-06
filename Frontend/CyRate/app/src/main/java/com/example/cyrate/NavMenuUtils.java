@@ -10,6 +10,7 @@ import com.example.cyrate.activities.BarsListActivity;
 import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.CoffeeListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
+import com.example.cyrate.activities.FavoritesActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.RestaurantListActivity;
@@ -117,9 +118,6 @@ public class NavMenuUtils {
                 context.startActivity(i);
                 break;
             case R.id.nav_sign_in:
-                i = new Intent(context, LoginActivity.class);
-                context.startActivity(i);
-                break;
             case R.id.nav_logout:
                 i = new Intent(context, LoginActivity.class);
                 context.startActivity(i);
@@ -133,6 +131,9 @@ public class NavMenuUtils {
                 i = new Intent(context, WelcomeToCyRateActivity.class);
                 context.startActivity(i);
                 break;
+            case R.id.nav_favorites:
+                i = new Intent(context, FavoritesActivity.class);
+                context.startActivity(i);
         }
 
 
