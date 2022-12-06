@@ -33,6 +33,9 @@ private int lid;
 @Column
 private int likeCount;
 
+@Column
+private String likeType;
+
 @Hidden
 @ManyToOne
 @JoinColumn(name = "rid", referencedColumnName = "rid")
@@ -50,11 +53,6 @@ private User user;
 private Post post;
 
 public Like() {
-}
-
-public Like(int likeCount)
-{
-    this.likeCount = likeCount;
 }
 
 public int getLid()
@@ -96,6 +94,28 @@ public void setPost(Post post)
 {
     this.post = post;
 }
+
+public String getLikeType()
+{
+    return likeType;
+}
+
+public void setLikeType(String likeType)
+{
+    this.likeType = likeType;
+}
+
+public int getLikeCount()
+{
+    return likeCount;
+}
+
+public void setLikeCount(int likeCount)
+{
+    this.likeCount = likeCount;
+}
+
+
 
 
 }

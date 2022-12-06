@@ -8,7 +8,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 @Configuration
 public class CommentConfig {
     @Bean
-	public ServerEndpointExporter serverEndpointExporter() {
+	public ServerEndpointExporter serverEndpointExport() {
 		return new ServerEndpointExporter();
 	}
 

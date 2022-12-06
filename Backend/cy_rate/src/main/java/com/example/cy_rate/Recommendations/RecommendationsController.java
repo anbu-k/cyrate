@@ -36,7 +36,7 @@ List<Recommendations> getAllRecommendations()
     return recRepo.findAll();
 }
 
-@GetMapping(path = "/recommendations/buisness/{bid}")
+@GetMapping(path = "/recommendations/business/{bid}")
 List<Recommendations> getRecommendationsByBusiness(@PathVariable int bid)
 {
     Business b = businessRepo.findById(bid);
