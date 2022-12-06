@@ -37,6 +37,8 @@ public class Const {
     public static final String COFFEE_ACT = "CoffeeListActivity";
     public static final String ALL_BUSINESSES_ACT = "AllBusinessesListActivity";
     public static final String BARS_ACT = "BarsListActivity";
+    public static final String RESTARUANTS_ACT = "RestaurantsActivity";
+
 
 
 

@@ -203,7 +203,9 @@ public class IndividualBusinessActivity extends AppCompatActivity {
         }
         else if(prevActivity.equals(Const.BARS_ACT)){
             intent = new Intent(this, BarsListActivity.class);
-
+        }
+        else if(prevActivity.equals(Const.RESTARUANTS_ACT)){
+            intent = new Intent(this, RestaurantListActivity.class);
         }
         else {
             intent = new Intent(this, BusinessListActivity.class);

@@ -12,6 +12,7 @@ import com.example.cyrate.activities.CoffeeListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.activities.RestaurantListActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
 
@@ -101,6 +102,10 @@ public class NavMenuUtils {
                 break;
             case R.id.nav_bars:
                 i = new Intent(context, BarsListActivity.class);
+                context.startActivity(i);
+                break;
+            case R.id.nav_restaurants:
+                i = new Intent(context, RestaurantListActivity.class);
                 context.startActivity(i);
                 break;
             case R.id.nav_addBusiness:
