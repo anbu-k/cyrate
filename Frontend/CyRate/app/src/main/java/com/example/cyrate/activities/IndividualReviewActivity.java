@@ -68,10 +68,10 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
 
 
-
-
-        // Remove the delete icon if the current User is not the original reviewer or not an Admin
+        // Remove the delete & edit icons if the current User is not the original
+        // reviewer or not an Admin
         deleteIcon.setVisibility(View.GONE);
+        editReviewIcon.setVisibility(View.INVISIBLE);
 
         // Update the thumbsUpIcon and CommentIcon position since we removed the deleteIcon
         ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.constraintSet_individualReview);
@@ -91,6 +91,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
             cs.applyTo(cl);
 
             deleteIcon.setVisibility(View.VISIBLE);
+            editReviewIcon.setVisibility(View.VISIBLE);
         }
 
         editReviewIcon.setOnClickListener(new View.OnClickListener() {

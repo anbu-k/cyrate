@@ -97,7 +97,7 @@ public class CommentThreadActivity extends AppCompatActivity {
                     intent = new Intent(CommentThreadActivity.this, IndividualReviewActivity.class);
                 }
                 else{
-                    intent = new Intent(CommentThreadActivity.this, BusinessPostFeed.class);`
+                    intent = new Intent(CommentThreadActivity.this, BusinessPostFeed.class);
                 }
                 intent.putExtras(extras);
                 startActivity(intent);
