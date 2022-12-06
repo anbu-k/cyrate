@@ -92,7 +92,13 @@ public class CommentThreadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 websocket.close();
-                Intent intent = new Intent(CommentThreadActivity.this, IndividualReviewActivity.class);
+                Intent intent;
+                if(extras.getString(Const.COMMENT_TYPE).equals(Const.REVIEW_COMMENT)){
+                    intent = new Intent(CommentThreadActivity.this, IndividualReviewActivity.class);
+                }
+                else{
+                    intent = new Intent(CommentThreadActivity.this, BusinessPostFeed.class);`
+                }
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -200,7 +206,6 @@ public class CommentThreadActivity extends AppCompatActivity {
         }, milliseconds);
     }
 
-    public static final String commentBody = "Hey, this is a great post. Thanks for sharing! Do you have any other recommendations that you could share?";
 }
 
 
