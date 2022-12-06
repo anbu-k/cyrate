@@ -16,14 +16,14 @@ public class UserListCardModel {
     public UserListCardModel(int userId, UserType userType, String email, String password, String fullName,
                              String username, String phoneNum, String dob, String photoUrl){
         this.userId = userId;
-        this.userType = UserType.BASIC_USER;
+        this.userType = userType;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.username = username;
         this.phoneNum = phoneNum;
         this.dob = dob;
-        this.photoUrl = "";
+        this.photoUrl = photoUrl;
     }
 
     public String getUsername() {
