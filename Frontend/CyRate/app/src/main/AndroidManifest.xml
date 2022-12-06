@@ -84,6 +84,9 @@
         <activity
             android:name=".activities.PersonalReviewListActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.FavoritesActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
