@@ -57,6 +57,9 @@
             android:name=".activities.IndividualBusinessActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.UserListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity

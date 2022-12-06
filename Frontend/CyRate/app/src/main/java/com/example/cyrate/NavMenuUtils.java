@@ -10,6 +10,7 @@ import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
+import com.example.cyrate.activities.UserListActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
 
@@ -111,6 +112,10 @@ public class NavMenuUtils {
                 break;
             case R.id.nav_my_reviews:
                 i = new Intent(context, PersonalReviewListActivity.class);
+                context.startActivity(i);
+                break;
+            case R.id.nav_all_users:
+                i = new Intent(context, UserListActivity.class);
                 context.startActivity(i);
                 break;
             case R.id.nav_home:

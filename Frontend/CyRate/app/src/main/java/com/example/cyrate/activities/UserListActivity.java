@@ -1,10 +1,15 @@
 package com.example.cyrate.activities;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +20,6 @@ import com.example.cyrate.NavMenuUtils;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.UserListAdapter;
 import com.example.cyrate.models.UserListCardModel;
-import com.example.cyrate.models.UserModel;
 import com.example.cyrate.models.UserRecyclerViewInterface;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,7 +28,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListActivity extends AppCompatActivity implements UserRecyclerViewInterface {
+public class UserListActivity extends AppCompatActivity implements UserRecyclerViewInterface, NavigationView.OnNavigationItemSelectedListener {
 
     UserLogic userLogic;
     UserListAdapter userListAdapter;
@@ -69,6 +73,7 @@ public class UserListActivity extends AppCompatActivity implements UserRecyclerV
             public void onSuccess(List<UserListCardModel> list) {
                 for (int i = 0; i < list.size(); i++){
                     userListCardModel.add(list.get(i));
+                    Log.d("all users", list.get(i).getUsername());
                 }
                 userListAdapter.notifyDataSetChanged();
             }
@@ -83,5 +88,36 @@ public class UserListActivity extends AppCompatActivity implements UserRecyclerV
     @Override
     public void onUserClick(int position) {
 
+    }
+
+    private void navigationDrawer() {
+        // Navigation Drawer
+        navView.bringToFront();
+        navView.setNavigationItemSelectedListener(this);
+        navView.setCheckedItem(R.id.nav_all_users);
+
+        open_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                else{
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if (menuItem.getItemId() != R.id.nav_all_users){
+            NavMenuUtils.onNavItemSelected(menuItem, UserListActivity.this);
+        }
+        else{
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

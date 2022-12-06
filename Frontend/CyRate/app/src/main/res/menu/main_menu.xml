@@ -14,6 +14,10 @@
             android:id="@+id/nav_addBusiness"
             android:icon="@drawable/add_bussiness_icon"
             android:title="Add Business" />
+        <item
+            android:id="@+id/nav_all_users"
+            android:icon="@drawable/profile_icon"
+            android:title="All Users" />
     </group>
 
 
