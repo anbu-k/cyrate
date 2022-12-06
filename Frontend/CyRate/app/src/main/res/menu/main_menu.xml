@@ -15,6 +15,10 @@
             android:icon="@drawable/restaurant_menu_icon"
             android:title="Cafes &amp; Coffee" />
         <item
+            android:id="@+id/nav_bars"
+            android:icon="@drawable/wine_icon"
+            android:title="Bars" />
+        <item
             android:id="@+id/nav_addBusiness"
             android:icon="@drawable/coffee_icon"
             android:title="Add Business" />

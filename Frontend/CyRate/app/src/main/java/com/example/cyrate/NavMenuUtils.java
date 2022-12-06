@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cyrate.activities.AddBusinessActivity;
+import com.example.cyrate.activities.BarsListActivity;
 import com.example.cyrate.activities.BusinessListActivity;
 import com.example.cyrate.activities.CoffeeListActivity;
 import com.example.cyrate.activities.EditProfileActivity;
@@ -96,6 +97,10 @@ public class NavMenuUtils {
                 break;
             case R.id.nav_coffee:
                 i = new Intent(context, CoffeeListActivity.class);
+                context.startActivity(i);
+                break;
+            case R.id.nav_bars:
+                i = new Intent(context, BarsListActivity.class);
                 context.startActivity(i);
                 break;
             case R.id.nav_addBusiness:
