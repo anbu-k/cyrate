@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.cyrate.R;
 import com.example.cyrate.adapters.CommentThreadAdapter;
 import com.example.cyrate.models.CommentThreadCardModel;
+import com.example.cyrate.net_utils.Const;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -28,7 +29,9 @@ import org.w3c.dom.Comment;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CommentThreadActivity extends AppCompatActivity {
 
@@ -44,7 +47,11 @@ public class CommentThreadActivity extends AppCompatActivity {
     Handler handler;
 
     WebSocketClient websocket;
-    String SERVER_PATH = "wss://ws.postman-echo.com/raw/";
+    String SERVER_PATH = "ws://coms-309-020.class.las.iastate.edu:8080/comments/";
+    int userId = MainActivity.globalUser.getUserId();
+    String idForComment;
+    String commentType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,9 @@ public class CommentThreadActivity extends AppCompatActivity {
 
         handler = new Handler();
 
-
+        // Get the comment type and either the Post ID / Review ID
+        commentType = extras.getString(Const.COMMENT_TYPE);
+        idForComment = String.valueOf(extras.getInt(Const.ID_FOR_COMMENT));
         try {
             initiateSocketConnection();
         } catch (URISyntaxException e) {
@@ -76,6 +85,7 @@ public class CommentThreadActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                websocket.close();
                 Intent intent = new Intent(CommentThreadActivity.this, IndividualReviewActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -88,13 +98,19 @@ public class CommentThreadActivity extends AppCompatActivity {
                 if (comment_et.getText().toString().isEmpty()) {
                     Toast.makeText(CommentThreadActivity.this, "Write out your comment!", Toast.LENGTH_LONG).show();
                 } else {
+                    // Get the current date
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+                    String dateStr = formatter.format(date);
+
                     JSONObject obj = new JSONObject();
 
                     try {
                         obj.put("commenterName", MainActivity.globalUser.getFullName());
                         obj.put("photoUrl", MainActivity.globalUser.getPhotoUrl());
                         obj.put("commentBody", comment_et.getText().toString());
-                        obj.put("date", "3 days ago");
+                        obj.put("commentType", commentType);
+                        obj.put("date", dateStr);
 
                         websocket.send(obj.toString());
                         commentThreadAdapter.addItem(obj);
@@ -117,7 +133,7 @@ public class CommentThreadActivity extends AppCompatActivity {
         };
 
         Log.d("Socket:", "Trying socket");
-        websocket = new WebSocketClient(new URI(SERVER_PATH), drafts[0]) {
+        websocket = new WebSocketClient(new URI(SERVER_PATH + commentType + "/" + idForComment + "/" + userId), drafts[0]) {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
                 Log.d("OPEN", "run() returned: " + "is connecting");
@@ -131,6 +147,8 @@ public class CommentThreadActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     try {
                         JSONObject obj = new JSONObject(message);
+                        Log.d("Comment Thread ON MSG", obj.toString());
+
                         commentThreadAdapter.addItem(obj);
                         recyclerView.smoothScrollToPosition(commentThreadAdapter.getItemCount() - 1);
 

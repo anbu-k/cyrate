@@ -23,6 +23,7 @@ import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
@@ -106,6 +107,8 @@ public class IndividualReviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(IndividualReviewActivity.this, CommentThreadActivity.class);
                 intent.putExtras(extras);
+                intent.putExtra(Const.COMMENT_TYPE, Const.REVIEW_COMMENT);
+                intent.putExtra(Const.ID_FOR_COMMENT, reviewId);
                 startActivity(intent);
             }
         });

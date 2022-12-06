@@ -43,6 +43,7 @@ public class CommentThreadAdapter extends RecyclerView.Adapter<CommentThreadAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         new ImageLoaderTask(commentListCardModels.get(position).getPhotoUrl(), holder.profilePic).execute();
         holder.commenterName.setText(commentListCardModels.get(position).getName());
         holder.commentText.setText(commentListCardModels.get(position).getCommentBody());
