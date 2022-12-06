@@ -35,6 +35,7 @@ import com.example.cyrate.activities.ReviewListActivity;
 import com.example.cyrate.models.BusinessPostCardModel;
 //import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
@@ -78,16 +79,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BusinessFeedAdapter.MyViewHolder holder, int position) {
-//        final String busPostPhoto = businessPostList.get(position).getPhotoUrl();
-//
-//        if(busPostPhoto.contains("http")){
-//            new ImageLoaderTask(businessPostList.get(position).getPhotoUrl(), holder.busPostPhoto).execute();
-//        }
-//        else{
-//            final Bitmap bitmap = getBitmapFromString(busPostPhoto);
-//            holder.busPostPhoto.setImageBitmap(bitmap);
-//        }
-
         final byte[] imgBlob = businessPostList.get(position).getBlobPhoto();
         final Bitmap bitmap = BitmapFactory.decodeByteArray(imgBlob, 0, imgBlob.length);
         holder.busPostPhoto.setImageBitmap(bitmap);
@@ -99,11 +90,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
         holder.busPostText.setText(businessPostList.get(position).getPostTxt());
     }
 
-
-    private Bitmap getBitmapFromString(String image){
-        byte[] bytes = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
 
     @Override
     public int getItemCount() {
@@ -156,10 +142,13 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    final byte[] imgBlob = list.get(getAdapterPosition()).getBlobPhoto();
+                    final Bitmap bitmap = BitmapFactory.decodeByteArray(imgBlob, 0, imgBlob.length);
+
                     Intent intent = new Intent(ctx, EditBusinessPostActivity.class);
                     intent.putExtras(extras);
                     intent.putExtra("POST_TEXT", list.get(getAdapterPosition()).getPostTxt());
-//                    intent.putExtra("POST_PHOTO", list.get(getAdapterPosition()).getPhotoUrl());
+                    intent.putExtra(Const.BUS_POST_BITMAP, bitmap);
                     intent.putExtra("POST_ID", list.get(getAdapterPosition()).getPostId());
 
                     ctx.startActivity(intent);
