@@ -1,11 +1,14 @@
 package com.example.cyrate;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -27,6 +30,7 @@ import com.example.cyrate.net_utils.Utils;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Base64;
 
 public class EditBusinessPostActivity extends AppCompatActivity {
 
@@ -39,6 +43,7 @@ public class EditBusinessPostActivity extends AppCompatActivity {
 
     Bitmap bitmap;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +62,10 @@ public class EditBusinessPostActivity extends AppCompatActivity {
         new ImageLoaderTask(extras.getString("IMAGE"), busImage).execute();
         busName.setText(extras.getString("NAME"));
         postTxt_et.setText(extras.getString("POST_TEXT"));
-        bitmap = (Bitmap) extras.get(Const.BUS_POST_BITMAP);
+
+        // Get our byte array from extras, and convert it into a bitmap
+        byte[] byteArray = extras.getByteArray(Const.BUS_POST_BITMAP);
+        bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

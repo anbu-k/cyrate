@@ -36,6 +36,7 @@ import com.example.cyrate.models.BusinessPostCardModel;
 //import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 import com.example.cyrate.net_utils.Const;
+import com.example.cyrate.net_utils.Utils;
 
 import org.json.JSONException;
 
@@ -142,13 +143,14 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // Pass a byte array to the next activity so we can convert it
+                    // to a bitmap. Passing a whole bitmap is too large
                     final byte[] imgBlob = list.get(getAdapterPosition()).getBlobPhoto();
-                    final Bitmap bitmap = BitmapFactory.decodeByteArray(imgBlob, 0, imgBlob.length);
 
                     Intent intent = new Intent(ctx, EditBusinessPostActivity.class);
                     intent.putExtras(extras);
                     intent.putExtra("POST_TEXT", list.get(getAdapterPosition()).getPostTxt());
-                    intent.putExtra(Const.BUS_POST_BITMAP, bitmap);
+                    intent.putExtra(Const.BUS_POST_BITMAP, imgBlob);
                     intent.putExtra("POST_ID", list.get(getAdapterPosition()).getPostId());
 
                     ctx.startActivity(intent);

@@ -505,7 +505,7 @@ public class BusinessServiceLogic {
      *
      * @param postId
      * @param postTxt
-     * @param photoUrl
+     * @param blobPhoto
      * @param r
      * @throws JSONException
      */
