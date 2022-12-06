@@ -1,5 +1,6 @@
 package com.example.cyrate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -87,6 +88,21 @@ public class UserListActivity extends AppCompatActivity implements UserRecyclerV
 
     @Override
     public void onUserClick(int position) {
+        Intent intent = new Intent(UserListActivity.this, IndividualUserActivity.class);
+
+        intent.putExtra("EMAIL", userListCardModel.get(position).getEmail());
+        intent.putExtra("PASSWORD", userListCardModel.get(position).getPassword());
+        intent.putExtra("FULLNAME", userListCardModel.get(position).getFullName());
+        intent.putExtra("USERNAME", userListCardModel.get(position).getUsername());
+        intent.putExtra("PHONENUM", userListCardModel.get(position).getPhoneNum());
+        intent.putExtra("DOB", userListCardModel.get(position).getDob());
+        intent.putExtra("PHOTOURL", userListCardModel.get(position).getPhotoUrl());
+
+        intent.putExtra("USERTYPE", userListCardModel.get(position).getUserType());
+
+        intent.putExtra("USERID", userListCardModel.get(position).getUserId());
+
+        startActivity(intent);
 
     }
 

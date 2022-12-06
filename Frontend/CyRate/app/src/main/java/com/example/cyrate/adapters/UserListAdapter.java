@@ -45,7 +45,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         String userEmail = userCardList.get(position).getEmail();
         UserType userType = userCardList.get(position).getUserType();
 
-        new ImageLoaderTask(userCardList.get(position).getProfilePic(), holder.profilePic).execute();
+        new ImageLoaderTask(userCardList.get(position).getPhotoUrl(), holder.profilePic).execute();
 
         holder.userName.setText(userCardList.get(position).getUsername());
         holder.userEmail.setText(userCardList.get(position).getEmail());

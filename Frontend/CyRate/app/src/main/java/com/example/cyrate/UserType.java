@@ -38,6 +38,7 @@ public enum UserType {
      * @return
      */
     public static UserType fromString(String type){
+        System.out.println(type);
         switch(type){
             case "guest":
                 return GUEST;

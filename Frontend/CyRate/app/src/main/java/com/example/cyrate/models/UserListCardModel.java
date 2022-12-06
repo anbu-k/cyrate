@@ -38,7 +38,17 @@ public class UserListCardModel {
         return userType;
     }
 
-    public String getProfilePic() {
+    public String getPhotoUrl() {
         return photoUrl;
     }
+
+    public String getPassword() {return password;}
+
+    public int getUserId(){ return userId;}
+
+    public String getFullName() { return fullName;}
+
+    public String getPhoneNum() {return phoneNum;}
+
+    public String getDob() { return dob;}
 }
