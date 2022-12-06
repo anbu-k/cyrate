@@ -91,7 +91,7 @@ public class BusinessServiceLogic {
         List<BusinessListCardModel> businessModelsList = new ArrayList<>();
         Log.d("TEST 1", "IN GET COFFEE");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-                "http://10.0.2.2:8080/business/coffee", null, response -> {
+                Const.GET_ALL_COFFEE, null, response -> {
             Log.d("TEST 1", "IN ON RESPONSE");
 
             for (int i = 0; i < response.length(); i++) {
@@ -138,7 +138,7 @@ public class BusinessServiceLogic {
         List<BusinessListCardModel> businessModelsList = new ArrayList<>();
         Log.d("TEST 1", "IN GET COFFEE");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-                "http://10.0.2.2:8080/business/bars", null, response -> {
+                Const.GET_ALL_BARS, null, response -> {
             Log.d("TEST 1", "IN ON RESPONSE");
 
             for (int i = 0; i < response.length(); i++) {
@@ -185,7 +185,7 @@ public class BusinessServiceLogic {
         List<BusinessListCardModel> businessModelsList = new ArrayList<>();
         Log.d("TEST 1", "IN GET RESTAURANTS");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-                "http://10.0.2.2:8080/business/restaurants", null, response -> {
+                Const.GET_ALL_RESTAURANTS, null, response -> {
             Log.d("TEST 1", "IN ON RESPONSE");
 
             for (int i = 0; i < response.length(); i++) {
