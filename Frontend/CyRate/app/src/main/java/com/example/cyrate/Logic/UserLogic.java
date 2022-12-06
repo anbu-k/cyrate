@@ -48,13 +48,10 @@ public class UserLogic {
             public void onResponse(JSONArray response) {
                 try {
                     //create a list of users
-                    ///OHHHH ur only grabbing the first user here u gotta keep going
-
                     for (int i = 0; i < response.length(); i++){
                         JSONObject user = (JSONObject) response.get(i);
 
                         String email = user.get("email").toString();
-                        Log.d("in userLog", email);
                         int id = user.getInt("userID");
                         String typeString = user.get("userType").toString();
                         String password = user.get("userPass").toString();
@@ -70,24 +67,7 @@ public class UserLogic {
                         UserListCardModel newUser = new UserListCardModel(id, userType, email, password, fullName, username, phone, dob, photoUrl);
                         userModelList.add(newUser);
                     }
-//                    JSONObject user = (JSONObject) response.get(0);
-//
-//                    String email = user.get("email").toString();
-//                    Log.d("in userLog", email);
-//                    int id = user.getInt("userID");
-//                    String typeString = user.get("userType").toString();
-//                    String password = user.get("userPass").toString();
-//                    String fullName = user.get("realName").toString();
-//                    String username = user.get("username").toString();
-//                    String phone = user.get("phoneNum").toString();
-//                    String dob = user.get("dob").toString();
-//                    String photoUrl = user.get("photoUrl").toString();
-//
-//                    UserType userType = UserType.fromString(typeString);
-//
-//
-//                    UserListCardModel newUser = new UserListCardModel(id, userType, email, password, fullName, username, phone, dob, photoUrl);
-//                    userModelList.add(newUser);
+
                     r.onSuccess(userModelList);
                 } catch (JSONException e) {
                     r.onError("OOF");
