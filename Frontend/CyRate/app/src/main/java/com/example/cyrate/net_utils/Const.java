@@ -7,14 +7,15 @@ public class Const {
     public static final String DELETE_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/delete/";
     public static final String ADD_BUSINESS_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/create";
 
+    public static final String GET_ALL_RESTAURANTS = "http://coms-309-020.class.las.iastate.edu:8080/business/restaurants";
+    public static final String GET_ALL_COFFEE = "http://coms-309-020.class.las.iastate.edu:8080/business/coffee";
+    public static final String GET_ALL_BARS = "http://coms-309-020.class.las.iastate.edu:8080/business/bars";
+
+
     public static final String GET_BUSINESS_POSTS_BY_ID = "http://coms-309-020.class.las.iastate.edu:8080/posts/";
     public static final String CREATE_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/create/";
     public static final String DELETE_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/delete/";
     public static final String EDIT_POST = "http://coms-309-020.class.las.iastate.edu:8080/posts/update/";
-
-
-
-
 
 
     public static final String GET_USER_BY_EMAIL_URL = "http://coms-309-020.class.las.iastate.edu:8080/user/byEmail/";
