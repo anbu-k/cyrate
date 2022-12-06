@@ -20,6 +20,7 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
@@ -194,8 +195,11 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     private void navigateBack() {
         Intent intent;
         String prevActivity = extras.getString("PREVIOUS_ACTIVITY");
-        if (prevActivity.equals("WelcomeToCyrateActivity")){
+        if (prevActivity.equals(Const.WELCOME_TO_CYRATE_ACTIVITY)){
             intent = new Intent(this, WelcomeToCyRateActivity.class);
+        }
+        else if(prevActivity.equals(Const.COFFEE_ACT)) {
+            intent = new Intent(this, CoffeeListActivity.class);
         }
         else {
             intent = new Intent(this, BusinessListActivity.class);

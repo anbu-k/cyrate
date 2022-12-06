@@ -1,5 +1,7 @@
 package com.example.cyrate.net_utils;
 
+import com.example.cyrate.activities.WelcomeToCyRateActivity;
+
 public class Const {
     public static final String GET_BUSINESSES_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/all";
     public static final String GET_BUSINESS_BY_ID_URL = "http://coms-309-020.class.las.iastate.edu:8080/business/byId/";
@@ -29,6 +31,12 @@ public class Const {
 
 
     public static final String GET_REVIEWS_BY_USER_ID = "http://coms-309-020.class.las.iastate.edu:8080/reviews/user/";
+
+
+    public static final String WELCOME_TO_CYRATE_ACTIVITY = "WelcomeToCyrateActivity";
+    public static final String COFFEE_ACT = "CoffeeListActivity";
+    public static final String ALL_BUSINESSES_ACT = "AllBusinessesListActivity";
+    public static final String BARS_ACT = "BarsListActivity";
 
 
 

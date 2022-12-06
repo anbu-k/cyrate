@@ -22,6 +22,7 @@ import com.example.cyrate.R;
 import com.example.cyrate.adapters.BusinessListAdapter;
 import com.example.cyrate.models.BusinessListCardModel;
 import com.example.cyrate.models.BusinessRecyclerViewInterface;
+import com.example.cyrate.net_utils.Const;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -129,7 +130,7 @@ public class CoffeeListActivity extends AppCompatActivity implements BusinessRec
         intent.putExtra("ID", businessListCardModel.get(position).getBusId());
         intent.putExtra("RATING_SUM", businessListCardModel.get(position).getReviewSum());
         intent.putExtra("REVIEW_COUNT", businessListCardModel.get(position).getReviewCount());
-        intent.putExtra("PREVIOUS_ACTIVITY", "BusinessListActivity");
+        intent.putExtra("PREVIOUS_ACTIVITY", Const.COFFEE_ACT);
 
 
         startActivity(intent);
@@ -139,7 +140,7 @@ public class CoffeeListActivity extends AppCompatActivity implements BusinessRec
         // Navigation Drawer
         navView.bringToFront();
         navView.setNavigationItemSelectedListener(this);
-        navView.setCheckedItem(R.id.nav_restaurants);
+        navView.setCheckedItem(R.id.nav_allBusinesses);
 
         open_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +157,7 @@ public class CoffeeListActivity extends AppCompatActivity implements BusinessRec
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (menuItem.getItemId() != R.id.nav_restaurants){
+        if (menuItem.getItemId() != R.id.nav_allBusinesses){
             NavMenuUtils.onNavItemSelected(menuItem, CoffeeListActivity.this);
         }
         else{

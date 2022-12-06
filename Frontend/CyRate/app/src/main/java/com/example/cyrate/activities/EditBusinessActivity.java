@@ -153,7 +153,7 @@ public class EditBusinessActivity extends AppCompatActivity implements Navigatio
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Intent intent;
         switch (menuItem.getItemId()) {
-            case R.id.nav_restaurants:
+            case R.id.nav_allBusinesses:
                 intent = new Intent(EditBusinessActivity.this, BusinessListActivity.class);
                 startActivity(intent);
                 break;
