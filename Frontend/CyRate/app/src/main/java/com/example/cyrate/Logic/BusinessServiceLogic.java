@@ -646,11 +646,11 @@ public class BusinessServiceLogic {
      *
      * @param postId
      * @param postTxt
-     * @param photoUrl
+     * @param blobPhoto
      * @param r
      * @throws JSONException
      */
-    public void editPost(int postId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
+    public void editPost(int postId, String postTxt, String blobPhoto, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_POST + String.valueOf(postId);
 
         Log.d("EDIT POST URL", url);
@@ -663,7 +663,7 @@ public class BusinessServiceLogic {
         HashMap<String, Object> params = new HashMap<>();
         params.put("postTxt", postTxt);
         params.put("date", dateStr);
-        params.put("photoUrl", photoUrl);
+        params.put("blobPhoto", blobPhoto);
 
         Log.d("addPost - newPost", params.toString());
 

@@ -131,6 +131,8 @@ public class CommentThreadActivity extends AppCompatActivity {
                         // Empty the Edit Text
                         comment_et.setText("");
 
+                        emptyView.setVisibility(View.INVISIBLE);
+
                         removeThreadBar(150);
                     } catch (JSONException e) {
                         e.printStackTrace();

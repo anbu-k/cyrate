@@ -52,6 +52,7 @@ public class Const {
 
 
 
+    public static final String BUS_POST_BITMAP = "Bitmap";
 
 
 }

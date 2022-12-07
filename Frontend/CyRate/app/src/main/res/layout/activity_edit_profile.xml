@@ -49,8 +49,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_password"
-        app:layout_constraintVertical_bias="0.122"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView
@@ -70,7 +70,6 @@
         android:id="@+id/edittext_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="388dp"
         android:background="@drawable/edit_text_bg"
         android:hint="Password"
         android:paddingLeft="20dp"
@@ -79,8 +78,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_email"
-        app:layout_constraintVertical_bias="0.804"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView
@@ -108,8 +107,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_username"
-        app:layout_constraintVertical_bias="0.061"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.27"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView
@@ -134,11 +133,12 @@
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.202"
+        app:layout_constraintVertical_bias="0.15"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText
@@ -153,8 +153,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_name"
-        app:layout_constraintVertical_bias="0.158"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText
@@ -169,8 +169,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_birthday"
-        app:layout_constraintVertical_bias="0.22"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.78"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView

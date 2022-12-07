@@ -11,7 +11,7 @@ public class Utils {
     public static String imageToString(Bitmap bitmap){
 
         ByteArrayOutputStream bOutStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bOutStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, bOutStream);
         byte[] imgBytes = bOutStream.toByteArray();
         return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
