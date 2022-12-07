@@ -22,6 +22,7 @@ import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
@@ -66,10 +67,10 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
 
 
-
-
-        // Remove the delete icon if the current User is not the original reviewer or not an Admin
+        // Remove the delete & edit icons if the current User is not the original
+        // reviewer or not an Admin
         deleteIcon.setVisibility(View.GONE);
+        editReviewIcon.setVisibility(View.INVISIBLE);
 
         // Update the thumbsUpIcon and CommentIcon position since we removed the deleteIcon
         ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.constraintSet_individualReview);
@@ -89,6 +90,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
             cs.applyTo(cl);
 
             deleteIcon.setVisibility(View.VISIBLE);
+            editReviewIcon.setVisibility(View.VISIBLE);
         }
 
         editReviewIcon.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +98,17 @@ public class IndividualReviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(IndividualReviewActivity.this, EditReviewActivity.class);
                 intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
+        commentIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualReviewActivity.this, CommentThreadActivity.class);
+                intent.putExtras(extras);
+                intent.putExtra(Const.COMMENT_TYPE, Const.REVIEW_COMMENT);
+                intent.putExtra(Const.ID_FOR_COMMENT, reviewId);
                 startActivity(intent);
             }
         });

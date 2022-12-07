@@ -29,14 +29,17 @@ import com.example.cyrate.Logic.BusinessServiceLogic;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+import com.example.cyrate.activities.CommentThreadActivity;
 import com.example.cyrate.activities.IndividualReviewActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.ReviewListActivity;
 import com.example.cyrate.models.BusinessPostCardModel;
 //import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
+import org.w3c.dom.Comment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -78,15 +81,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BusinessFeedAdapter.MyViewHolder holder, int position) {
-//        final String busPostPhoto = businessPostList.get(position).getPhotoUrl();
-//
-//        if(busPostPhoto.contains("http")){
-//            new ImageLoaderTask(businessPostList.get(position).getPhotoUrl(), holder.busPostPhoto).execute();
-//        }
-//        else{
-//            final Bitmap bitmap = getBitmapFromString(busPostPhoto);
-//            holder.busPostPhoto.setImageBitmap(bitmap);
-//        }
 
         final byte[] imgBlob = businessPostList.get(position).getBlobPhoto();
         final Bitmap bitmap = BitmapFactory.decodeByteArray(imgBlob, 0, imgBlob.length);
@@ -100,10 +94,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
     }
 
 
-    private Bitmap getBitmapFromString(String image){
-        byte[] bytes = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
 
     @Override
     public int getItemCount() {
@@ -113,8 +103,9 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
     // Class necessary and is similar for having an onCreate method. Allows us to get all our views
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView busProfilePic, busPostPhoto, deleteIcon, editIcon;
+        ImageView busProfilePic, busPostPhoto, deleteIcon, editIcon, commentIcon;
         TextView busName, busPostDate, busPostText;
+
 
         public MyViewHolder(@NonNull View itemView, Context ctx, Bundle extras, ArrayList<BusinessPostCardModel> list) {
             super(itemView);
@@ -127,6 +118,7 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
             deleteIcon = itemView.findViewById(R.id.busPost_deleteIcon);
             editIcon = itemView.findViewById(R.id.busPost_editIcon);
+            commentIcon = itemView.findViewById(R.id.busPost_comment);
 
 
             // Remove the delete icon if the current User is not the original reviewer or not an Admin
@@ -152,6 +144,17 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
                 deleteIcon.setVisibility(View.VISIBLE);
                 editIcon.setVisibility(View.VISIBLE);
             }
+
+            commentIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, CommentThreadActivity.class);
+                    intent.putExtras(extras);
+                    intent.putExtra(Const.ID_FOR_COMMENT, list.get(getAdapterPosition()).getPostId());
+                    intent.putExtra(Const.COMMENT_TYPE, Const.BUSPOST_COMMENT);
+                    ctx.startActivity(intent);
+                }
+            });
 
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
