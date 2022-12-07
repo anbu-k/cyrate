@@ -187,7 +187,7 @@ class CyRateApplicationTests {
 
 	}
 
-	// Anbus tests below
+	// Anbus tests below for backend
 
 	/**
 	 * This test tests the create favorite controller
