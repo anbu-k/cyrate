@@ -80,7 +80,7 @@ public class LikeSocket {
     user = userRepo.findById(uid);
     sessionUsernameMap.put(session,user.getUsername());
     usernameSessionMap.put(user.getUsername(), session);
-    sendLikeObject(user.getUsername(), getLikes(type,id));
+    sendLikeObject(user.getUsername(), getAllLikes(type,id));
   }
 
 
@@ -94,9 +94,6 @@ public class LikeSocket {
     String username = sessionUsernameMap.get(session);
     sessionUsernameMap.remove(session);
     usernameSessionMap.remove(username);
-
-    String message = username + "disconnected";
-    // broadcast(message);
   }
 
 
@@ -109,19 +106,39 @@ public class LikeSocket {
     
     Gson gson = new Gson();
     Like like = gson.fromJson(message, Like.class);
-    if(like.getLikeType().equals("Review"))
+    if(like.getLikeType().equals("review"))
     {
         Review review = reviewRepo.findById(id);
+        Like likes = likeRepo.findByReview(review);
+
+        if(likes == null)
+        {
+            likes = new Like(1);
+        }
+        else
+        {
+            likes.setLikeCount(likes.getLikeCount() + 1);
+        }
+
         like.setReview(review);
+
     } 
     else if(like.getLikeType().equals("businessPost"))
     {
         Post post = postRepo.findById(id);
+        Like likes = likeRepo.findByPost(post);
+
+        if(likes == null)
+        {
+            likes = new Like(1);
+        }
+        else
+        {
+            likes.setLikeCount(likes.getLikeCount() + 1);
+        }
         like.setPost(post);
-
     }
-
-    like.setUser(user);
+    // like.setUser(user);
     likeRepo.save(like);
     broadcast(like);
 
@@ -142,7 +159,7 @@ public class LikeSocket {
   /**
    * 
    */
-  private Like getLikes(String type, int id)
+  private Like getAllLikes(String type, int id)
   {
     if(type.equals("review"))
     {
@@ -156,7 +173,7 @@ public class LikeSocket {
     }
     else
     {
-        return new Like();
+        return new Like(0);
     }
   }
 
@@ -200,5 +217,3 @@ public class LikeSocket {
     }
 }
   
-
-

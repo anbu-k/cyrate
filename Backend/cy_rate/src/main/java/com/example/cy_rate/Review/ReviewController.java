@@ -122,7 +122,15 @@ public class ReviewController {
     {
         Review r = reviewRepo.findById(rid);
         r.setReviewHeader(newR.getReviewHeader());
-        r.setRateVal(newR.getRateVal());
+
+        // Update Business review sum to reflect updated review
+        if(r.getRateVal() != newR.getRateVal())
+        {
+            Business temp = businessRepo.findById(r.getBusiness().getBusId());
+            temp.setReviewSum(temp.getReviewSum() - r.getRateVal());
+            temp.setReviewSum(temp.getReviewSum() + newR.getRateVal());
+            r.setRateVal(newR.getRateVal());
+        }
         r.setReviewTxt(newR.getReviewTxt());
         reviewRepo.save(r);
         return success;
