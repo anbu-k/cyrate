@@ -90,6 +90,147 @@ public class BusinessServiceLogic {
         AppController.getInstance().addToRequestQueue(request);
     }
 
+    public void getAllCoffee(getBusinessesResponse r) throws JSONException {
+        List<BusinessListCardModel> businessModelsList = new ArrayList<>();
+        Log.d("TEST 1", "IN GET COFFEE");
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                Const.GET_ALL_COFFEE, null, response -> {
+            Log.d("TEST 1", "IN ON RESPONSE");
+
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    // Get each business from the JSON array
+                    JSONObject business = (JSONObject) response.get(i);
+                    Log.d("JSON OBJ", business.toString());
+
+                    // Some priceGauges are null, lets do a check first
+                    String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
+
+                    BusinessListCardModel businessListCardModel = new BusinessListCardModel(
+                            (int) business.get("busId"),
+                            business.get("busName").toString(),
+                            business.get("busType").toString(),
+                            business.getString("phone"),
+                            business.get("photoUrl").toString(),
+                            business.get("hours").toString(),
+                            business.get("location").toString(),
+                            (int) business.get("ownerId"),
+                            business.get("menuLink").toString(),
+                            priceGauge,
+                            (int) business.get("reviewSum"),
+                            (int) business.get("reviewCount")
+                    );
+                    businessModelsList.add(businessListCardModel);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Send the businessModelsList back to the BusinessListActivity
+            // as a async callback
+            r.onSuccess(businessModelsList);
+        }, error -> r.onError(error.toString())
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void getAllBars(getBusinessesResponse r) throws JSONException {
+        List<BusinessListCardModel> businessModelsList = new ArrayList<>();
+        Log.d("TEST 1", "IN GET COFFEE");
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                Const.GET_ALL_BARS, null, response -> {
+            Log.d("TEST 1", "IN ON RESPONSE");
+
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    // Get each business from the JSON array
+                    JSONObject business = (JSONObject) response.get(i);
+                    Log.d("JSON OBJ", business.toString());
+
+                    // Some priceGauges are null, lets do a check first
+                    String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
+
+                    BusinessListCardModel businessListCardModel = new BusinessListCardModel(
+                            (int) business.get("busId"),
+                            business.get("busName").toString(),
+                            business.get("busType").toString(),
+                            business.getString("phone"),
+                            business.get("photoUrl").toString(),
+                            business.get("hours").toString(),
+                            business.get("location").toString(),
+                            (int) business.get("ownerId"),
+                            business.get("menuLink").toString(),
+                            priceGauge,
+                            (int) business.get("reviewSum"),
+                            (int) business.get("reviewCount")
+                    );
+                    businessModelsList.add(businessListCardModel);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Send the businessModelsList back to the BusinessListActivity
+            // as a async callback
+            r.onSuccess(businessModelsList);
+        }, error -> r.onError(error.toString())
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
+    public void getAllRestaurants(getBusinessesResponse r) throws JSONException {
+        List<BusinessListCardModel> businessModelsList = new ArrayList<>();
+        Log.d("TEST 1", "IN GET RESTAURANTS");
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                Const.GET_ALL_RESTAURANTS, null, response -> {
+            Log.d("TEST 1", "IN ON RESPONSE");
+
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    // Get each business from the JSON array
+                    JSONObject business = (JSONObject) response.get(i);
+                    Log.d("JSON OBJ", business.toString());
+
+                    // Some priceGauges are null, lets do a check first
+                    String priceGauge = business.get("priceGauge").toString().equals("null") ? "$" : business.get("priceGauge").toString();
+
+                    BusinessListCardModel businessListCardModel = new BusinessListCardModel(
+                            (int) business.get("busId"),
+                            business.get("busName").toString(),
+                            business.get("busType").toString(),
+                            business.getString("phone"),
+                            business.get("photoUrl").toString(),
+                            business.get("hours").toString(),
+                            business.get("location").toString(),
+                            (int) business.get("ownerId"),
+                            business.get("menuLink").toString(),
+                            priceGauge,
+                            (int) business.get("reviewSum"),
+                            (int) business.get("reviewCount")
+                    );
+                    businessModelsList.add(businessListCardModel);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Send the businessModelsList back to the BusinessListActivity
+            // as a async callback
+            r.onSuccess(businessModelsList);
+        }, error -> r.onError(error.toString())
+
+        );
+
+        AppController.getInstance().addToRequestQueue(request);
+    }
+
     /**
      * Makes a request to the server to GET an individual business
      * by a businessId.
@@ -505,11 +646,11 @@ public class BusinessServiceLogic {
      *
      * @param postId
      * @param postTxt
-     * @param photoUrl
+     * @param blobPhoto
      * @param r
      * @throws JSONException
      */
-    public void editPost(int postId, String postTxt, String photoUrl, businessStringResponse r) throws JSONException {
+    public void editPost(int postId, String postTxt, String blobPhoto, businessStringResponse r) throws JSONException {
         String url = Const.EDIT_POST + String.valueOf(postId);
 
         Log.d("EDIT POST URL", url);
@@ -522,7 +663,7 @@ public class BusinessServiceLogic {
         HashMap<String, Object> params = new HashMap<>();
         params.put("postTxt", postTxt);
         params.put("date", dateStr);
-        params.put("photoUrl", photoUrl);
+        params.put("blobPhoto", blobPhoto);
 
         Log.d("addPost - newPost", params.toString());
 

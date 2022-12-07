@@ -23,15 +23,11 @@ import com.example.cyrate.Logic.FavoritesServiceLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
 import com.example.cyrate.models.BusinessListCardModel;
+import com.example.cyrate.net_utils.Const;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 
 public class IndividualBusinessActivity extends AppCompatActivity {
     // test push
@@ -294,15 +290,20 @@ public class IndividualBusinessActivity extends AppCompatActivity {
     private void navigateBack() {
         Intent intent;
         String prevActivity = extras.getString("PREVIOUS_ACTIVITY");
-        Log.d("prev activity", prevActivity);
-        if (prevActivity == null){
-            intent = new Intent(this, BusinessListActivity.class);
-        }
-        else if (prevActivity.equals("WelcomeToCyrateActivity")){
+        if (prevActivity.equals(Const.WELCOME_TO_CYRATE_ACTIVITY)){
             intent = new Intent(this, WelcomeToCyRateActivity.class);
         }
-        else if (prevActivity.equals("FavoritesActivity")){
+        else if (prevActivity.equals(Const.FAVS_ACT)){
             intent = new Intent(this, FavoritesActivity.class);
+        }
+        else if(prevActivity.equals(Const.COFFEE_ACT)) {
+            intent = new Intent(this, CoffeeListActivity.class);
+        }
+        else if(prevActivity.equals(Const.BARS_ACT)){
+            intent = new Intent(this, BarsListActivity.class);
+        }
+        else if(prevActivity.equals(Const.RESTAURANTS_ACT)){
+            intent = new Intent(this, RestaurantListActivity.class);
         }
         else {
             intent = new Intent(this, BusinessListActivity.class);

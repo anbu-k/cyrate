@@ -37,6 +37,7 @@ import com.example.cyrate.models.BusinessPostCardModel;
 //import com.example.cyrate.models.RecyclerViewInterface;
 import com.example.cyrate.models.ReviewListCardModel;
 import com.example.cyrate.net_utils.Const;
+import com.example.cyrate.net_utils.Utils;
 
 import org.json.JSONException;
 import org.w3c.dom.Comment;
@@ -81,7 +82,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BusinessFeedAdapter.MyViewHolder holder, int position) {
-
         final byte[] imgBlob = businessPostList.get(position).getBlobPhoto();
         final Bitmap bitmap = BitmapFactory.decodeByteArray(imgBlob, 0, imgBlob.length);
         holder.busPostPhoto.setImageBitmap(bitmap);
@@ -93,8 +93,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
         holder.busPostText.setText(businessPostList.get(position).getPostTxt());
     }
 
-
-
     @Override
     public int getItemCount() {
         return businessPostList.size();
@@ -105,7 +103,6 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
 
         ImageView busProfilePic, busPostPhoto, deleteIcon, editIcon, commentIcon;
         TextView busName, busPostDate, busPostText;
-
 
         public MyViewHolder(@NonNull View itemView, Context ctx, Bundle extras, ArrayList<BusinessPostCardModel> list) {
             super(itemView);
@@ -159,10 +156,14 @@ public class BusinessFeedAdapter extends RecyclerView.Adapter<BusinessFeedAdapte
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // Pass a byte array to the next activity so we can convert it
+                    // to a bitmap. Passing a whole bitmap is too large
+                    final byte[] imgBlob = list.get(getAdapterPosition()).getBlobPhoto();
+
                     Intent intent = new Intent(ctx, EditBusinessPostActivity.class);
                     intent.putExtras(extras);
                     intent.putExtra("POST_TEXT", list.get(getAdapterPosition()).getPostTxt());
-//                    intent.putExtra("POST_PHOTO", list.get(getAdapterPosition()).getPhotoUrl());
+                    intent.putExtra(Const.BUS_POST_BITMAP, imgBlob);
                     intent.putExtra("POST_ID", list.get(getAdapterPosition()).getPostId());
 
                     ctx.startActivity(intent);
