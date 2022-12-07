@@ -57,7 +57,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessR
         // Use this to hide any menu tabs depending on the user type
         NavMenuUtils.hideMenuItems(navView.getMenu());
 
-        RecyclerView recyclerView = findViewById(R.id.restaurantList_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.allBus_recyclerView);
         layoutManager = new LinearLayoutManager(this);
 
         businessServiceLogic = new BusinessServiceLogic();
@@ -142,7 +142,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessR
         // Navigation Drawer
         navView.bringToFront();
         navView.setNavigationItemSelectedListener(this);
-        navView.setCheckedItem(R.id.nav_restaurants);
+        navView.setCheckedItem(R.id.nav_allBusinesses);
 
         open_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +159,7 @@ public class BusinessListActivity extends AppCompatActivity implements BusinessR
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (menuItem.getItemId() != R.id.nav_restaurants){
+        if (menuItem.getItemId() != R.id.nav_allBusinesses){
             NavMenuUtils.onNavItemSelected(menuItem, BusinessListActivity.this);
         }
         else{

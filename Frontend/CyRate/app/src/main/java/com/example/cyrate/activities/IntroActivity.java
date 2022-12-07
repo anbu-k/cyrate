@@ -52,6 +52,7 @@ public class IntroActivity extends AppCompatActivity {
 
         background = findViewById(R.id.bg_image);
         logo = findViewById(R.id.cy_logo);
+        logo.setTag(R.drawable.cy);
         welcomeTxt = findViewById(R.id.txt_welcome);
         cyrateTxt = findViewById(R.id.txt_cyrate);
         lottieAnimationView = findViewById(R.id.cycloneAnimation);

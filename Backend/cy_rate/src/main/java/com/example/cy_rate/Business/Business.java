@@ -1,10 +1,7 @@
 package com.example.cy_rate.Business;
 
 // JPA stuff
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //@Hidden
 import io.swagger.v3.oas.annotations.Hidden;
@@ -26,6 +23,12 @@ public class Business {
     private int ownerId;
     private String menuLink;
     private String priceGauge;
+
+    private String isCoffee;
+
+    private String isBar;
+
+    private String isRestaurant;
     
     //-------review's stuff--------//
 
@@ -52,7 +55,10 @@ public class Business {
         */
     }
 
-    public Business(String busType, String busName, String phone, String photoUrl, String hours, String location, int ownerId, String menuLink, String priceGauge, int reviewCount, int reviewSum){
+    public Business(String busType, String busName, String phone, String photoUrl,
+                    String hours, String location, int ownerId, String menuLink,
+                    String priceGauge, int reviewCount, int reviewSum,
+                    String isCoffee, String isBar, String isRestaurant){
         this.busType = busType;
         this.busName = busName;
         this.phone = phone;
@@ -64,6 +70,9 @@ public class Business {
         this.priceGauge = priceGauge;
         this.reviewCount = reviewCount;
         this.reviewSum = reviewSum;
+        this.isCoffee = isCoffee;
+        this.isBar = isBar;
+        this.isRestaurant = isRestaurant;
     }
 
     //---------- Getter Setter's ----------// 
@@ -163,7 +172,29 @@ public class Business {
         this.phone = phone;
     }
 
+    public String getIsCoffee() {
+        return isCoffee;
+    }
 
+    public void setIsCoffee(String isCoffee) {
+        this.isCoffee = isCoffee;
+    }
+
+    public String getIsBar() {
+        return isBar;
+    }
+
+    public void setIsBar(String isBar) {
+        this.isBar = isBar;
+    }
+
+    public String getIsRestaurant() {
+        return isRestaurant;
+    }
+
+    public void setIsRestaurant(String isRestaurant) {
+        this.isRestaurant = isRestaurant;
+    }
 
     // Review Class Getter and setters for one to many relation
     // public void addReview(Review review)
