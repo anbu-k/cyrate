@@ -13,6 +13,7 @@ import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
+import com.example.cyrate.models.UserModel;
 
 public class NavMenuUtils {
     /**
@@ -25,6 +26,9 @@ public class NavMenuUtils {
 
             if(MainActivity.globalUser == null){
                 Log.d("GLOBAL USER", "Global User NULL");
+                // Fallback, mainly for  testing purposes
+                MainActivity.globalUser = new UserModel("TempEmail", "TempPass");
+                MainActivity.globalUser.setUserType(UserType.GUEST);
             }
             if (MainActivity.globalUser.getUserType() == UserType.GUEST){
                 navMenu.findItem(R.id.nav_edit_profile).setVisible(false);

@@ -24,12 +24,14 @@ import android.view.View;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.IndividualBusinessActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.LoginActivity;
 
@@ -44,10 +46,10 @@ import org.junit.runner.RunWith;
 // Mock the RequestServerForService class
 @RunWith(AndroidJUnit4ClassRunner.class)
 @LargeTest   // large execution time
-public class LoginActivityTest {
+public class BusinessListActivityTest {
 
     @Rule   // needed to launch the activity
-    public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<BusinessListActivity> activityRule = new ActivityTestRule<>(BusinessListActivity.class);
 
     @Before
     public void setUp() {
@@ -60,36 +62,43 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void guestButtonNavigatesToRestaurantActivity(){
+    public void selectingBusinessNavigatesToIndividualBusiness(){
         activityRule.launchActivity(new Intent());
 
         // Wait for buttons to animate in
         onView(isRoot()).perform(TestUtils.waitFor(2000));
 
-        onView(withId(R.id.btn_use_as_guest)).perform(click());
+        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(isRoot()).perform(TestUtils.waitFor(200));
 
         // Verify we navigate to the next activity
-        intended(hasComponent(BusinessListActivity.class.getName()));
+        intended(hasComponent(IndividualBusinessActivity.class.getName()));
+
+        // Our first restaurant is The Cafe, verify that the name matches
+        onView(withId(R.id.restaurant_name)).check(matches(withText("The Cafe")));
     }
 
     @Test
-    public void loginClickWithEmptyFields(){
-        final String expectedToastString = "Email is incorrect";
+    public void openNavMenu(){
+        onView(withId(R.id.open_menu_icon)).perform(click());
+        onView(withId(R.id.nav_menu_header)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void navMenuSignInSelect(){
         activityRule.launchActivity(new Intent());
 
-        // Wait for buttons to animate in
-        onView(isRoot()).perform(TestUtils.waitFor(2000));
+        // Open the Nav Menu and click Sign In
+        onView(withId(R.id.open_menu_icon)).perform(click());
+        onView(withId(R.id.nav_menu_header)).check(matches(isDisplayed()));
+        onView(withId(R.id.nav_sign_in)).perform(click());
 
-        // Do a click anc check that we're still on the login page (failed login)
-        // Checking for Toast messages seems not to work for Espresso for SDK 30+
-        // So this is the best way to check for now
-        onView(withId(R.id.btn_login)).perform(click());
-
+        // Verify we navigate back to the Login Activity
         intended(hasComponent(LoginActivity.class.getName()));
-
     }
+
+
+
 }
 
 
