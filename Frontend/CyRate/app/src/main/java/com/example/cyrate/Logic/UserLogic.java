@@ -327,11 +327,11 @@ public class UserLogic {
      * @param r
      * @throws JSONException
      */
-    public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, editProfileResponse r) throws JSONException {
+    public void editUser(int id, String username, String email, String password, String name, String dob, String photo, String phoneNum, String newType, editProfileResponse r) throws JSONException {
         String url = Const.EDIT_USER_URL + String.valueOf(id);
 
         JSONObject userObject = new JSONObject();
-        userObject.put("userType", MainActivity.globalUser.getUserType().toString());
+        userObject.put("userType", newType);
         userObject.put("realName", name);
         userObject.put("username", username);
         userObject.put("userPass", password);

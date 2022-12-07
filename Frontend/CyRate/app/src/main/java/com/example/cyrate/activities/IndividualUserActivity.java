@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.UserInterfaces.editProfileResponse;
 import com.example.cyrate.Logic.UserInterfaces.userStringResponse;
 import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.R;
@@ -127,6 +128,32 @@ public class IndividualUserActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+            }
+        });
+
+        editUserTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserLogic userLogic = new UserLogic();
+
+                //get new type
+                String newUserType = userTypeDropdown.getSelectedItem().toString();
+
+                try{
+                    userLogic.editUser(userId, username, email, password, fullName, dob, photoUrl, phoneNum, newUserType, new editProfileResponse() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Toast.makeText(IndividualUserActivity.this, "User Updated", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onError(String s) {
+                            Toast.makeText(IndividualUserActivity.this, s, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
             }
         });
     }
