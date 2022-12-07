@@ -109,6 +109,9 @@ public class IndividualBusinessActivity extends AppCompatActivity {
             }
         });
 
+        if(MainActivity.globalUser.getUserType() == UserType.GUEST){
+            favoriteBtn.setVisibility(View.INVISIBLE);
+        }
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

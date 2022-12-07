@@ -14,8 +14,10 @@ import com.example.cyrate.activities.FavoritesActivity;
 import com.example.cyrate.activities.LoginActivity;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.activities.RestaurantListActivity;
+import com.example.cyrate.activities.UserListActivity;
 import com.example.cyrate.activities.WelcomeToCyRateActivity;
 import com.example.cyrate.activities.PersonalReviewListActivity;
+import com.example.cyrate.models.UserModel;
 
 public class NavMenuUtils {
     /**
@@ -28,6 +30,9 @@ public class NavMenuUtils {
 
             if(MainActivity.globalUser == null){
                 Log.d("GLOBAL USER", "Global User NULL");
+                // Fallback, mainly for  testing purposes
+                MainActivity.globalUser = new UserModel("TempEmail", "TempPass");
+                MainActivity.globalUser.setUserType(UserType.GUEST);
             }
             if (MainActivity.globalUser.getUserType() == UserType.GUEST){
                 navMenu.findItem(R.id.nav_edit_profile).setVisible(false);
@@ -46,6 +51,12 @@ public class NavMenuUtils {
 
                 //guest CANNOT see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
+
+                //guest CANNOT see user list
+                navMenu.findItem(R.id.nav_all_users).setVisible(false);
+
+                //guest CANNOT see favorites
+                navMenu.findItem(R.id.nav_favorites).setVisible(false);
 
             }
 
@@ -67,6 +78,10 @@ public class NavMenuUtils {
 
                 //normal user can see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(true);
+
+                //normal user CANNOT see user list
+                navMenu.findItem(R.id.nav_all_users).setVisible(false);
+
             }
 
             else if (MainActivity.globalUser.getUserType() == UserType.BUSINESS_OWNER){
@@ -87,6 +102,9 @@ public class NavMenuUtils {
 
                 //business owner CANNOT see their own reviews
                 navMenu.findItem(R.id.nav_my_reviews).setVisible(false);
+
+                //business owner CANNOT see user list
+                navMenu.findItem(R.id.nav_all_users).setVisible(false);
             }
     }
 
@@ -124,6 +142,10 @@ public class NavMenuUtils {
                 break;
             case R.id.nav_my_reviews:
                 i = new Intent(context, PersonalReviewListActivity.class);
+                context.startActivity(i);
+                break;
+            case R.id.nav_all_users:
+                i = new Intent(context, UserListActivity.class);
                 context.startActivity(i);
                 break;
             case R.id.nav_home:
