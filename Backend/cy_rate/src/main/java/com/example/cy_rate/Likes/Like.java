@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.CascadeType;
 
 
 @Entity
@@ -37,7 +38,7 @@ private int likeCount;
 private String likeType;
 
 @Hidden
-@ManyToOne
+@ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name = "rid", referencedColumnName = "rid")
 private Review review;
 
@@ -48,7 +49,7 @@ private Review review;
 // private User user;
 
 @Hidden
-@ManyToOne
+@ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name = "pid", referencedColumnName = "pid")
 private Post post;
 

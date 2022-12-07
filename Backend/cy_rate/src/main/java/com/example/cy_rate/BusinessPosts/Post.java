@@ -13,6 +13,7 @@ import java.sql.Blob;
 @Table(name = "BusinessPosts")
 public class Post {
     // pk
+    @Hidden
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pid")
@@ -28,7 +29,7 @@ public class Post {
     @Column(name = "blobPhoto", columnDefinition="BLOB")
     private byte[] blobPhoto;
 
-
+    @Hidden
     @ManyToOne
     @JoinColumn(name = "bid", referencedColumnName = "busId")
     private Business business;

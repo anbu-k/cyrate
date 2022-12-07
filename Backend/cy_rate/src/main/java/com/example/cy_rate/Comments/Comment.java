@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "Comments")
@@ -49,17 +50,17 @@ public class Comment {
     // private Business business;
 
     @Hidden
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "pid", referencedColumnName = "pid")
     private Post post;
 
     @Hidden
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Review review;
 
     @Hidden
-    @ManyToOne 
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "uid", referencedColumnName = "userId")
     private User user;
 

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cy_rate.Business.BusinessRepository;
+import com.example.cy_rate.Comments.CommentRepository;
+import com.example.cy_rate.Likes.LikeRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -27,6 +29,12 @@ public class PostController {
 
     @Autowired
     BusinessRepository businessRepo;
+
+    @Autowired
+    LikeRepository likeRepo;
+
+    @Autowired
+    CommentRepository commentRepo;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -84,6 +92,8 @@ public class PostController {
     @DeleteMapping(path = "/posts/delete/{pid}")
     String deletePost(@PathVariable int pid)
     {
+        likeRepo.deleteByPost(postRepo.findById(pid));
+        commentRepo.deleteByPost(postRepo.findById(pid));
         postRepo.deleteById(pid);
         return success;
     }

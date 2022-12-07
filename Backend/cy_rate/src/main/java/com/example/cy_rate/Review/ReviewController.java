@@ -4,6 +4,8 @@ import java.util.List;
 import com.example.cy_rate.Business.Business;
 import com.example.cy_rate.User.User;
 import com.example.cy_rate.Business.BusinessRepository;
+import com.example.cy_rate.Comments.CommentRepository;
+import com.example.cy_rate.Likes.LikeRepository;
 import com.example.cy_rate.User.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -39,6 +41,12 @@ public class ReviewController {
 
     @Autowired
     ReviewRepository reviewRepo;
+
+    @Autowired
+    CommentRepository commentRepo;
+
+    @Autowired
+    LikeRepository likeRepo;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -151,6 +159,11 @@ public class ReviewController {
         b.setReviewCount(b.getReviewCount() - 1);
         b.setReviewSum(b.getReviewSum() - r.getRateVal());
         businessRepo.save(b);
+
+        // delete comments and likes first
+        //commentRepo.removeByReview(r);
+        commentRepo.deleteByReview(r);
+        likeRepo.deleteByReview(r);
 
         // delete review
         reviewRepo.deleteById(rid);
