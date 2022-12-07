@@ -26,8 +26,8 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_favorites"
-                    android:icon="@drawable/profile_icon"
-                    android:title="favorites" />
+                    android:icon="@drawable/star_outline"
+                    android:title="Favorites" />
                 <item
                     android:id="@+id/nav_edit_profile"
                     android:icon="@drawable/profile_icon"
