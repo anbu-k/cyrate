@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.cyrate.EditReviewActivity;
 import com.example.cyrate.ImageLoaderTask;
-import com.example.cyrate.Logic.BusinessInterfaces.businessStringResponse;
 import com.example.cyrate.Logic.ReviewInterfaces.reviewStringResponse;
 import com.example.cyrate.Logic.ReviewServiceLogic;
 import com.example.cyrate.R;
@@ -44,7 +43,7 @@ public class IndividualReviewActivity extends AppCompatActivity {
 
         back_btn = (ImageView) findViewById(R.id.back_button_image);
         editReviewIcon = findViewById(R.id.editReview_icon);
-        reviewerProfilePic = findViewById(R.id.profilePic);
+        reviewerProfilePic = findViewById(R.id.profile_pic);
         deleteIcon = findViewById(R.id.deleteReviewIcon);
         thumbsUpIcon = findViewById(R.id.thumbsUpIcon);
         commentIcon = findViewById(R.id.commentIcon);

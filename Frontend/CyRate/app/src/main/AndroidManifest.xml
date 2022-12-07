@@ -52,10 +52,16 @@
             android:name=".activities.EditBusinessActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.IndividualUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddBusinessActivity"
             android:exported="false" />
         <activity
             android:name=".activities.IndividualBusinessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserListActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
