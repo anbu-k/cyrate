@@ -18,6 +18,7 @@ import com.example.cyrate.Logic.UserInterfaces.getAllUsersResponse;
 import com.example.cyrate.Logic.UserInterfaces.getEmailPasswordResponse;
 import com.example.cyrate.Logic.UserInterfaces.getUserByEmailResponse;
 import com.example.cyrate.Logic.UserInterfaces.getUsernamesResponse;
+import com.example.cyrate.Logic.UserInterfaces.userStringResponse;
 import com.example.cyrate.UserType;
 import com.example.cyrate.activities.MainActivity;
 import com.example.cyrate.models.UserListCardModel;
@@ -352,5 +353,23 @@ public class UserLogic {
         });
         AppController.getInstance().addToRequestQueue(request);
 
+    }
+
+    public void deleteUser(userStringResponse r,int userId) throws JSONException {
+        String url = Const.DELETE_USER_URL + String.valueOf(userId);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                r.onSuccess("User Deleted");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                r.onError("error.toString");
+            }
+        }
+        );
+        AppController.getInstance().addToRequestQueue(request);
     }
 }

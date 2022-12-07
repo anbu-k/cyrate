@@ -1,17 +1,25 @@
 package com.example.cyrate.activities;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cyrate.ImageLoaderTask;
+import com.example.cyrate.Logic.UserInterfaces.userStringResponse;
+import com.example.cyrate.Logic.UserLogic;
 import com.example.cyrate.R;
 import com.example.cyrate.UserType;
+
+import org.json.JSONException;
 
 public class IndividualUserActivity extends AppCompatActivity {
     Button deleteUserBtn, editUserTypeButton;
@@ -34,7 +42,6 @@ public class IndividualUserActivity extends AppCompatActivity {
 
         //get the extras
         email = extras.getString("EMAIL");
-        System.out.println(email);
         password = extras.getString("PASSWORD");
         fullName = extras.getString("FULLNAME");
         username = extras.getString("USERNAME");
@@ -94,8 +101,33 @@ public class IndividualUserActivity extends AppCompatActivity {
         userName.setText(nameToDisplay);
         userEmail.setText(email);
 
-
-
         //deal with button clicks
+        deleteUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete user
+                UserLogic userLogic = new UserLogic();
+
+                try{
+                    userLogic.deleteUser(new userStringResponse() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Toast.makeText(IndividualUserActivity.this, s, Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(IndividualUserActivity.this, UserListActivity.class);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onError(String s) {
+                            Toast.makeText(IndividualUserActivity.this, s, Toast.LENGTH_LONG).show();
+
+                        }
+                    }, userId);
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 }
