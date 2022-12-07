@@ -7,7 +7,7 @@
 // @Configuration
 // public class LikeConfig {
 //     @Bean
-// 	public ServerEndpointExporter serverEndpointExporter() {
+// 	public ServerEndpointExporter serverEndpointExporterLikes() {
 // 		return new ServerEndpointExporter();
 // 	}
 

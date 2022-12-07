@@ -33,16 +33,19 @@ private int lid;
 @Column
 private int likeCount;
 
+@Column
+private String likeType;
+
 @Hidden
 @ManyToOne
 @JoinColumn(name = "rid", referencedColumnName = "rid")
 private Review review;
 
 
-@Hidden
-@ManyToOne
-@JoinColumn(name = "uid", referencedColumnName = "userId")
-private User user;
+// @Hidden
+// @ManyToOne
+// @JoinColumn(name = "uid", referencedColumnName = "userId")
+// private User user;
 
 @Hidden
 @ManyToOne
@@ -50,6 +53,7 @@ private User user;
 private Post post;
 
 public Like() {
+    
 }
 
 public Like(int likeCount)
@@ -67,15 +71,15 @@ public void setLid(int lid)
     this.lid = lid;
 }
 
-public User getUser()
-{
-    return user;
-}
+// public User getUser()
+// {
+//     return user;
+// }
 
-public void setUser(User user)
-{
-    this.user = user;
-}
+// public void setUser(User user)
+// {
+//     this.user = user;
+// }
 
 public Review getReview()
 {
@@ -96,6 +100,28 @@ public void setPost(Post post)
 {
     this.post = post;
 }
+
+public String getLikeType()
+{
+    return likeType;
+}
+
+public void setLikeType(String likeType)
+{
+    this.likeType = likeType;
+}
+
+public int getLikeCount()
+{
+    return likeCount;
+}
+
+public void setLikeCount(int likeCount)
+{
+    this.likeCount = likeCount;
+}
+
+
 
 
 }
