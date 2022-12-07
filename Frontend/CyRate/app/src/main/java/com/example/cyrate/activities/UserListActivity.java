@@ -61,6 +61,11 @@ public class UserListActivity extends AppCompatActivity implements UserRecyclerV
         recyclerView.setAdapter(userListAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
+        navigationDrawer();
+
+        drawerLayout.setScrimColor(getResources().getColor(R.color.red));
+        drawerLayout.setScrimColor(getResources().getColor(R.color.red));
+
         try{
             setUpUserCardModels();
         } catch (JSONException e){

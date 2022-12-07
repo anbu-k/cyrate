@@ -156,5 +156,13 @@ public class IndividualUserActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(IndividualUserActivity.this, UserListActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

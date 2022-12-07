@@ -16,6 +16,9 @@ import com.example.cyrate.UserType;
 import com.example.cyrate.models.UserListCardModel;
 import com.example.cyrate.models.UserRecyclerViewInterface;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder>{
@@ -46,15 +49,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         UserType userType = userCardList.get(position).getUserType();
 
         String userPhotoUrl = userCardList.get(position).getPhotoUrl();
-        if (userPhotoUrl == null || userPhotoUrl.length() == 0){
+
+
+        if (userPhotoUrl == null || userPhotoUrl.length() == 0 || userPhotoUrl.equals("null")){
             userPhotoUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyK6VC1UacbsCU2hKSWCItKSrh1hRq35XDKg&usqp=CAU";
         }
 
+
         new ImageLoaderTask(userPhotoUrl, holder.profilePic).execute();
 
-        holder.userName.setText(userCardList.get(position).getUsername());
-        holder.userEmail.setText(userCardList.get(position).getEmail());
-        holder.userType.setText(userCardList.get(position).getUserType().toString());
+        holder.userName.setText(userName);
+        holder.userEmail.setText(userEmail);
+        holder.userType.setText(userType.toString());
     }
 
     @Override
