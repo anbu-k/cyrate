@@ -97,6 +97,12 @@ public class BusinessListActivityTest {
         intended(hasComponent(LoginActivity.class.getName()));
     }
 
+    // For these Individual Business tests, I'm keeping them in this file so that we start from
+    // the BusinessListActivity, otherwise we don't have the data of the Businesses which will
+    // give us exceptions when trying to get info like Business Name and such.
+    //
+    // This works because we call the server on this activity, populate the list, and then the data
+    // works and passes info to IndividualBusinessActivity like normal
     @Test
     public void selectIndividualBusinessClickReviews(){
         activityRule.launchActivity(new Intent());
