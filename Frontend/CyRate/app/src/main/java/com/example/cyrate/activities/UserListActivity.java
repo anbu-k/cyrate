@@ -89,6 +89,9 @@ public class UserListActivity extends AppCompatActivity implements UserRecyclerV
     @Override
     public void onUserClick(int position) {
         Intent intent = new Intent(UserListActivity.this, IndividualUserActivity.class);
+        System.out.print("position: ");
+        System.out.println(position);
+        System.out.println(userListCardModel.get(position).getEmail());
 
         intent.putExtra("EMAIL", userListCardModel.get(position).getEmail());
         intent.putExtra("PASSWORD", userListCardModel.get(position).getPassword());

@@ -45,7 +45,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         String userEmail = userCardList.get(position).getEmail();
         UserType userType = userCardList.get(position).getUserType();
 
-        new ImageLoaderTask(userCardList.get(position).getPhotoUrl(), holder.profilePic).execute();
+        String userPhotoUrl = userCardList.get(position).getPhotoUrl();
+        if (userPhotoUrl == null || userPhotoUrl.length() == 0){
+            userPhotoUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyK6VC1UacbsCU2hKSWCItKSrh1hRq35XDKg&usqp=CAU";
+        }
+
+        new ImageLoaderTask(userPhotoUrl, holder.profilePic).execute();
 
         holder.userName.setText(userCardList.get(position).getUsername());
         holder.userEmail.setText(userCardList.get(position).getEmail());

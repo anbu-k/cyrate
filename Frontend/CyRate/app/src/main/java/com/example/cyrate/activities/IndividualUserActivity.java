@@ -1,8 +1,10 @@
 package com.example.cyrate.activities;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ public class IndividualUserActivity extends AppCompatActivity {
     Button deleteUserBtn, editUserTypeButton;
     ImageView backBtn, profilePic;
     TextView userName, userEmail;
+    Spinner userTypeDropdown;
 
     String email, password, fullName, username, phoneNum, dob, photoUrl;
     UserType userType;
@@ -39,7 +42,7 @@ public class IndividualUserActivity extends AppCompatActivity {
         dob = extras.getString("DOB");
         photoUrl = extras.getString("PHOTOURL");
 
-        userType = UserType.fromString(extras.getString("USERTYPE"));
+        userType = (UserType)(extras.get("USERTYPE"));
         userId = extras.getInt("USERID");
 
         //get ui elements
@@ -47,11 +50,34 @@ public class IndividualUserActivity extends AppCompatActivity {
         profilePic = (ImageView) findViewById(R.id.profile_pic);
         deleteUserBtn = (Button) findViewById(R.id.btn_delete_user);
         editUserTypeButton = (Button) findViewById(R.id.btn_edit_user);
+        userName = (TextView) findViewById(R.id.user_fullname);
+        userEmail = (TextView) findViewById(R.id.user_email);
+        userTypeDropdown = (Spinner) findViewById(R.id.spinner_user_type);
 
         //profile pic
         new ImageLoaderTask(photoUrl, profilePic).execute();
 
         //user type dropdown
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(IndividualUserActivity.this, R.array.userTypesAdmin, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        userTypeDropdown.setAdapter(adapter);
+
+        //set default user type
+        int selection;
+        switch(userType){
+            case BUSINESS_OWNER:
+                selection = 1;
+                break;
+            case ADMIN:
+                selection = 2;
+                break;
+            case BASIC_USER:
+            default:
+                selection = 0;
+        }
+
+        userTypeDropdown.setSelection(selection);
 
 
         //set user info ui elements
@@ -60,6 +86,11 @@ public class IndividualUserActivity extends AppCompatActivity {
         if (fullName != null && fullName.length() > 0){
             nameToDisplay = fullName;
         }
+        if (nameToDisplay == null || nameToDisplay.length() == 0){
+            nameToDisplay = "no name available";
+        }
+
+        System.out.println("username: " + username + " to display: " + nameToDisplay);
         userName.setText(nameToDisplay);
         userEmail.setText(email);
 
