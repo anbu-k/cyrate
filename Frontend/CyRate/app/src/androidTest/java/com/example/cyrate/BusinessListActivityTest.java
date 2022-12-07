@@ -31,9 +31,12 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.cyrate.activities.BusinessListActivity;
+import com.example.cyrate.activities.BusinessPostFeed;
+import com.example.cyrate.activities.FindUsActivity;
 import com.example.cyrate.activities.IndividualBusinessActivity;
 import com.example.cyrate.activities.IntroActivity;
 import com.example.cyrate.activities.LoginActivity;
+import com.example.cyrate.activities.ReviewListActivity;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -65,11 +68,7 @@ public class BusinessListActivityTest {
     public void selectingBusinessNavigatesToIndividualBusiness(){
         activityRule.launchActivity(new Intent());
 
-        // Wait for buttons to animate in
-        onView(isRoot()).perform(TestUtils.waitFor(2000));
-
         onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(isRoot()).perform(TestUtils.waitFor(200));
 
         // Verify we navigate to the next activity
         intended(hasComponent(IndividualBusinessActivity.class.getName()));
@@ -80,6 +79,7 @@ public class BusinessListActivityTest {
 
     @Test
     public void openNavMenu(){
+        // Open Nav menu and verify we have it open
         onView(withId(R.id.open_menu_icon)).perform(click());
         onView(withId(R.id.nav_menu_header)).check(matches(isDisplayed()));
     }
@@ -95,6 +95,57 @@ public class BusinessListActivityTest {
 
         // Verify we navigate back to the Login Activity
         intended(hasComponent(LoginActivity.class.getName()));
+    }
+
+    @Test
+    public void selectIndividualBusinessClickReviews(){
+        activityRule.launchActivity(new Intent());
+
+        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        // Verify we navigate to the next activity
+        intended(hasComponent(IndividualBusinessActivity.class.getName()));
+
+        // Our first restaurant is The Cafe, verify that the name matches
+        onView(withId(R.id.restaurant_name)).check(matches(withText("The Cafe")));
+
+        // Click Reviews and verify we navigate to the Reviews Activity
+        onView(withId(R.id.reviews_btn)).perform(click());
+        intended(hasComponent(ReviewListActivity.class.getName()));
+    }
+
+    @Test
+    public void selectIndividualBusinessClickPosts(){
+        activityRule.launchActivity(new Intent());
+
+        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        // Verify we navigate to the next activity
+        intended(hasComponent(IndividualBusinessActivity.class.getName()));
+
+        // Our first restaurant is The Cafe, verify that the name matches
+        onView(withId(R.id.restaurant_name)).check(matches(withText("The Cafe")));
+
+        // Click Reviews and verify we navigate to the Reviews Activity
+        onView(withId(R.id.busPosts_btn)).perform(click());
+        intended(hasComponent(BusinessPostFeed.class.getName()));
+    }
+
+    @Test
+    public void selectIndividualBusinessClickFindUs(){
+        activityRule.launchActivity(new Intent());
+
+        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        // Verify we navigate to the next activity
+        intended(hasComponent(IndividualBusinessActivity.class.getName()));
+
+        // Our first restaurant is The Cafe, verify that the name matches
+        onView(withId(R.id.restaurant_name)).check(matches(withText("The Cafe")));
+
+        // Click Reviews and verify we navigate to the Reviews Activity
+        onView(withId(R.id.find_us_btn)).perform(click());
+        intended(hasComponent(FindUsActivity.class.getName()));
     }
 
 
