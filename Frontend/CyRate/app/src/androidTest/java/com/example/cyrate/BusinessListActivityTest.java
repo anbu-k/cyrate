@@ -68,7 +68,7 @@ public class BusinessListActivityTest {
     public void selectingBusinessNavigatesToIndividualBusiness(){
         activityRule.launchActivity(new Intent());
 
-        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.allBus_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Verify we navigate to the next activity
         intended(hasComponent(IndividualBusinessActivity.class.getName()));
@@ -107,7 +107,7 @@ public class BusinessListActivityTest {
     public void selectIndividualBusinessClickReviews(){
         activityRule.launchActivity(new Intent());
 
-        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.allBus_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Verify we navigate to the next activity
         intended(hasComponent(IndividualBusinessActivity.class.getName()));
@@ -124,7 +124,7 @@ public class BusinessListActivityTest {
     public void selectIndividualBusinessClickPosts(){
         activityRule.launchActivity(new Intent());
 
-        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.allBus_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Verify we navigate to the next activity
         intended(hasComponent(IndividualBusinessActivity.class.getName()));
@@ -141,7 +141,7 @@ public class BusinessListActivityTest {
     public void selectIndividualBusinessClickFindUs(){
         activityRule.launchActivity(new Intent());
 
-        onView(withId(R.id.restaurantList_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.allBus_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Verify we navigate to the next activity
         intended(hasComponent(IndividualBusinessActivity.class.getName()));
